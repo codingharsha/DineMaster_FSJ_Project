@@ -1,12 +1,15 @@
 import React from 'react'
 import Images from '../../assets/assets'
+import './LoginPage.css'
 const LoginPage = () => {
   return (
-    <div>
+    <div className='login'>
         <div className="left-section">
-            <img src = {Images.login_bg} alt="" />
+            <img src = {Images.login_bg} alt="Background_Login" />
         </div>
-        <div className="right-section"></div>
+        <div className="right-section">
+
+        </div>
     </div>
   )
 }
