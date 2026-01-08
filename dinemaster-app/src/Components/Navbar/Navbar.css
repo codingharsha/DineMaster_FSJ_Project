@@ -1,0 +1,74 @@
+.navbar-container{
+    padding: 18px 83px;
+    background-color: #fff5ec;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+
+.logo{
+    display: flex;
+    gap: 10px;
+    width: auto;
+    align-items: center;
+}
+
+.logo-img{
+    font-size: 45px;
+    color: #f24822;
+}
+
+.logo-text-container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.title{
+    font-weight: 900;
+    color: #f26622;
+    font-size: 30px;
+    letter-spacing: -2px;
+}
+
+.slogan{
+    font-weight: 200;
+    letter-spacing: 3px;
+    font-size: 11px;
+    position: absolute;
+    top: 35px;
+    width: 200px;
+}
+
+.links{
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.location-container{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background-color: #fbd6bf;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.location-arrow, .arrow-down{
+    color: #f24822;
+}
+
+.profile{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background-color: #fbd6bf;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.user-icon{
+    color: #f24822;
+}
