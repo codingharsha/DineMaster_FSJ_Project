@@ -1,10 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { FaFire, FaLocationArrow } from "react-icons/fa";
 import { IoSearchSharp, IoCartOutline } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import './Navbar.css'
+import { Navigate } from 'react-router-dom';
 const Navbar = () => {
+    const navigate = useNavigate();
   return (
     <div>
         <div className='navbar-container'>
@@ -30,7 +33,7 @@ const Navbar = () => {
                 <IoIosArrowDown className='arrow-down' size={20}/>
             </div>
 
-            <div className="profile">
+            <div className="profile" onClick={() => navigate('/auth')}>
                 <FiUser size={20} className='user-icon'/>
                 <div className="login-text">Login</div>
             </div>
