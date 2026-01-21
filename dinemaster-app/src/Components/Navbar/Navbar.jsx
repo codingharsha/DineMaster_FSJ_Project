@@ -1,42 +1,64 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import { FaFire, FaLocationArrow } from "react-icons/fa";
-import { IoSearchSharp, IoCartOutline } from "react-icons/io5";
-import { FiUser } from "react-icons/fi";
-import { IoIosArrowDown } from "react-icons/io";
 import './Navbar.css'
-import { Navigate } from 'react-router-dom';
+import { FaLocationArrow } from "react-icons/fa";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { RiShoppingCart2Line } from "react-icons/ri";
+import { FaRegUser } from "react-icons/fa6";
+import { IoSearch } from "react-icons/io5";
+import { FaFire } from "react-icons/fa";
+import { RxHamburgerMenu } from "react-icons/rx";
 const Navbar = () => {
-    const navigate = useNavigate();
   return (
     <div>
-        <div className='navbar-container'>
-            <div className="logo">
-                <FaFire className='logo-img'/>
-                <div className="logo-text-container">
-                <div className="title">DineMaster</div>
-                <div className="slogan">AUTHENTIC FLAVOURS</div>
-                </div>
-            </div>
+        <div className="navbar-container">
 
+          <div className="logo-container">
+          <div className="icon-wrapper">
+            <FaFire className='logo'/>
+          </div>
+          <div className="logo-txt-container">
+            <div className='logo-txt'>DineMaster</div>
+            <div className='logo-slogan'>AUTHENTIC FLAVOURS</div>
+            </div>
+          </div>
+
+          <div className='mid-section'>
             <div className="links">
-                <div className="deals">Deals</div>
-                <div className="happiness-cards">Happiness Cards</div>
-                <div className="restaurants">Restaurants</div>
-                <IoSearchSharp size={30}/>
-                <IoCartOutline size={30}/>
-            </div>
+            <div>Deals</div>
+            <div>Happiness Cards</div>
+            <div>Restaurants</div>
+            <div>Order Online</div>
+          </div>
 
-            <div className="location-container">
-                <FaLocationArrow className='location-arrow' size={20}/>
-                <div className="location-name">Choose your Location</div>
-                <IoIosArrowDown className='arrow-down' size={20}/>
+          <div className="icons">
+            <div className="icon-wrapper">
+              <IoSearch className='search-icon'/>
             </div>
+            <div className="icon-wrapper">
+              <RiShoppingCart2Line className='cart-icon'/>
+            </div>
+          </div>
+          </div>
 
-            <div className="profile" onClick={() => navigate('/auth')}>
-                <FiUser size={20} className='user-icon'/>
-                <div className="login-text">Login</div>
+          <div className="right-section">
+            <button className='location-btn'>
+            <div className="icon-wrapper">
+              <FaLocationArrow />
             </div>
+            <span className='location-txt'>Select Your Location</span>
+            <div className="icon-wrapper">
+              <MdOutlineKeyboardArrowDown />
+            </div>
+          </button>
+
+          <button className='profile'>
+            <div className="icon-wrapper"><FaRegUser /></div>
+            <div className='profile-txt'>Log In</div>
+          </button>
+
+          <div className="icon-wrapper"><RxHamburgerMenu /></div>
+
+          </div>
         </div>
     </div>
   )

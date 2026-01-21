@@ -1,74 +1,100 @@
 .navbar-container{
-    padding: 18px 83px;
-    background-color: #fff5ec;
+    position: absolute;
+    z-index: 10;
+    padding: 25px 90px;
+    width: 100%;
+    height: auto;
+    background: transparent;
     display: flex;
-    justify-content: center;
-    gap: 40px;
-}
-
-
-.logo{
-    display: flex;
-    gap: 10px;
-    width: auto;
+    gap:50px;
+    justify-content: space-between;
+    box-sizing: border-box;
     align-items: center;
 }
 
-.logo-img{
-    font-size: 45px;
-    color: #f24822;
+.icon-wrapper{
+    display: flex;
+    font-size: 25px;
+    color: white;
 }
 
-.logo-text-container{
+.logo-container{
+    display: flex;
+    gap: 10px;
+}
+.logo{
+    color: #f26622;
+    font-size: 35px;
+}
+
+
+.logo-txt{
+    font-size: 30px;
+    font-weight: 800;
+    color: #f26622;
+    line-height: 1;
+    letter-spacing: -2px;
+    
+}
+
+.logo-txt-container{
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
-.title{
-    font-weight: 900;
-    color: #f26622;
-    font-size: 30px;
-    letter-spacing: -2px;
-}
-
-.slogan{
+.logo-slogan{
+    line-height: 0.5;
     font-weight: 200;
-    letter-spacing: 3px;
-    font-size: 11px;
-    position: absolute;
-    top: 35px;
-    width: 200px;
+    font-size: 12px;
+    letter-spacing: 2.2px;
+    color: white;
+
+}
+
+.mid-section{
+    display: flex;
+    gap: 40px;
 }
 
 .links{
     display: flex;
-    gap: 40px;
-    align-items: center;
+    gap: 45px;
+    color: white;
 }
 
-.location-container{
+.icons{
+    display: flex;
+    gap: 45px;
+}
+
+.right-section{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.location-btn{
     display: flex;
     gap: 15px;
-    align-items: center;
-    background-color: #fbd6bf;
-    padding: 10px;
     border-radius: 10px;
+    border: none;
+    align-items: center;
+    background-color: #f2672286;
+    padding: 10px 20px;
 }
 
-.location-arrow, .arrow-down{
-    color: #f24822;
+.location-txt{
+    color: white;
+    font-size: 14px;
+    font-family: Poppins, sans-serif;
 }
 
 .profile{
     display: flex;
-    gap: 10px;
-    align-items: center;
-    background-color: #fbd6bf;
-    padding: 10px;
+    gap: 15px;
+    border: none;
     border-radius: 10px;
-}
-
-.user-icon{
-    color: #f24822;
+    align-items: center;
+    background-color: #f2672286;
+    padding: 10px 20px;
+    color: white;
 }
