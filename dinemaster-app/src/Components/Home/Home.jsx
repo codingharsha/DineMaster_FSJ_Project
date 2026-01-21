@@ -2,6 +2,9 @@ import React from 'react'
 import './Home.css'
 import Navbar from '../Navbar/Navbar'
 import HappinessCards from '../HappinessCards/HappinessCards';
+import SizzlingDeals from '../SizzlingDeals/SizzlingDeals';
+import Gallery from '../Gallery/Gallery';
+import OurLocations from '../OurLocations/OurLocations';
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { FaRegCalendarAlt, FaMotorcycle } from "react-icons/fa";
@@ -69,6 +72,10 @@ const Home = () => {
       </div>
 
       <HappinessCards />
+      <SizzlingDeals />
+      <Gallery />
+      <OurLocations />
+
     </div>
   )
 }
