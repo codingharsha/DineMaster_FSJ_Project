@@ -5,6 +5,7 @@ import HappinessCards from '../HappinessCards/HappinessCards';
 import SizzlingDeals from '../SizzlingDeals/SizzlingDeals';
 import Gallery from '../Gallery/Gallery';
 import OurLocations from '../OurLocations/OurLocations';
+import Footer from '../Footer/Footer';
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { FaRegCalendarAlt, FaMotorcycle } from "react-icons/fa";
@@ -75,6 +76,7 @@ const Home = () => {
       <SizzlingDeals />
       <Gallery />
       <OurLocations />
+      <Footer />
 
     </div>
   )
