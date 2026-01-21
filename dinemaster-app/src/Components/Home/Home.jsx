@@ -1,20 +1,23 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 import './Home.css'
-import Navbar from '../Navbar/Navbar'
+
 import HappinessCards from '../HappinessCards/HappinessCards';
 import SizzlingDeals from '../SizzlingDeals/SizzlingDeals';
 import Gallery from '../Gallery/Gallery';
 import OurLocations from '../OurLocations/OurLocations';
 import Footer from '../Footer/Footer';
+
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { FaRegCalendarAlt, FaMotorcycle } from "react-icons/fa";
 import { TbCardsFilled } from "react-icons/tb";
 import { BiSolidOffer } from "react-icons/bi";
+
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div>
-      <Navbar />
       <div className="hero-section">
         <div className="hero-content">
           <h1 className="hero-headline">
@@ -29,7 +32,7 @@ const Home = () => {
                 TownHall, Coimbatore <IoIosArrowDown className="arrow-icon"/>
               </div>
             </div>
-            <button className="reserve-btn">
+            <button className="reserve-btn" onClick={() => navigate('/reservation')}>
               Reserve a Table <MdOutlineRestaurantMenu />
             </button>
           </div>
@@ -44,7 +47,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="feature-item">
+          <div className="feature-item" onClick={() => navigate('/order-online')}>
             <div className="feature-icon-box"><FaMotorcycle /></div>
             <div className="feature-text">
               <h4>Order Online</h4>

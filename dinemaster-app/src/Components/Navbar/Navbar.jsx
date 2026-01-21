@@ -7,7 +7,7 @@ import { FaRegUser } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { FaFire } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
-const Navbar = () => {
+const Navbar = ({ setShowLogin }) => {
   return (
     <div>
         <div className="navbar-container">
@@ -51,7 +51,7 @@ const Navbar = () => {
             </div>
           </button>
 
-          <button className='profile'>
+          <button className='profile' onClick={() => setShowLogin(true)}>
             <div className="icon-wrapper"><FaRegUser /></div>
             <div className='profile-txt'>Log In</div>
           </button>
