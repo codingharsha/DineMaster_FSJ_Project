@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import './OrderOnline.css';
 
-// Icons
 import { FaSearch, FaMapMarkerAlt, FaRegCheckCircle } from "react-icons/fa";
 import { MdOutlineDeliveryDining, MdOutlineSecurity, MdOutlineRestaurantMenu } from "react-icons/md";
 import { BiCurrentLocation } from "react-icons/bi";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { CgDanger } from "react-icons/cg"; // For non-veg symbol
-import { FaCircle } from "react-icons/fa"; // For veg symbol
+import { CgDanger } from "react-icons/cg";
+import { FaCircle } from "react-icons/fa"; 
 
 const OrderOnline = () => {
-  const [selectedOutlet, setSelectedOutlet] = useState(null); // Stores the selected branch name
+  const [selectedOutlet, setSelectedOutlet] = useState(null); 
   const [vegOnly, setVegOnly] = useState(false);
   const [activeCategory, setActiveCategory] = useState("Recommended");
 
-  // --- MOCK DATA: LOCATIONS ---
   const locations = [
     {
       city: "Coimbatore",
@@ -30,7 +28,6 @@ const OrderOnline = () => {
     }
   ];
 
-  // --- MOCK DATA: MENU ITEMS ---
   const categories = ["Recommended", "BBQ Bites", "Biryani Bowls", "Drinks & Desserts"];
   
   const menuItems = [
@@ -72,7 +69,6 @@ const OrderOnline = () => {
     }
   ];
 
-  // Logic to filter items based on toggle
   const displayItems = vegOnly 
     ? menuItems.filter(item => item.isVeg) 
     : menuItems;
@@ -81,10 +77,8 @@ const OrderOnline = () => {
     <div className="order-online-page">
       <div className="order-container">
         
-        {/* --- LEFT SIDEBAR --- */}
         <div className="order-sidebar">
             
-            {/* 1. Veg Toggle */}
             <div className="veg-toggle-section">
                 <span>Veg Only</span>
                 <label className="switch">
@@ -93,9 +87,7 @@ const OrderOnline = () => {
                 </label>
             </div>
 
-            {/* 2. Sidebar Content Logic */}
             {!selectedOutlet ? (
-                // VIEW A: LOCATION LIST
                 <div className="location-list-view">
                     <div className="sidebar-header">
                         <FaMapMarkerAlt /> Select Outlet
@@ -111,7 +103,7 @@ const OrderOnline = () => {
 
                     <div className="sidebar-search">
                         <input type="text" placeholder="Search..." />
-                        <FaSearch className="search-icon"/>
+                        <FaSearch className="sidebar-search-icon"/>
                     </div>
 
                     <div className="city-list">
@@ -132,14 +124,13 @@ const OrderOnline = () => {
                     </div>
                 </div>
             ) : (
-                // VIEW B: CATEGORY LIST (After Selecting Outlet)
                 <div className="category-list-view">
                     <div className="selected-outlet-card" onClick={() => setSelectedOutlet(null)}>
                         <div className="outlet-info">
                             <span className="so-label">Selected Outlet</span>
                             <span className="so-name">{selectedOutlet}</span>
                         </div>
-                        <IoIosArrowUp /> {/* Click to collapse/change */}
+                        <IoIosArrowUp /> 
                     </div>
 
                     <div className="menu-categories">
@@ -157,11 +148,9 @@ const OrderOnline = () => {
             )}
         </div>
 
-        {/* --- RIGHT MAIN CONTENT --- */}
         <div className="order-main">
             
             {!selectedOutlet ? (
-                // VIEW A: PLACEHOLDER (Select Location)
                 <div className="location-placeholder">
                     <div className="placeholder-content">
                         <FaMapMarkerAlt className="big-pin-icon"/>
@@ -188,19 +177,15 @@ const OrderOnline = () => {
                     </div>
                 </div>
             ) : (
-                // VIEW B: FOOD MENU
                 <div className="food-menu-container">
                     
-                    {/* Search Bar */}
                     <div className="menu-search-bar">
                         <FaSearch className="ms-icon"/>
                         <input type="text" placeholder="Search for dishes, sides or desserts..." />
                     </div>
 
-                    {/* Category Title */}
                     <h2 className="menu-category-title">{activeCategory}</h2>
 
-                    {/* Food Items List */}
                     <div className="food-items-list">
                         {displayItems.map((item) => (
                             <div className="food-card" key={item.id}>

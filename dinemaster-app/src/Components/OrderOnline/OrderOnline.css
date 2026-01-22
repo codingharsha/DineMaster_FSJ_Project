@@ -10,7 +10,6 @@
     align-items: flex-start;
 }
 
-/* --- SIDEBAR --- */
 .order-sidebar {
     width: 300px;
     background: white;
@@ -21,7 +20,6 @@
     min-height: 500px;
 }
 
-/* Veg Toggle */
 .veg-toggle-section {
     display: flex;
     justify-content: space-between;
@@ -31,15 +29,51 @@
     color: #555;
 }
 
-/* Switch Styling */
-.switch { position: relative; display: inline-block; width: 40px; height: 20px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-.slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; }
-input:checked + .slider { background-color: #f26622; }
-input:checked + .slider:before { transform: translateX(20px); }
+.switch { 
+    position: relative; 
+    display: inline-block; 
+    width: 40px; 
+    height: 20px; 
+}
 
-/* Location Sidebar Styles */
+.switch input { 
+    opacity: 0; 
+    width: 0; 
+    height: 0; 
+}
+
+.slider { 
+    position: absolute; 
+    cursor: pointer; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background-color: #ccc; 
+    transition: .4s; 
+    border-radius: 34px; 
+}
+
+.slider:before { 
+    position: absolute; 
+    content: ""; 
+    height: 16px; 
+    width: 16px; 
+    left: 2px; 
+    bottom: 2px; 
+    background-color: white; 
+    transition: .4s; 
+    border-radius: 50%; 
+}
+
+input:checked + .slider { 
+    background-color: #f26622; 
+}
+
+input:checked + .slider:before { 
+    transform: translateX(20px); 
+}
+
 .sidebar-header, .so-label {
     font-weight: 700;
     font-size: 1.1rem;
@@ -61,22 +95,43 @@ input:checked + .slider:before { transform: translateX(20px); }
     cursor: pointer;
     margin-bottom: 20px;
 }
-.gps-icon { color: #f26622; font-size: 1.2rem; }
-.gps-title { display: block; font-weight: 700; color: #f26622; font-size: 0.9rem; }
-.gps-desc { font-size: 0.75rem; color: #888; }
+.gps-icon { 
+    color: #f26622; 
+    font-size: 1.2rem; 
+}
+
+.gps-title { 
+    display: block; 
+    font-weight: 700; 
+    color: #f26622; 
+    font-size: 0.9rem; 
+}
+
+.gps-desc { 
+    font-size: 0.75rem; 
+    color: #888; 
+}
 
 .sidebar-search {
     position: relative;
     margin-bottom: 20px;
 }
 .sidebar-search input {
-    width: 100%;
-    padding: 10px 35px 10px 10px;
+    width: 82%;
+    padding: 12px 15px 12px 40px;
     border: 1px solid #ddd;
     border-radius: 6px;
     outline: none;
 }
-.search-icon { position: absolute; right: 10px; top: 12px; color: #999; }
+.sidebar-search-icon { 
+position: absolute;
+    left: 12px;
+    top: 50%;  
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 16px;
+    pointer-events: none; 
+}
 
 .city-name {
     font-size: 1rem;

@@ -21,23 +21,32 @@ const LoginPopup = ({ setShowLogin }) => {
 
   const handleVerifyOtp = (e) => {
     e.preventDefault();
-    const mockResponse = {
-      success: true,
-      role: "manager" 
-    };
+    
+    let role = "customer"; 
 
-    if (mockResponse.success) {
-      setShowLogin(false); 
-      
-      if (mockResponse.role === 'manager') {
-        navigate('/admin/dashboard');
-      } 
-      else if (mockResponse.role === 'kitchen') {
-        navigate('/kitchen/orders');
-      } 
-      else {
-        navigate('/');
-      }
+    if (phone === "9999999999") {
+        role = "admin";
+    } 
+    else if (phone === "8888888888") {
+        role = "kitchen";
+    }
+
+    localStorage.setItem("token", "mock-token-" + role); 
+    localStorage.setItem("role", role);
+
+    setShowLogin(false);
+
+    if (role === 'admin') {
+      alert("Welcome, Manager!");
+      navigate('/admin/dashboard');
+    } 
+    else if (role === 'kitchen') {
+      alert("Welcome, Chef!");
+      navigate('/kitchen/orders');
+    } 
+    else {
+      alert("Login Successful!");
+      navigate('/'); 
     }
   };
 
@@ -47,7 +56,9 @@ const LoginPopup = ({ setShowLogin }) => {
         
         <div className="login-popup-title">
           <h2>{currState === "Login" ? "Login" : "Verify OTP"}</h2>
-          <IoClose onClick={() => setShowLogin(false)} className="close-icon" />
+          <div className="close-btn" onClick={() => setShowLogin(false)}>
+             <IoClose className="close-icon" />
+          </div>
         </div>
 
         <form className="login-popup-inputs">
@@ -62,6 +73,10 @@ const LoginPopup = ({ setShowLogin }) => {
                 onChange={(e) => setPhone(e.target.value)}
               />
               <button onClick={handleSendOtp}>Continue</button>
+              
+              <p style={{fontSize: '10px', color: '#999', marginTop: '10px', textAlign:'center'}}>
+                (Dev Hint: Use <b>9999999999</b> for Admin, <b>8888888888</b> for Kitchen)
+              </p>
             </>
           ) : (
             <>

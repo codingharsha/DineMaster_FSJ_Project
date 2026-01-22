@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './HappinessCards.css';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const HappinessCards = () => {
+  const navigate = useNavigate();
   const sliderRef = useRef(null);
 
   const slideLeft = () => {
@@ -59,7 +61,7 @@ const HappinessCards = () => {
         <h2 className="section-title">Happiness Cards</h2>
         
         <div className="controls">
-          <button className="view-all-btn">View All</button>
+          <button className="view-all-btn" onClick={() => navigate('/happiness-cards')}>View All</button>
           
           <div className="arrow-btn" onClick={slideLeft}>
             <FaArrowLeft />

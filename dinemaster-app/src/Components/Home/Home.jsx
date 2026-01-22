@@ -55,7 +55,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="feature-item">
+          <div className="feature-item" onClick={()=> navigate('/happiness-cards')}>
             <div className="feature-icon-box"><TbCardsFilled /></div>
             <div className="feature-text">
               <h4>Happiness Cards</h4>
@@ -63,7 +63,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="feature-item">
+          <div className="feature-item" onClick={()=> navigate('/offers')}>
             <div className="feature-icon-box"><BiSolidOffer /></div>
             <div className="feature-text">
               <h4>Offers & Deals</h4>

@@ -1,17 +1,36 @@
-.navbar-container{
-    position: absolute;
-    z-index: 10;
-    padding: 25px 90px;
+.navbar {
     width: 100%;
-    height: auto;
-    background: transparent;
-    display: flex;
-    gap:50px;
-    justify-content: space-between;
-    box-sizing: border-box;
-    align-items: center;
+    z-index: 999;
+    padding: 20px 0;
+    transition: 0.3s all ease;
 }
 
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    margin: 0 auto;
+}
+
+.navbar-home {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    background: transparent;
+}
+
+.navbar-solid {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.logo-txt { color: #fff; font-weight: 700; font-size: 24px; }
+.logo-slogan { color: #ccc; font-size: 10px; letter-spacing: 1px; }
+.logo { color: #f26622; font-size: 28px; }
 .icon-wrapper{
     display: flex;
     font-size: 25px;
@@ -21,6 +40,7 @@
 .logo-container{
     display: flex;
     gap: 10px;
+    cursor: pointer;
 }
 .logo{
     color: #f26622;
@@ -62,6 +82,10 @@
     color: white;
 }
 
+.links, .icons div{
+    cursor: pointer;
+}
+
 .icons{
     display: flex;
     gap: 45px;
@@ -80,6 +104,7 @@
     align-items: center;
     background-color: #f2672286;
     padding: 10px 20px;
+    cursor: pointer;
 }
 
 .location-txt{
@@ -97,4 +122,5 @@
     background-color: #f2672286;
     padding: 10px 20px;
     color: white;
+    cursor: pointer;
 }

@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SizzlingDeals.css';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const SizzlingDeals = () => {
+  const navigate = useNavigate();
   const sliderRef = useRef(null);
 
   const slideLeft = () => {
@@ -49,7 +51,7 @@ const SizzlingDeals = () => {
       <div className="deals-header">
         <h2 className="deals-title">Sizzling Deals (At your Selected Restaurants)</h2>
         <div className="deals-controls">
-          <button className="view-all-btn">View All</button>
+          <button className="view-all-btn" onClick={()=> navigate('/offers')}>View All</button>
           <div className="arrow-btn" onClick={slideLeft}><FaArrowLeft /></div>
           <div className="arrow-btn" onClick={slideRight}><FaArrowRight /></div>
         </div>
