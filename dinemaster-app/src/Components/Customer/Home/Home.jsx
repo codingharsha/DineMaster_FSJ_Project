@@ -39,7 +39,7 @@ const Home = () => {
         </div>
 
         <div className="features-bar">
-          <div className="feature-item">
+          <div className="feature-item" onClick={()=> navigate('/reservation')}>
             <div className="feature-icon-box"><FaRegCalendarAlt /></div>
             <div className="feature-text">
               <h4>Table Booking</h4>

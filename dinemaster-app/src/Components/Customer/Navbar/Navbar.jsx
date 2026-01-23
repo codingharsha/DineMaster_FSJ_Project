@@ -33,7 +33,7 @@ const Navbar = ({ setShowLogin }) => {
             <div onClick={()=> navigate('/offers')}>Deals</div>
             <div onClick={() => navigate('/happiness-cards')}>Happiness Cards</div>
             <div>Restaurants</div>
-            <div>Takeaway</div>
+            <div onClick={()=> navigate('/order-online')}>Takeaway</div>
           </div>
 
           <div className="right-section">
