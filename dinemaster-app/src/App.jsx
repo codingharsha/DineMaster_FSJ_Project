@@ -15,7 +15,6 @@ import AdminDashboard from './Components/Admin/Dashboard/AdminDashboard';
 import MenuManagement from './Components/Admin/Menu/MenuManagement';
 import ReviewManagement from './Components/Admin/Reviews/ReviewManagement';
 
-const KitchenDisplay = () => <h1 style={{padding: '100px'}}>Kitchen Display System</h1>;
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
