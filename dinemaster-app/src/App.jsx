@@ -19,7 +19,7 @@ import ReviewManagement from './Components/Admin/Reviews/ReviewManagement';
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const location = useLocation();
-  const isAdminOrKitchen = location.pathname.startsWith('/admin') || location.pathname.startsWith('/kitchen');
+  const isAdminOrKitchen = location.pathname.startsWith('/admin');
 
   return (
     <>
