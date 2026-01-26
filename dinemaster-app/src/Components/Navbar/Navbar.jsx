@@ -9,7 +9,7 @@ import { FaFire } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 const Navbar = () => {
   return (
-    <div>
+    <div className='navbar'>
         <div className="navbar-container">
             <div className="logo-section">
                 <FaFire className='logo-img'/>
@@ -25,20 +25,20 @@ const Navbar = () => {
                     <div className="link">Happiness Cards</div>
                     <div className="link">Restaurants</div>
                 </div>
+            </div>
+
+            <div className="right-section">
                 <div className="buttons">
                     <IoSearch className='icon-wrapper'/>
                     <RiShoppingCart2Line className='icon-wrapper'/>
                 </div>
-            </div>
-
-            <div className="right-section">
                 <button className='location-button'>
-                    <FaLocationArrow className='icon-wrapper'/>
+                    <FaLocationArrow className='btn-icon-wrapper'/>
                     <div className="location-txt">Select Your Location</div>
-                    <MdOutlineKeyboardArrowDown className='icon-wrapper'/>
+                    <MdOutlineKeyboardArrowDown className='btn-icon-wrapper'/>
                 </button>
                 <button className="profile-button">
-                    <FaRegUser className='location-btn-icon-wrapper'/>
+                    <FaRegUser className='btn-icon-wrapper'/>
                     <div className="profile-txt">Log In</div>
                 </button>
                 <div className="sidebar-button">
