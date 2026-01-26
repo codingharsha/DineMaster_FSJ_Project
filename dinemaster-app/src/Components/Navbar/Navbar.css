@@ -1,7 +1,11 @@
 .navbar {
     width: 100%;
     padding: 20px 0;
-    background-color: darkgray;
+    top: 0;
+    left: 0;
+    background: transparent;
+    position: absolute;
+    z-index: 1000;
 }
 
 .navbar-container {
@@ -107,5 +111,9 @@
     background-color: #f2672286;
     padding: 10px 20px;
     color: white;
+    cursor: pointer;
+}
+
+.icon-wrapper{
     cursor: pointer;
 }
