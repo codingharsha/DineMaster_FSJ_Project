@@ -1,0 +1,19 @@
+.navbar-container{
+    display: flex;
+    gap: 80px;
+    width: 100%;
+    padding: 10px 30px;
+
+}
+
+.logo-section{
+    display: flex;
+}
+
+.mid-section{
+    display: flex;
+}
+
+.right-section{
+    display: flex;
+}
