@@ -1,59 +1,79 @@
-
-.navbar-container{
-    display: flex;
-    gap: 10px;
-    justify-content: space-around;
+.navbar {
     width: 100%;
-    padding: 10px 0px;
+    padding: 20px 0;
     background-color: darkgray;
-    height: auto;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    width: 85%;
+    margin: 0 auto;
 }
 
-.logo-section{
+
+.logo-txt { color: #fff; font-weight: 700; font-size: 24px; }
+.logo-slogan { color: #ccc; font-size: 10px; letter-spacing: 1px; }
+.logo { color: #f26622; font-size: 28px; }
+.icon-wrapper{
     display: flex;
-    gap: 0px;
-}
-
-.logo-txt{
-    display: flex;
-    flex-direction: column;
-    gap: 0px;
-}
-
-.logo-title{
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: #f26622;
-}
-
-.logo-img{
-    color: #f26622;
-    font-size: 30px;
-}
-
-.logo-slogan{
-    font-weight: 200;
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    line-height: 0;
+    font-size: 25px;
     color: white;
 }
 
+.logo-container{
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+}
+.logo{
+    color: #f26622;
+    font-size: 35px;
+}
 
-.links{
+
+.logo-txt{
+    font-size: 30px;
+    font-weight: 800;
+    color: #f26622;
+    line-height: 1;
+    letter-spacing: -2px;
+    
+}
+
+.logo-txt-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-slogan{
+    line-height: 0.5;
+    font-weight: 200;
+    font-size: 12px;
+    letter-spacing: 2.2px;
+    color: white;
+
+}
+
+.mid-section{
     display: flex;
     gap: 40px;
 }
 
-.buttons{
+.links{
     display: flex;
-    gap: 30px;
+    gap: 45px;
+    color: white;
 }
 
-.icon-wrapper{
-    font-size: 25px;
+.links, .icons div{
+    cursor: pointer;
+}
+
+.icons{
+    display: flex;
+    gap: 30px;
 }
 
 .right-section{
@@ -61,27 +81,31 @@
     gap: 30px;
     align-items: center;
 }
-
-.location-button{
+.location-btn{
     display: flex;
-    gap: 10px;
-    padding: 10px 20px;
-    align-items: center;
+    gap: 15px;
+    border-radius: 10px;
     border: none;
-    border-radius: 15px;
-    font-family: Poppins,sans-serif;
+    align-items: center;
+    background-color: #f2672286;
+    padding: 10px 20px;
+    cursor: pointer;
 }
 
-.profile-button{
-    display: flex;
-    gap: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 15px;
-    align-items: center;
+.location-txt{
+    color: white;
+    font-size: 14px;
     font-family: Poppins, sans-serif;
 }
 
-.btn-icon-wrapper{
-    font-size: 20px;
+.profile{
+    display: flex;
+    gap: 15px;
+    border: none;
+    border-radius: 10px;
+    align-items: center;
+    background-color: #f2672286;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
 }
