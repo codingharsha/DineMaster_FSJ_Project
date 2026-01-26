@@ -26,23 +26,23 @@ const Navbar = () => {
                     <div className="link">Restaurants</div>
                 </div>
                 <div className="buttons">
-                    <IoSearch className='button'/>
-                    <RiShoppingCart2Line className='button'/>
+                    <IoSearch className='icon-wrapper'/>
+                    <RiShoppingCart2Line className='icon-wrapper'/>
                 </div>
             </div>
 
             <div className="right-section">
                 <button className='location-button'>
-                    <FaLocationArrow className='button'/>
+                    <FaLocationArrow className='icon-wrapper'/>
                     <div className="location-txt">Select Your Location</div>
-                    <MdOutlineKeyboardArrowDown className='button'/>
+                    <MdOutlineKeyboardArrowDown className='icon-wrapper'/>
                 </button>
                 <button className="profile-button">
-                    <FaRegUser className='profile-button'/>
+                    <FaRegUser className='location-btn-icon-wrapper'/>
                     <div className="profile-txt">Log In</div>
                 </button>
                 <div className="sidebar-button">
-                    <RxHamburgerMenu className='hamburger-menu-button'/>
+                    <RxHamburgerMenu className='btn-icon-wrapper'/>
                 </div>
             </div>
         </div>

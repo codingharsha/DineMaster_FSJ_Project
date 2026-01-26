@@ -1,19 +1,93 @@
 .navbar-container{
     display: flex;
     gap: 80px;
-    width: 100%;
+    justify-content: space-between;
+    width: 85%;
     padding: 10px 30px;
-
+    background-color: darkgray;
+    height: auto;
+    align-items: center;
 }
 
 .logo-section{
     display: flex;
+    gap: 10px;
+}
+
+.logo-txt{
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.logo-title{
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #f26622;
+}
+
+.logo-img{
+    color: #f26622;
+    font-size: 35px;
+}
+
+.logo-slogan{
+    font-weight: 200;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    line-height: 0;
+    color: white;
 }
 
 .mid-section{
     display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.links{
+    display: flex;
+    gap: 30px;
+}
+
+.buttons{
+    display: flex;
+    gap: 30px;
+}
+
+.icon-wrapper{
+    font-size: 25px;
 }
 
 .right-section{
     display: flex;
+    gap: 30px;
+    align-items: center;
 }
+
+.location-button{
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+    align-items: center;
+    border: none;
+    border-radius: 15px;
+    font-family: Poppins,sans-serif;
+}
+
+.profile-button{
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    align-items: center;
+    font-family: Poppins, sans-serif;
+}
+
+.location-btn-icon-wrapper{
+    font-size: 16px;
+}
+
+.sidebar-button{}
