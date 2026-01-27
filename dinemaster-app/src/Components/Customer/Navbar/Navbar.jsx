@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css'
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { RiShoppingCart2Line } from "react-icons/ri";
@@ -8,6 +9,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
   const [showLocation, setShowLocation] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("Select Location");
   const dropdownRef = useRef(null);
@@ -27,7 +31,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className= 'navbar'>
+    <div className= {isHomePage ? 'navbar' : 'navbar navbar-solid'}>
         <div className="navbar-container">
           <div className="logo-container">
              <div className="icon-wrapper">
@@ -43,7 +47,7 @@ const Navbar = () => {
             <div >Deals</div>
             <div >Happiness Cards</div>
             <div>Restaurants</div>
-            <div>Takeaway</div>
+            <div onClick={() => navigate('/order-online')}>Takeaway</div>
           </div>
 
           <div className="right-section">

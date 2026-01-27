@@ -1,0 +1,120 @@
+.order-online {
+    width: 80%;
+    margin: auto;
+    padding-top: 100px;
+}
+
+.menu-header h1 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #262626;
+}
+
+.category-list {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+.category-list button {
+    padding: 10px 20px;
+    border: 1px solid #747474;
+    background: transparent;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.category-list button.active {
+    background-color: #f26622;
+    color: white;
+    border-color: #f26622;
+}
+
+.food-display-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.food-card {
+    width: 100%;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px #00000015;
+    transition: 0.3s;
+    animation: fadeIn 1s;
+}
+.food-card:hover { transform: translateY(-5px); }
+
+.food-card-img {
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.food-card-info { padding: 20px; }
+
+.food-card-name-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.food-card-name-rating p {
+    font-size: 20px;
+    font-weight: 500;
+}
+.food-card-desc {
+    color: #676767;
+    font-size: 12px;
+}
+.food-card-price {
+    color: #f26622;
+    font-size: 22px;
+    font-weight: 500;
+    margin: 10px 0px;
+}
+
+.floating-cart-bar {
+    position: fixed;
+    bottom: 30px; 
+    left: 50%;
+    transform: translateX(-50%); 
+    width: min(90%, 600px); 
+    background-color: #262626; 
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 2000;
+    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy animation */
+}
+
+.cart-summary p { margin: 0; font-size: 11px; color: #bbb; text-transform: uppercase; letter-spacing: 1px; }
+.cart-summary h3 { margin: 0; font-size: 20px; font-weight: 700; color: white; }
+
+.floating-cart-bar button {
+    background-color: #f26622;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.floating-cart-bar button:hover {
+    background-color: #fff;
+    color: #f26622;
+}
+
+@keyframes slideUp {
+    from { bottom: -100px; opacity: 0; }
+    to { bottom: 30px; opacity: 1; }
+}

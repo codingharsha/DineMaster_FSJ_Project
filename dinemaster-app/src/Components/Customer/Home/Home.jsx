@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import './Home.css'
 import HappinessCards from '../HappinessCards/HappinessCards';
 import Gallery from '../Gallery/Gallery'
@@ -13,6 +14,8 @@ import { TbCardsFilled } from "react-icons/tb";
 import { BiSolidOffer } from "react-icons/bi";
 
 const Home = () => {
+
+    const navigate = useNavigate();
   return (
     <div>
         <div className="hero-section">
@@ -42,7 +45,7 @@ const Home = () => {
                         <p>No More Waiting</p>
                     </div>
                 </div>
-                <div className="feature-item">
+                <div className="feature-item" onClick={()=> navigate('/order-online')}>
                     <div className="feature-icon-box"><FaMotorcycle /></div>
                     <div className="feature-text">
                         <h4>Takeaway</h4>

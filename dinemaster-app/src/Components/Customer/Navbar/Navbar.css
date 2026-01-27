@@ -8,6 +8,65 @@
     z-index: 1000;
 }
 
+.navbar-solid {
+    background-color: #fffbf7;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 15px 0px;
+}
+
+.navbar-solid .links div {
+    color: #262626 !important;
+    font-weight: 500;
+}
+
+.navbar-solid .right-section .icons .icon-wrapper, 
+.navbar-solid .right-section .hamburger {
+    color: #262626 !important;
+}
+
+.navbar-solid svg {
+    fill: currentColor;
+    color: #262626; 
+}
+
+.navbar-solid .logo-slogan {
+    color: #686868;
+}
+
+.navbar-solid .location-btn {
+    background-color: #f26622;
+}
+.navbar-solid .location-btn .location-txt,
+.navbar-solid .location-btn svg {
+    color: #ffffff !important; 
+}
+
+.navbar-solid .profile {
+    background-color: #f26622; 
+    border: 1px solid #f26622;
+}
+.navbar-solid .profile .profile-txt, 
+.navbar-solid .profile svg {
+    color: #ffffff !important; 
+}
+
+.navbar-solid .links div:hover {
+    color: #f26622 !important;
+}
+
+.navbar-solid .logo-container .icon-wrapper {
+    color: #f26622 !important; 
+}
+
+.navbar-solid .logo-container svg {
+    fill: #f26622 !important; 
+    color: #f26622 !important;
+}
+
+.navbar-solid .logo-txt {
+    color: #f26622 !important;
+}
+
 .navbar-container {
     display: flex;
     justify-content: space-between;
