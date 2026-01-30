@@ -1,11 +1,10 @@
 .cart {
-    margin-top: 100px; /* Space for fixed Navbar */
-    width: 80%; /* Consistent with other pages */
+    margin-top: 100px; 
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Table Headers & Rows */
 .cart-items-title {
     display: grid;
     grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
@@ -32,7 +31,6 @@
 }
 .cross:hover { color: red; transform: scale(1.1); }
 
-/* Bottom Section (Totals + Promo) */
 .cart-bottom {
     margin-top: 80px;
     display: flex;
@@ -40,7 +38,6 @@
     gap: max(12vw, 20px);
 }
 
-/* Cart Totals Box */
 .cart-total {
     flex: 1;
     display: flex;
@@ -57,7 +54,7 @@
 .cart-total button {
     border: none;
     color: white;
-    background-color: #f26622; /* Theme Orange */
+    background-color: #f26622; 
     width: max(15vw, 200px);
     padding: 12px 0px;
     border-radius: 4px;
@@ -67,7 +64,6 @@
 }
 .cart-total button:hover { background-color: #d95516; }
 
-/* Promo Code Box */
 .cart-promocode { flex: 1; }
 
 .cart-promocode p { color: #555; }

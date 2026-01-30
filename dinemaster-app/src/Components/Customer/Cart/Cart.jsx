@@ -5,14 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { FaTrash } from "react-icons/fa";
 
 const Cart = () => {
-  // 1. Get Tools from Context
   const { cartItems, food_list, removeFromCart, getTotalCartAmount } = useContext(StoreContext);
   const navigate = useNavigate();
 
   return (
     <div className='cart'>
       
-      {/* 2. CART ITEMS TABLE */}
       <div className="cart-items">
         <div className="cart-items-title">
           <p>Items</p>
@@ -26,7 +24,6 @@ const Cart = () => {
         <hr />
         
         {food_list.map((item, index) => {
-          // Only display if item is in cart
           if (cartItems[item._id] > 0) {
             return (
               <div key={index}>
@@ -47,7 +44,6 @@ const Cart = () => {
         })}
       </div>
 
-      {/* 3. CART TOTALS & PROMO CODE */}
       <div className="cart-bottom">
         
         <div className="cart-total">
@@ -60,7 +56,6 @@ const Cart = () => {
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              {/* Logic: Free delivery if cart is empty, else ₹40 */}
               <p>₹{getTotalCartAmount() === 0 ? 0 : 40}</p>
             </div>
             <hr />

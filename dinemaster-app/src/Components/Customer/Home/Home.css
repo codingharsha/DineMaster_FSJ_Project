@@ -1,3 +1,4 @@
+
 .hero-section{
     background-image: url('../../../assets/Images/premium_photo-1698500035173-fdea60f9294e.jpg');
     width: 100%;
@@ -25,7 +26,7 @@
 }
 
 .hero-content{
-    z-index: 2;
+    z-index: 100;
     text-align: center;
     margin-bottom: 40px;
 }
@@ -52,23 +53,72 @@
 .branch-selection {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: center;
+    position: relative; 
+    min-width: 200px;
+}
+
+.branch-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    user-select: none;
+}
+
+.arrow-down {
+    color: #f26622;
+    transition: transform 0.3s ease;
+}
+
+.arrow-down.rotate {
+    transform: rotate(180deg);
+}
+
+.hero-branch-list {
+    position: absolute;
+    top: 50px; 
+    left: -10px;
+    background: white;
+    width: 240px;
+    list-style: none;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    z-index: 100;
+    border: 1px solid #f0f0f0;
+    animation: fadeIn 0.2s ease-in-out;
+    z-index: 3;
+}
+
+.hero-branch-list li {
+    padding: 10px;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.hero-branch-list li:hover {
+    background-color: #fff5f0;
+    color: #f26622;
+    font-weight: 600;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .branch-label {
     font-size: 0.8rem;
     color: #888;
     margin-bottom: 2px;
-}
-
-.branch-value {
-    font-weight: 400;
-    font-size: 1.1rem;
-    color: #000;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
 }
 
 .reserve-btn {

@@ -1,0 +1,165 @@
+.deals-page {
+    width: 90%;
+    max-width: 1200px;
+    margin: 100px auto 50px auto;
+}
+
+.deals-header-main { margin-bottom: 40px; }
+.deals-header-main h1 { font-size: 32px; color: #262626; margin-bottom: 5px; }
+.deals-header-main p { color: #666; }
+
+.deals-section { margin-bottom: 50px; }
+
+.section-title {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.coupons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 25px;
+}
+
+.coupon-ticket {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    border: 1px solid #eee;
+    height: 160px;
+}
+
+.coupon-ticket:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.ticket-stub {
+    width: 100px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+}
+
+.theme-orange .ticket-stub { background: linear-gradient(135deg, #f26622, #ff8c55); }
+.theme-blue .ticket-stub   { background: linear-gradient(135deg, #00529b, #0077d4); }
+.theme-green .ticket-stub  { background: linear-gradient(135deg, #1a9f5c, #2ecc71); }
+.theme-special .ticket-stub{ background: linear-gradient(135deg, #8e44ad, #c0392b); }
+
+.stub-content {
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+
+.bank-logo {
+    width: 50px; height: 50px;
+    object-fit: contain;
+    background: white;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.stub-content span { font-weight: 700; letter-spacing: 1px; font-size: 12px; }
+
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 14px;
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
+.ticket-body {
+    flex-grow: 1;
+    padding: 20px 25px 20px 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ticket-info h3 { margin: 0; font-size: 20px; color: #262626; }
+.ticket-info p { margin: 8px 0 0 0; font-size: 13px; color: #777; line-height: 1.4; }
+
+.ticket-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.coupon-code-box {
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 16px;
+    color: #333;
+    background: #f5f5f5;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px dashed #ccc;
+}
+
+.copy-btn {
+    background: transparent;
+    border: none;
+    color: #f26622;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.copy-btn:hover {
+    background-color: #fff4f0;
+    color: #d95516;
+}
+
+.punch-hole-top {
+    position: absolute;
+    top: -10px;
+    left: 90px;
+    width: 20px;
+    height: 20px;
+    background-color: #fcfcfc;
+    border-radius: 50%;
+    box-shadow: inset 0 -2px 5px rgba(0,0,0,0.1);
+    z-index: 2;
+}
+
+.punch-hole-bottom {
+    position: absolute;
+    bottom: -10px;
+    left: 90px;
+    width: 20px;
+    height: 20px;
+    background-color: #fcfcfc;
+    border-radius: 50%;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 2;
+}
+
+.ticket-stub::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 15px;
+    bottom: 15px;
+    border-right: 2px dashed rgba(255,255,255,0.4);
+}

@@ -1,0 +1,21 @@
+.profile-page {
+    padding: 50px 10%;
+    min-height: 60vh;
+}
+.profile-container h1 { color: #f26622; margin-bottom: 20px; }
+.profile-details-placeholder {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 400px;
+}
+.edit-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #f26622;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

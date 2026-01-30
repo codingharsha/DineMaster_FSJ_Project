@@ -1,0 +1,21 @@
+.billing-layout { display: flex; gap: 30px; height: 80vh; }
+.order-selection { width: 30%; background: white; padding: 20px; border-radius: 8px; overflow-y: auto; }
+.billing-order-card { padding: 15px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+.billing-order-card:hover { background: #f9f9f9; }
+.billing-order-card.active { border-color: #f26622; background: #fff5f0; }
+.b-card-header { display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: bold; }
+.status-pill.unbilled { background: #ffebee; color: #c62828; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+.status-pill.billed { background: #e8f5e9; color: #2e7d32; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+
+.invoice-preview { width: 70%; display: flex; justify-content: center; background: #e0e0e0; padding: 20px; border-radius: 8px; }
+.invoice-paper { background: white; width: 400px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+.inv-header { text-align: center; margin-bottom: 20px; }
+.inv-items { width: 100%; border-collapse: collapse; margin: 20px 0; }
+.inv-items th { text-align: left; border-bottom: 2px solid #333; }
+.inv-items td { border-bottom: 1px solid #eee; padding: 8px 0; }
+.inv-summary .row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.inv-summary .total { font-size: 18px; font-weight: bold; color: #f26622; margin-top: 10px; }
+.inv-actions { margin-top: auto; display: flex; gap: 10px; }
+.print-btn, .save-btn { flex: 1; padding: 10px; border: none; cursor: pointer; border-radius: 4px; display: flex; align-items: center; justify-content: center; gap: 5px; color: white; }
+.print-btn { background: #333; }
+.save-btn { background: #4caf50; }

@@ -22,7 +22,7 @@ const FoodItem = ({ id, name, price, description, image, rating, time, type }) =
             </div>
             
             <div className="food-meta">
-                <span className={`type-badge ${type === 'Veg' ? 'veg' : 'non-veg'}`}>
+                <span className={`type-badge ₹{type === 'Veg' ? 'veg' : 'non-veg'}`}>
                     {type === 'Veg' ? '🟢 Veg' : '🔴 Non-Veg'}
                 </span>
                 <span className="time-badge">⏱ {time}</span>

@@ -1,23 +1,72 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import Navbar from './Components/Customer/Navbar/Navbar'
 import Home from './Components/Customer/Home/Home';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom';
 import OrderOnline from './Components/Customer/OrderOnline/OrderOnline';
 import PlaceOrder from './Components/Customer/PlaceOrder/PlaceOrder';
 import Cart from './Components/Customer/Cart/Cart';
+import Deals from './Components/Customer/Deals/Deals';
+import HappinessCardsPage from './Components/Customer/HappinessCardsPage/HappinessCardsPage';
+import Restaurants from './Components/Customer/Restaurants/Restaurants';
+import LoginPopup from './Components/LoginPopup/LoginPopup';
+import Profile from './Components/Customer/Profile/Profile';
+import TableReservation from './Components/Customer/TableReservation/TableReservation';
+import MyOrders from './Components/Customer/MyOrders/MyOrders';
+import TrackOrder from './Components/Customer/TrackOrder/TrackOrder';
+import { StoreContext } from './Context/StoreContext';
+
+import KitchenDashboard from './Components/Kitchen/KitchenDashboard/KitchenDashboard';
+import KitchenNavbar from './Components/Kitchen/KitchenNavbar/KitchenNavbar';
+import AdminDashboard from './Components/Admin/AdminDashboard/AdminDashboard';
+import AdminBilling from './Components/Admin/AdminBilling/AdminBilling';
+import AdminStaff from './Components/Admin/AdminStaff/AdminStaff';
+import AdminSettings from './Components/Admin/AdminSettings/AdminSettings';
+import AdminCustomers from './Components/Admin/AdminCustomers/AdminCustomers';
+import AdminReviews from './Components/Admin/AdminReviews/AdminReviews';
 const App = () => {
+
+  const [showLogin, setShowLogin] = useState(false);
+  const {userRole} = useContext(StoreContext);
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
   return (
-    <div>
-      <Navbar />
+    <>
+      {showLogin ? <LoginPopup setShowLogin={setShowLogin}/> : <></>}
+    
+      <div className='app'>
+        {isAdminRoute ? (
+          <></>
+        ):
+        userRole === "kitchen" ? (
+          <KitchenNavbar />
+        ) : (
+          <Navbar setShowLogin={setShowLogin} />
+        )}
 
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/order-online' element ={<OrderOnline />} />
-        <Route path='/order' element ={<PlaceOrder />} />
-        <Route path='/cart' element = {<Cart />} />
-      </Routes>
 
-    </div>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/order-online' element ={<OrderOnline />} />
+          <Route path='/order' element ={<PlaceOrder />} />
+          <Route path='/cart' element = {<Cart />} />
+          <Route path='/offers' element = {<Deals />} />
+          <Route path='/happiness-cards' element={<HappinessCardsPage />} />
+          <Route path='/restaurants' element={<Restaurants />} />
+          <Route path='/myprofile' element={<Profile />} />
+          <Route path='/book-table' element={<TableReservation />} />
+          <Route path='/track-order/:orderId' element={<TrackOrder />} />
+
+          <Route path='/kitchen' element = {<KitchenDashboard />} />
+          <Route path='/admin/dashboard' element = {<AdminDashboard />} />
+          <Route path='/admin/billing' element={<AdminBilling />} />
+          <Route path='/admin/staff' element={<AdminStaff />} />
+          <Route path='/admin/settings' element={<AdminSettings />} />
+          <Route path='/admin/customers' element={<AdminCustomers />} />
+          <Route path='/admin/reviews' element={<AdminReviews />} />
+          <Route path='/myorders' element={<MyOrders />} />
+        </Routes>
+      </div>
+    </>
   )
 }
 

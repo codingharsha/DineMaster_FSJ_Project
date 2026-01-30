@@ -34,12 +34,11 @@
 
 .food-item-desc { color: #888; font-size: 12px; line-height: 1.4; margin-bottom: 15px; flex-grow: 1; }
 
-/* --- NEW ACTION ROW STYLES --- */
 .food-item-action {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: auto; /* Pushes to bottom */
+    margin-top: auto; 
     padding: 20px auto;
 }
 
@@ -50,10 +49,9 @@
     margin: 0;
 }
 
-/* Simple "ADD" Text Button */
 .add-btn-text {
     background-color: white;
-    color: #24963f; /* Green Text */
+    color: #24963f; 
     border: 1px solid #dcdcdc;
     padding: 8px 25px;
     border-radius: 8px;
@@ -69,7 +67,6 @@
     transform: scale(1.05);
 }
 
-/* The Counter */
 .food-item-counter {
     display: flex;
     align-items: center;

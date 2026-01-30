@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Home.css'
 import HappinessCards from '../HappinessCards/HappinessCards';
@@ -14,6 +14,16 @@ import { TbCardsFilled } from "react-icons/tb";
 import { BiSolidOffer } from "react-icons/bi";
 
 const Home = () => {
+    const [selectedBranch, setSelectedBranch] = useState("TownHall, Coimbatore");
+    const [showBranchList, setShowBranchList] = useState(false);
+
+    const locations = [
+        "TownHall, Coimbatore",
+        "Gandhipuram, Coimbatore", 
+        "Anna Nagar, Chennai",
+        "Koramangala, Bangalore", 
+        "MG Road, Kochi"
+    ];
 
     const navigate = useNavigate();
   return (
@@ -27,18 +37,32 @@ const Home = () => {
                 <div className="booking-widget">
                     <div className="branch-selection">
                         <span className='branch-label'>Select Branch</span>
-                        <div className="branch-value">
-                            TownHall, Coimbatore <IoIosArrowDown className='arrow-down'/>
+                        <div 
+                                className="branch-value" 
+                                onClick={() => setShowBranchList(!showBranchList)}
+                            >
+                                {selectedBranch} 
+                                <IoIosArrowDown className={`arrow-down ${showBranchList ? 'rotate' : ''}`}/>
+                            </div>
+
+                            {showBranchList && (
+                                <ul className="hero-branch-list">
+                                    {locations.map((loc, index) => (
+                                        <li key={index} onClick={() => { setSelectedBranch(loc); setShowBranchList(false); }}>
+                                            📍 {loc}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
-                    </div>
-                    <button className='reserve-btn'>
+                    <button className='reserve-btn' onClick={()=> navigate('/book-table')}>
                         Reserve a Table <MdOutlineRestaurantMenu/>
                     </button>
                 </div>
             </div>
 
             <div className="features-bar">
-                <div className="feature-item">
+                <div className="feature-item" onClick={() => navigate('/book-table')}>
                     <div className="feature-icon-box"><FaRegCalendarAlt /></div>
                     <div className="feature-text">
                         <h4>Table Booking</h4>
@@ -52,14 +76,14 @@ const Home = () => {
                         <p>Order Online</p>
                     </div>
                 </div>
-                <div className="feature-item">
+                <div className="feature-item" onClick={()=> navigate('/happiness-cards')}>
                     <div className="feature-icon-box"><TbCardsFilled /></div>
                     <div className="feature-text">
-                        <h4>Offer Cards</h4>
+                        <h4>Happiness Cards</h4>
                         <p>All in One</p>
                     </div>
                 </div>
-                <div className="feature-item">
+                <div className="feature-item" onClick={()=> navigate('/offers')}>
                     <div className="feature-icon-box"><BiSolidOffer /></div>
                     <div className="feature-text">
                         <h4>Offers & Deals</h4>

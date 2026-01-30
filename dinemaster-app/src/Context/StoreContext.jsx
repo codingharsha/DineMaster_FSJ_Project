@@ -6,6 +6,21 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
 
   const [cartItems, setCartItems] = useState({});
+    const [token, setToken] = useState(() => localStorage.getItem("token") || "");
+    const [userName, setUserName] = useState(() => localStorage.getItem("userName") || "");
+    const [userRole, setUserRole] = useState(() => localStorage.getItem("userRole") || "customer");
+    const [kitchenTab, setKitchenTab] = useState("live");
+    const [bookings, setBookings] = useState(() => {
+        const saved = localStorage.getItem("bookings");
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    const addBooking = (bookingDetails) => {
+        const newBooking = { ...bookingDetails, id: "BKG" + Date.now(), status: "Confirmed" };
+        const updatedBookings = [newBooking, ...bookings];
+        setBookings(updatedBookings);
+        localStorage.setItem("bookings", JSON.stringify(updatedBookings));
+    };
 
   const addToCart = (itemId) => {
     if(!cartItems[itemId]){
@@ -37,7 +52,17 @@ const StoreContextProvider = (props) => {
     cartItems,
     addToCart,
     removeFromCart,
-    getTotalCartAmount
+    getTotalCartAmount,
+    token,
+    setToken,
+    userName,     
+    setUserName,
+    userRole,
+    setUserRole,
+    kitchenTab,
+    setKitchenTab,
+    bookings,
+    addBooking
   };
 
   return (
