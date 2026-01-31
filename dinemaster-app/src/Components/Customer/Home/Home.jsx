@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import './Home.css'
+import './Home.scss'
 import HappinessCards from '../HappinessCards/HappinessCards';
 import Gallery from '../Gallery/Gallery'
 import SizzlingDeals from '../SizzlingDeals/SizzlingDeals';
@@ -12,6 +12,7 @@ import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { FaRegCalendarAlt, FaMotorcycle } from "react-icons/fa";
 import { TbCardsFilled } from "react-icons/tb";
 import { BiSolidOffer } from "react-icons/bi";
+import GalleryPage from '../GalleryPage/GalleryPage';
 
 const Home = () => {
     const [selectedBranch, setSelectedBranch] = useState("TownHall, Coimbatore");

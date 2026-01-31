@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AdminBilling.css';
+import './AdminBilling.scss';
 import AdminSidebar from '../AdminSidebar/AdminSidebar';
 import { FaPrint, FaFileInvoice, FaCheckCircle } from 'react-icons/fa';
 

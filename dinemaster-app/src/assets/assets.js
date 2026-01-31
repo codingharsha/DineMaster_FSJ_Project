@@ -90,7 +90,7 @@ export const food_list = [
     {
         _id: "8",
         name: "Veg Grilled Sandwich",
-        image: "https://images.unsplash.com/photo-1553909489-cd47e3b208dc?w=500",
+        image: "https://images.unsplash.com/photo-1730309483398-5b153e6c8a2c?q=80&w=1025&auto=format&fit=crop",
         price: 120,
         description: "Loaded with cheese, corn, capsicum, and grilled to perfection.",
         category: "Sandwich",
@@ -271,7 +271,7 @@ export const locations_list = [
         address: "12, Marine Drive, Nariman Point, Mumbai, 400021",
         image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600",
         rating: 4.8,
-        coordinates: { top: "42%", left: "68%" } // CSS Position on Map
+        coordinates: { top: "42%", left: "68%" } 
     },
     {
         id: 2,
@@ -324,12 +324,6 @@ export const locations_list = [
         coordinates: { top: "27%", left: "49%" }
     }
 ];
-
-// ... (Your existing food_list, menu_list, etc. remain here) ...
-
-/* =========================================
-   KITCHEN DASHBOARD MOCK DATA
-   ========================================= */
 
 export const kitchen_active_orders = [
     {

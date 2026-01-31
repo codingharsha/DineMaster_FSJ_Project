@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AdminStaff.css';
+import './AdminStaff.scss';
 import AdminSidebar from '../AdminSidebar/AdminSidebar';
 import { FaUserPlus, FaTrophy, FaExclamationTriangle, FaEye, FaCalendarCheck } from 'react-icons/fa';
 import { admin_staff_data } from '../../../assets/assets';

@@ -17,12 +17,15 @@ import { StoreContext } from './Context/StoreContext';
 
 import KitchenDashboard from './Components/Kitchen/KitchenDashboard/KitchenDashboard';
 import KitchenNavbar from './Components/Kitchen/KitchenNavbar/KitchenNavbar';
+import AdminSidebar from './Components/Admin/AdminSidebar/AdminSidebar'; 
 import AdminDashboard from './Components/Admin/AdminDashboard/AdminDashboard';
 import AdminBilling from './Components/Admin/AdminBilling/AdminBilling';
 import AdminStaff from './Components/Admin/AdminStaff/AdminStaff';
 import AdminSettings from './Components/Admin/AdminSettings/AdminSettings';
 import AdminCustomers from './Components/Admin/AdminCustomers/AdminCustomers';
 import AdminReviews from './Components/Admin/AdminReviews/AdminReviews';
+import AdminMenuInventory from './Components/Admin/AdminMenuInventory/AdminMenuInventory';
+import GalleryPage from './Components/Customer/GalleryPage/GalleryPage';
 const App = () => {
 
   const [showLogin, setShowLogin] = useState(false);
@@ -34,6 +37,7 @@ const App = () => {
       {showLogin ? <LoginPopup setShowLogin={setShowLogin}/> : <></>}
     
       <div className='app'>
+        {isAdminRoute && <AdminSidebar />}
         {isAdminRoute ? (
           <></>
         ):
@@ -55,6 +59,8 @@ const App = () => {
           <Route path='/myprofile' element={<Profile />} />
           <Route path='/book-table' element={<TableReservation />} />
           <Route path='/track-order/:orderId' element={<TrackOrder />} />
+          <Route path='/myorders' element={<MyOrders />} />
+          <Route path='/gallery' element ={<GalleryPage />}/>
 
           <Route path='/kitchen' element = {<KitchenDashboard />} />
           <Route path='/admin/dashboard' element = {<AdminDashboard />} />
@@ -63,7 +69,7 @@ const App = () => {
           <Route path='/admin/settings' element={<AdminSettings />} />
           <Route path='/admin/customers' element={<AdminCustomers />} />
           <Route path='/admin/reviews' element={<AdminReviews />} />
-          <Route path='/myorders' element={<MyOrders />} />
+          <Route path='/admin/inventory' element={<AdminMenuInventory />} />
         </Routes>
       </div>
     </>

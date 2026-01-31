@@ -1,0 +1,114 @@
+@import '../../../variables.scss';
+
+.food-item {
+    width: 100%;
+    margin: auto;
+    border-radius: 16px;
+    box-shadow: 0px 4px 15px #00000010;
+    transition: 0.3s;
+    background-color: $white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    &:hover { 
+        transform: translateY(-5px); 
+        box-shadow: 0px 8px 20px #00000020; 
+    }
+}
+
+.food-item-img-container {
+    position: relative;
+    height: 180px;
+    width: 100%;
+}
+.food-item-image { width: 100%; height: 100%; object-fit: cover; }
+
+.food-item-info { padding: 15px; display: flex; flex-direction: column; flex: 1; }
+
+.food-item-name-rating { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 8px;
+
+    p { font-size: 17px; font-weight: 700; margin: 0; color: #333; }
+}
+
+.rating-badge { 
+    background-color: #24963f; 
+    color: $white; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    font-size: 11px; 
+    display: flex; 
+    align-items: center; 
+    gap: 4px; 
+}
+.star-icon { font-size: 9px; }
+
+.food-meta { display: flex; gap: 10px; margin-bottom: 10px; }
+
+.type-badge, .time-badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+.type-badge.veg { border: 1px solid #24963f; color: #24963f; background: #edffef; }
+.type-badge.non-veg { border: 1px solid #d92626; color: #d92626; background: #ffebeb; }
+.time-badge { background: #f5f5f5; color: #666; }
+
+.food-item-desc { color: #888; font-size: 12px; line-height: 1.4; margin-bottom: 15px; flex-grow: 1; }
+
+.food-item-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; 
+    padding: 20px auto;
+}
+
+.food-item-price {
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.add-btn-text {
+    background-color: $white;
+    color: #24963f; 
+    border: 1px solid #dcdcdc;
+    padding: 8px 25px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.05);
+    transition: 0.2s;
+
+    &:hover {
+        background-color: #f0fff4;
+        border-color: #24963f;
+        transform: scale(1.05);
+    }
+}
+
+.food-item-counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: $primary-color; 
+    padding: 6px 10px;
+    border-radius: 8px;
+    
+    p { font-weight: 600; color: $white; margin: 0; font-size: 14px; min-width: 15px; text-align: center; }
+}
+
+.counter-btn {
+    width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 10px;
+    transition: 0.2s;
+
+    &.remove { color: $white; border: 1px solid #555; }
+    &.add { background-color: #24963f; color: $white; }
+}

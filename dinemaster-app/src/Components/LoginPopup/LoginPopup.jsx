@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginPopup.css';
+import './LoginPopup.scss';
 import { StoreContext } from '../../Context/StoreContext';
 import { FaMobileAlt, FaLock, FaUser, FaTimes } from "react-icons/fa"; 
 

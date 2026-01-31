@@ -1,5 +1,5 @@
 import React from 'react';
-import './Deals.css';
+import './Deals.scss';
 import { general_coupons, bank_offers, payment_offers } from '../../../assets/assets';
 import { FaCopy, FaPercentage, FaGift } from "react-icons/fa";
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import './HappinessCardsPage.css';
+import './HappinessCardsPage.scss';
 import { gift_cards } from '../../../assets/assets'; 
 import { FaWallet, FaPlusCircle, FaGift, FaHistory, FaCheckCircle, FaUtensils, FaFire } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6"; 

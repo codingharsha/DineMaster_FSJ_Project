@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AdminCustomers.css';
+import './AdminCustomers.scss';
 import AdminSidebar from '../AdminSidebar/AdminSidebar';
 import { FaCrown, FaBan, FaGift, FaSearch } from 'react-icons/fa';
 import { admin_customer_data } from '../../../assets/assets';
@@ -16,9 +16,24 @@ const AdminCustomers = () => {
         <div className="admin-container">
             <AdminSidebar />
             <div className="admin-content">
-                <header className="admin-header">
-                    <h1>💎 Customer Loyalty & CRM</h1>
-                </header>
+                <div className="admin-header">
+                    <h1>Customer Insights & Engagement</h1>
+                    <p>Manage loyalty tiers and view traffic stats.</p>
+                </div>
+                <div className="crm-stats-row">
+                    <div className="crm-stat-box">
+                        <h3>1,240</h3>
+                        <p>Total Customers</p>
+                    </div>
+                    <div className="crm-stat-box">
+                        <h3>85%</h3>
+                        <p>Returning Rate</p>
+                    </div>
+                    <div className="crm-stat-box">
+                        <h3>45</h3>
+                        <p>New this Month</p>
+                    </div>
+                </div>
 
                 <div className="crm-stats">
                     <div className="crm-card platinum">

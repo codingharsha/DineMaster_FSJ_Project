@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import './MyOrders.css';
+import './MyOrders.scss';
 import { StoreContext } from '../../../Context/StoreContext';
 import { useNavigate } from 'react-router-dom';
 import { FaBoxOpen, FaCircle, FaChair, FaCalendarAlt, FaClock } from 'react-icons/fa';

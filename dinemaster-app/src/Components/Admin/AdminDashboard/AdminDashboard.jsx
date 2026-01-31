@@ -1,5 +1,5 @@
 import React from 'react';
-import './AdminDashboard.css';
+import './AdminDashboard.scss';
 import AdminSidebar from '../AdminSidebar/AdminSidebar';
 import { FaWallet, FaShoppingCart, FaUserFriends, FaArrowUp, FaStar, FaCircle, FaClock, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { MdOutlineRestaurantMenu, MdDeliveryDining } from "react-icons/md";

@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import './AdminSidebar.css';
+import './AdminSidebar.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaChartLine, FaFileInvoiceDollar, FaFire, FaUsersCog, FaCogs, FaSignOutAlt, FaUsers, FaBullhorn } from 'react-icons/fa';
+import { FaChartLine, FaFileInvoiceDollar, FaFire, FaUsersCog, FaCogs, FaSignOutAlt, FaUsers, FaBullhorn, FaUtensils } from 'react-icons/fa';
 import { StoreContext } from '../../../Context/StoreContext';
 
 const AdminSidebar = () => {
     const { setToken, setUserName, setUserRole } = useContext(StoreContext);
   const navigate = useNavigate();
 
-  const logout = () => {
+  const handleLogout = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("userRole");
       localStorage.removeItem("userName");
@@ -38,6 +38,10 @@ const AdminSidebar = () => {
             <NavLink to="/admin/billing" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
                 <FaFileInvoiceDollar /> Billing & Invoices
             </NavLink>
+
+            <NavLink to="/admin/inventory" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
+                <FaUtensils /> Menu & Inventory
+            </NavLink>
             
             <NavLink to="/admin/staff" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
                 <FaUsersCog /> Staff & Payroll
@@ -57,7 +61,7 @@ const AdminSidebar = () => {
         </div>
 
         <div className="admin-footer">
-            <button className="admin-logout" onClick={() => {logout}}>
+            <button className="admin-logout" onClick={handleLogout}>
                 <FaSignOutAlt /> Logout
             </button>
         </div>

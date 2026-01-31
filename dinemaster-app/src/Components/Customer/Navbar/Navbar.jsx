@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './Navbar.css';
+import './Navbar.scss';
 import { MdOutlineKeyboardArrowDown, MdLogout } from "react-icons/md";
 import { RiShoppingCart2Line, RiShoppingBag3Line, RiFileList3Line, RiCustomerService2Line } from "react-icons/ri";
 import { FaFire, FaTimes, FaRegUser, FaLocationArrow, FaCrosshairs } from "react-icons/fa"; 

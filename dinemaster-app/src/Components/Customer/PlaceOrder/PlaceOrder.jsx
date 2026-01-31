@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import './PlaceOrder.css';
+import './PlaceOrder.scss';
 import { StoreContext } from '../../../Context/StoreContext';
 import { FaCreditCard, FaGift, FaMoneyBillWave } from "react-icons/fa";
 

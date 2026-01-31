@@ -1,27 +1,19 @@
 import React, { useState, useContext, useMemo } from 'react'; 
-import './KitchenDashboard.css';
+import './KitchenDashboard.scss';
 import { StoreContext } from '../../../Context/StoreContext';
 import { FaUtensils, FaMotorcycle, FaShoppingBag, FaClock, FaCheck, FaTimes, FaBell, FaSearch, FaToggleOn, FaToggleOff, FaFilter } from "react-icons/fa";
-
-// Import Data
 import { kitchen_active_orders, kitchen_history_data } from '../../../assets/assets';
 
 const KitchenDashboard = () => {
 
   const { kitchenTab, food_list } = useContext(StoreContext);
-
-  // 1. STATE MANAGEMENT
-  const [orders, setOrders] = useState(kitchen_active_orders); // Use imported data
+  const [orders, setOrders] = useState(kitchen_active_orders); 
   const [inventory, setInventory] = useState(food_list);
   const [orderFilter, setOrderFilter] = useState("All");
-
-  // Modal State
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showAcceptModal, setShowAcceptModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [liveSubTab, setLiveSubTab] = useState("Incoming");
-
-  // --- HELPER FUNCTIONS ---
   const getSourceIcon = (source) => {
       if(source === "Dine-in") return <FaUtensils />;
       if(source === "Delivery") return <FaMotorcycle />;
@@ -30,7 +22,6 @@ const KitchenDashboard = () => {
 
   const simulateNewOrder = () => {
       alert("DING! New Order Received!");
-      // Logic to add random order can be added here
   };
 
   const toggleStock = (id) => {
@@ -38,16 +29,12 @@ const KitchenDashboard = () => {
           item._id === id ? { ...item, available: !item.available } : item 
       ));
   };
-
-  // --- FILTER LOGIC (Memoized) ---
   const filteredOrders = useMemo(() => {
       if (orderFilter === "All") return orders;
       if (orderFilter === "Dine-in") return orders.filter(o => o.source === "Dine-in");
       if (orderFilter === "Online") return orders.filter(o => o.source === "Delivery" || o.source === "Takeaway");
       return orders;
   }, [orders, orderFilter]);
-
-  // --- ACTION HANDLERS ---
   const handleAcceptClick = (order) => { setSelectedOrder(order); setShowAcceptModal(true); };
   const handleRejectClick = (order) => { setSelectedOrder(order); setShowRejectModal(true); };
   
@@ -124,7 +111,6 @@ const KitchenDashboard = () => {
                           <div className="items-list">
                               {order.items.map((item, index) => (
                                   <div key={index} className="order-item" onClick={(e) => {
-                                      // Visual toggle for "bumping" items
                                       e.currentTarget.classList.toggle('bumped');
                                   }}>
                                       {order.status !== 'Pending' && <span className="checkbox-circle"></span>}

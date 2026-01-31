@@ -1,8 +1,11 @@
 import React from 'react';
-import './Gallery.css';
+import { useNavigate } from 'react-router-dom';
+import './Gallery.scss';
 import { FaArrowRight } from "react-icons/fa6";
 
 const Gallery = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="gallery-section">
       <h2 className="section-header">Gallery</h2>
@@ -23,7 +26,7 @@ const Gallery = () => {
             Check Out Our <br /> Precious Moments
           </h2>
           
-          <button className="gallery-btn">
+          <button className="gallery-btn" onClick={() => navigate('/gallery')}>
             DineMaster Gallery <FaArrowRight />
           </button>
         </div>

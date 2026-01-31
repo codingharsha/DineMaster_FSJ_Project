@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './Profile.css';
+import './Profile.scss';
 import { StoreContext } from '../../../Context/StoreContext';
 
 const Profile = () => {

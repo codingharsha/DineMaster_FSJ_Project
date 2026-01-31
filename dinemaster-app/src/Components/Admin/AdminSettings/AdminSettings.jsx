@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AdminSettings.css';
+import './AdminSettings.scss';
 import AdminSidebar from '../AdminSidebar/AdminSidebar';
 import { FaSave, FaStore, FaClock, FaPercentage, FaRupeeSign } from 'react-icons/fa';
 

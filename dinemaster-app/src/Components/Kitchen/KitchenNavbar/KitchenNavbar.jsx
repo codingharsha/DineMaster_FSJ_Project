@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './KitchenNavbar.css';
+import './KitchenNavbar.scss';
 import { StoreContext } from '../../../Context/StoreContext';
 import { FaFire, FaHistory, FaBoxOpen, FaSignOutAlt, FaClipboardList, FaUserTie } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';

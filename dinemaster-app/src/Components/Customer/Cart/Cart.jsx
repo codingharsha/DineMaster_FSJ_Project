@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './Cart.css';
+import './Cart.scss';
 import { StoreContext } from '../../../Context/StoreContext';
 import { useNavigate } from 'react-router-dom';
 import { FaTrash } from "react-icons/fa";
@@ -71,7 +71,7 @@ const Cart = () => {
           <div>
             <p>Have a coupon? Enter it here</p> 
             <div className='cart-promocode-input'>
-              <input type="text" placeholder='Coupon Code' /> {/* Changed Placeholder */}
+              <input type="text" placeholder='Coupon Code' /> 
               <button>Apply</button>
             </div>
           </div>

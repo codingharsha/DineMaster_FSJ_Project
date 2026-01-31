@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Restaurants.css';
+import './Restaurants.scss';
 import { locations_list } from '../../../assets/assets';
 import { FaMapMarkerAlt, FaStar, FaPhoneAlt, FaDirections, FaSearch } from "react-icons/fa";
 

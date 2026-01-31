@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import './TableReservation.css';
+import './TableReservation.scss';
 import { FaUserFriends, FaCalendarAlt, FaClock, FaCheckCircle, FaUtensils, FaChair } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../../Context/StoreContext';

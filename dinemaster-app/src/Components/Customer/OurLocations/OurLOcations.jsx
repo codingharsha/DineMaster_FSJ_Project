@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import './OurLocations.css';
+import './OurLocations.scss';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const OurLocations = () => {
@@ -17,7 +17,7 @@ const OurLocations = () => {
     {
       id: 1,
       name: "Chennai",
-      imgUrl: "https://images.unsplash.com/photo-1582510003544-4fe00b708bd9?q=80&w=600&auto=format&fit=crop"
+      imgUrl: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1170&auto=format&fit=crop"
     },
     {
       id: 2,
@@ -32,12 +32,12 @@ const OurLocations = () => {
     {
       id: 4,
       name: "Delhi",
-      imgUrl: "https://images.unsplash.com/photo-1587474265402-9e6b2d60ddce?q=80&w=600&auto=format&fit=crop"
+      imgUrl: "https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1170&auto=format&fit=crop"
     },
     {
       id: 5,
       name: "Kolkata",
-      imgUrl: "https://images.unsplash.com/photo-1558431382-27e30314225d?q=80&w=600&auto=format&fit=crop"
+      imgUrl: "https://images.unsplash.com/photo-1571679654681-ba01b9e1e117?q=80&w=1074&auto=format&fit=crop"
     }
   ];
 

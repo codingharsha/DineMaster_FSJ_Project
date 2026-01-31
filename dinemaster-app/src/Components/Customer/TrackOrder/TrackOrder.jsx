@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import './TrackOrder.css';
+import './TrackOrder.scss';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../../Context/StoreContext';
 import { FaCheckCircle, FaMapMarkerAlt, FaMotorcycle, FaUtensils, FaClipboardCheck } from 'react-icons/fa';

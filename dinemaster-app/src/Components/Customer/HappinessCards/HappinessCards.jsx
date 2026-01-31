@@ -1,5 +1,5 @@
 import React , {useRef} from 'react'
-import './HappinessCards.css'
+import './HappinessCards.scss'
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
@@ -72,7 +72,7 @@ const HappinessCards = () => {
         <div className="cards-slider" ref={sliderRef}>
             {cards.map((card) => (
                 <div className="card-item" key={card.id}>
-                    <div className="card-image" style={{backgroundImage: `url(₹{card.imgUrl})`}}>
+                    <div className="card-image" style={{backgroundImage: `url(${card.imgUrl})`}}>
                         <div className="card-tag">{card.tag}</div>
                         <div className="img-overlay" style={{backgroundColor: card.color, opacity: 0.3}}></div>
                     </div>

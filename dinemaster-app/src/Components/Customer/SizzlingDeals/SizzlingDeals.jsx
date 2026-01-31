@@ -1,74 +1,76 @@
-import React, { useRef } from 'react';
-import './SizzlingDeals.css';
+import React from 'react';
+import './SizzlingDeals.scss';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { FaArrowRight, FaTicketAlt } from 'react-icons/fa';
 
 const SizzlingDeals = () => {
-    
     const navigate = useNavigate();
-    const sliderRef = useRef(null);
-
-    const slideLeft = () => {
-        if(sliderRef.current) sliderRef.current.scrollBy({left: -400, behavior: 'smooth'});
-    };
-
-    const slideRight = () => {
-        if(sliderRef.current) sliderRef.current.scrollBy({left: 400, behavior: 'smooth'});
-    };
 
     const deals = [
         {
             id: 1,
-            title: "New Year Bonanza | Dine In 4 at an exclusive price",
-            img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop", 
-            desc: "Enjoy the Dine Master's New Year Bonanza and indulge in an irresistible deal for a table of 4 just @ Rs.2799",
-            btnText: "Reserve a Table",
-            link: "/book-table"
+            title: "New Year Bonanza",
+            sub: "Table of 4 @ ₹2799",
+            desc: "Includes Starters, Mains & Dessert for 4 people.",
+            code: "NY2026",
+            theme: "theme-orange",
+            discount: "Flat Price"
         },
         {
             id: 2,
-            title: "Cheers Unlimited | Get Unlimited Drinks @ Limited Price",
-            img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=800&auto=format&fit=crop",
-            desc: "Get 30+ varieties of drinks at @249 and to add more joy.....It's Unlimited!",
-            btnText: "Reserve a Table",
-            link: "/book-table"
+            title: "Cheers Unlimited",
+            sub: "Unlimited Drinks @ ₹2499",
+            desc: "Get unlimited mocktails & cocktails for 2 hours.",
+            code: "CHEERS30",
+            theme: "theme-blue",
+            discount: "Unlimited"
         },
         {
             id: 3,
-            title: "Family Feast | Flat 25% Off on Buffet",
-            img: "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=800&auto=format&fit=crop", 
-            desc: "Bring your family for a lavish lunch buffet and enjoy flat 25% discount this weekend.",
-            btnText: "Reserve a Table",
-            link: "/book-table"
+            title: "Family Feast",
+            sub: "Buffet Special",
+            desc: "Flat 25% Off on Lunch Buffet this weekend.",
+            code: "FAM25",
+            theme: "theme-green",
+            discount: "25% OFF"
         }
     ];
 
     return (
-        <div className="sizzling-deals-container">
-            
-            <div className="deals-header-row">
-                <h2>Sizzling Deals (At your Selected Restaurants)</h2>
-                <div className="deals-controls">
-                    <button className="view-all-text">View All</button>
-                    <button className="arrow-circle" onClick={slideLeft}><FaArrowLeft /></button>
-                    <button className="arrow-circle" onClick={slideRight}><FaArrowRight /></button>
+        <div className="sizzling-section">
+            <div className="section-header">
+                <div>
+                    <span className="sub-header">Exclusive Offers</span>
+                    <h2 className="main-header">Sizzling Deals</h2>
                 </div>
+                <button className="view-all-btn" onClick={() => navigate('/offers')}>
+                    View All Deals <FaArrowRight />
+                </button>
             </div>
 
-            <div className="deals-slider" ref={sliderRef}>
+            <div className="deals-grid">
                 {deals.map((deal) => (
-                    <div className="deal-card" key={deal.id}>
-                        <h3 className="deal-title">{deal.title}</h3>
-                        
-                        <div className="deal-img-wrapper">
-                            <img src={deal.img} alt="Deal Banner" />
+                    <div className={`coupon-ticket ${deal.theme}`} key={deal.id}>
+                        <div className="ticket-stub">
+                            <div className="vertical-text">
+                                {deal.discount}
+                            </div>
+                            <div className="punch-hole-top"></div>
+                            <div className="punch-hole-bottom"></div>
                         </div>
 
-                        <p className="deal-desc">{deal.desc}</p>
-
-                        <button className="deal-btn" onClick={() => navigate(deal.link)}>
-                            {deal.btnText}
-                        </button>
+                        <div className="ticket-body">
+                            <div className="ticket-info">
+                                <span className="deal-tag"><FaTicketAlt /> {deal.code}</span>
+                                <h3>{deal.title}</h3>
+                                <h4>{deal.sub}</h4>
+                                <p>{deal.desc}</p>
+                            </div>
+                            
+                            <button className="claim-btn" onClick={() => navigate('/offers')}>
+                                Grab It
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>
