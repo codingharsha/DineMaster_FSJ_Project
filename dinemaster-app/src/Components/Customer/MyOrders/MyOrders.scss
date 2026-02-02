@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@use '../../../variables.scss' as *;
 
 .my-orders {
     margin: 80px auto 50px;

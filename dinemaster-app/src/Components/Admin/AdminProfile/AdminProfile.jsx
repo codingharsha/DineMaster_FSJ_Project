@@ -3,6 +3,7 @@ import './AdminProfile.scss';
 import { FaUserEdit, FaEnvelope, FaPhone, FaMapMarkerAlt, FaCalendarAlt, FaCamera, FaLock } from 'react-icons/fa';
 
 const AdminProfile = () => {
+    //eslint-disable-next-line no-unused-vars
     const [admin, setAdmin] = useState({
         name: "Siva Kumar",
         role: "Super Admin",
@@ -10,7 +11,7 @@ const AdminProfile = () => {
         phone: "+91 98765 43210",
         location: "Coimbatore, TN",
         joined: "Jan 12, 2024",
-        avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop",
+        avatar: "https://plus.unsplash.com/premium_photo-1677252438411-9a930d7a5168?w=600&auto=format&fit=crop",
         cover: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop"
     });
 

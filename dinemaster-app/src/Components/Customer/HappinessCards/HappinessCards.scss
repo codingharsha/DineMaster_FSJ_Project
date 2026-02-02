@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@use '../../../variables.scss' as *;
 
 .happiness-section {
     padding: 50px 90px;

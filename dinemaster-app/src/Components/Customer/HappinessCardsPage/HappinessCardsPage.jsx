@@ -7,6 +7,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 const HappinessCardsPage = () => {
 
   const [activeTab, setActiveTab] = useState("wallet");
+  //eslint-disable-next-line no-unused-vars
   const [balance, setBalance] = useState(2450); 
   const [rechargeAmount, setRechargeAmount] = useState("");
 

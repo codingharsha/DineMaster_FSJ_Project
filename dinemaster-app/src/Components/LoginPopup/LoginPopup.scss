@@ -1,5 +1,4 @@
-@import '../../variables.scss'; /* Adjust path to reach variables.scss */
-
+@use '../../variables.scss' as *; 
 .login-popup {
     position: fixed;
     z-index: 3000;

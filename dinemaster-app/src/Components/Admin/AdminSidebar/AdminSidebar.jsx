@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import './AdminSidebar.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaChartLine, FaFileInvoiceDollar, FaFire, FaUsersCog, FaCogs, FaSignOutAlt, FaUsers, FaBullhorn, FaUtensils } from 'react-icons/fa';
+import { FaChartLine, FaFileInvoiceDollar, FaFire, FaUsersCog, FaCogs, FaSignOutAlt, FaUsers, FaBullhorn, FaUtensils, FaUserCircle } from 'react-icons/fa';
 import { StoreContext } from '../../../Context/StoreContext';
 
 const AdminSidebar = () => {
@@ -57,6 +57,9 @@ const AdminSidebar = () => {
 
             <NavLink to="/admin/reviews" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
                 <FaBullhorn /> Reviews & Reports
+            </NavLink>
+            <NavLink to="/admin/profile" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
+                <FaUserCircle /> Profile
             </NavLink>
         </div>
 

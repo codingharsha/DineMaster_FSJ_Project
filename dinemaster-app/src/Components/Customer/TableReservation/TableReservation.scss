@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@use '../../../variables.scss' as *;
 
 .reservation-container {
     padding: 90px 5% 40px;

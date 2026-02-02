@@ -1,4 +1,5 @@
-@import '../../../variables.scss';
+@use '../../../variables.scss' as *
+;
 
 .billing-layout { display: flex; gap: 30px; height: 80vh; }
 

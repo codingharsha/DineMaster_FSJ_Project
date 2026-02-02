@@ -13,6 +13,7 @@ import Profile from './Components/Customer/Profile/Profile';
 import TableReservation from './Components/Customer/TableReservation/TableReservation';
 import MyOrders from './Components/Customer/MyOrders/MyOrders';
 import TrackOrder from './Components/Customer/TrackOrder/TrackOrder';
+import GalleryPage from './Components/Customer/GalleryPage/GalleryPage';
 import { StoreContext } from './Context/StoreContext';
 
 import KitchenDashboard from './Components/Kitchen/KitchenDashboard/KitchenDashboard';
@@ -25,7 +26,7 @@ import AdminSettings from './Components/Admin/AdminSettings/AdminSettings';
 import AdminCustomers from './Components/Admin/AdminCustomers/AdminCustomers';
 import AdminReviews from './Components/Admin/AdminReviews/AdminReviews';
 import AdminMenuInventory from './Components/Admin/AdminMenuInventory/AdminMenuInventory';
-import GalleryPage from './Components/Customer/GalleryPage/GalleryPage';
+import AdminProfile from './Components/Admin/AdminProfile/AdminProfile';
 const App = () => {
 
   const [showLogin, setShowLogin] = useState(false);
@@ -70,6 +71,7 @@ const App = () => {
           <Route path='/admin/customers' element={<AdminCustomers />} />
           <Route path='/admin/reviews' element={<AdminReviews />} />
           <Route path='/admin/inventory' element={<AdminMenuInventory />} />
+          <Route path="/admin/profile" element={<AdminProfile />} />
         </Routes>
       </div>
     </>

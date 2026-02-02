@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@use '../../../variables.scss' as *;
 
 .kitchen-navbar {
     background-color: #1a1a1a; 
