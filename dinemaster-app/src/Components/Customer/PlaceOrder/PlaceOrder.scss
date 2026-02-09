@@ -1,0 +1,94 @@
+@use '../../../variables.scss' as *;
+
+.place-order {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 50px;
+    margin-top: 100px;
+    width: 80%;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.place-order-left {
+    width: 100%;
+    max-width: max(30%, 500px);
+
+    .title {
+        font-size: 30px;
+        font-weight: 600;
+        margin-bottom: 50px;
+        color: $text-dark;
+    }
+
+    input {
+        margin-bottom: 15px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #c5c5c5;
+        border-radius: 4px;
+        outline-color: $primary-color; 
+    }
+}
+
+.multi-fields {
+    display: flex;
+    gap: 10px;
+}
+
+.place-order-right {
+    width: 100%;
+    max-width: max(40%, 500px);
+}
+
+.cart-total button {
+    margin-top: 30px;
+    width: 100%;      
+    background-color: $primary-color;
+    color: $white;
+    padding: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.payment-options {
+    margin-top: 40px;
+
+    h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+    }
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover { background-color: #fff9f7; }
+
+    &.selected {
+        border-color: $primary-color;
+        background-color: #fff4f0;
+    }
+}
+
+.pay-icon { 
+    font-size: 20px; color: #555; 
+    &.color-orange { color: $primary-color; }
+}
+
+@media (max-width: 750px) {
+    .place-order { flex-direction: column; }
+}
