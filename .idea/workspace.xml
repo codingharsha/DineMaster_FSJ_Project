@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="77accda6-0360-424a-9965-126265147b5d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminBilling/AdminBilling.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminBilling/AdminBilling.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminCustomers/AdminCustomers.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminCustomers/AdminCustomers.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminDashboard/AdminDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminDashboard/AdminDashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminSettings/AdminSettings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminSettings/AdminSettings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminStaff/AdminStaff.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/src/Components/Admin/AdminStaff/AdminStaff.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/src/Components/Customer/Cart/Cart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/src/Components/Customer/Cart/Cart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/src/Components/Customer/FoodItem/FoodItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/src/Components/Customer/FoodItem/FoodItem.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dinemaster-app/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/dinemaster-app/src/index.css" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="39jxGyaEoID7mFreTiK3qUXTHfJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "curr",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="77accda6-0360-424a-9965-126265147b5d" name="Changes" comment="" />
+      <created>1771223189155</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1771223189155</updated>
+      <workItem from="1771223190200" duration="201000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
