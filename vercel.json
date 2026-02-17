@@ -1,23 +1,10 @@
 {
   "version": 2,
-  "builds": [
+  "public": false,
+  "rewrites": [
     {
-      "src": "FrontEnd/dinemaster-app/package.json",
-      "use": "@vercel/static-build"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "FrontEnd/dinemaster-app/$1",
-      "check": true
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/.*",
-      "dest": "FrontEnd/dinemaster-app/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
