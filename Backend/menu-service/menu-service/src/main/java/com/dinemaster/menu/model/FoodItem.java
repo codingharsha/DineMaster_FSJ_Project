@@ -16,8 +16,10 @@ public class FoodItem {
     private String id;
     private String name;
     private String description;
-    private double price;
+    private Double price;
     private String category;
     private String imgUrl;
+    private Double rating;
+    private boolean isVeg;
     private boolean isAvailable;
 }

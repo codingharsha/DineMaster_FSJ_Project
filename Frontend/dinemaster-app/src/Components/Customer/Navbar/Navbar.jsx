@@ -18,6 +18,7 @@ const Navbar = ({ setShowLogin }) => {
     const [selectedLocation, setSelectedLocation] = useState("Select Location");
     const [showProfile, setShowProfile] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [showMenu, setShowMenu] = useState(false);
     const [keyword, setKeyword] = useState("");
 
@@ -73,7 +74,6 @@ const Navbar = ({ setShowLogin }) => {
                         <div onClick={() => navigate('/offers')}>Deals</div>
                         <div onClick={() => navigate('/happiness-cards')}>Happiness Cards</div>
                         <div onClick={() => navigate('/restaurants')}>Restaurants</div>
-                        <div onClick={() => navigate('/order-online')}>Takeaway</div>
                     </div>
 
                     <div className="right-section">

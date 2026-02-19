@@ -21,7 +21,7 @@ public class Order {
     private String customerName;
     private int tableNumber;
     private List<OrderItem> items;
-    private double totalAmount;
+    private Double totalAmount;
     private String status;
     private Date orderTime;
     private String paymentStatus;

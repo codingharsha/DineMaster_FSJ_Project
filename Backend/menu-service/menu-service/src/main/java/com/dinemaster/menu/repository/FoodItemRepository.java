@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface FoodItemRepository extends MongoRepository<FoodItem, String> {
     List<FoodItem> findByCategory(String category);
+
+    List<FoodItem> findByIsAvailableTrue();
 }

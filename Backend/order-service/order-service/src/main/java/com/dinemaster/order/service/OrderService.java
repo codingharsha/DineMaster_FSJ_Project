@@ -1,6 +1,7 @@
 package com.dinemaster.order.service;
 
 import com.dinemaster.order.model.Order;
+import com.dinemaster.order.model.OrderItem;
 import com.dinemaster.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,14 @@ public class OrderService {
         order.setOrderTime(new Date());
         order.setStatus("PLACED");
         order.setPaymentStatus("PENDING");
+
+        Double total = 0.00;
+        if(order.getItems() != null){
+            for(OrderItem item: order.getItems()){
+                total += item.getPrice() * item.getQuantity();
+            }
+        }
+        order.setTotalAmount(total);
         return repository.save(order);
     }
 

@@ -11,6 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class OrderItem {
     private String foodItemId;
     private String name;
-    private double price;
+    private Double price;
     private int quantity;
 }

@@ -15,8 +15,8 @@ public class Reservation {
     private String id;
     private String customerName;
     private String phone;
-    private int tableNumber;
-    private int numberOfPeople;
+    private Integer tableNumber;
+    private Integer numberOfPeople;
     private Date dateTime;
     private String status;
 }
