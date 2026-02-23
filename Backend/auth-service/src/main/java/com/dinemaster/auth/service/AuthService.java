@@ -1,6 +1,7 @@
 package com.dinemaster.auth.service;
 
 import com.dinemaster.auth.dto.AuthResponse;
+import com.dinemaster.auth.model.Role;
 import com.dinemaster.auth.model.User;
 import com.dinemaster.auth.repository.UserRepository;
 import com.dinemaster.auth.util.JwtUtil;
@@ -21,8 +22,9 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public String sendOtp(String mobile) {
-        return otpService.generateOtp(mobile);
+    public boolean sendOtp(String mobile) {
+        otpService.generateOtp(mobile);
+        return repository.findByMobileNumber(mobile).isPresent();
     }
 
     public AuthResponse verifyOtp(String mobile, String otp, String name) {
@@ -36,7 +38,7 @@ public class AuthService {
 
         if (existingUser.isPresent()) {
             User user = existingUser.get();
-            String token = jwtUtil.generateToken(mobile);
+            String token = jwtUtil.generateToken(mobile, user.getRole());
             return new AuthResponse(token, user.getName(), user.getRole(), "Login Successful");
 
         } else {
@@ -47,11 +49,11 @@ public class AuthService {
             User newUser = new User();
             newUser.setMobileNumber(mobile);
             newUser.setName(name);
-            newUser.setRole("USER");
+            newUser.setRole(Role.CUSTOMER);
 
             User savedUser = repository.save(newUser);
 
-            String token = jwtUtil.generateToken(mobile);
+            String token = jwtUtil.generateToken(mobile, savedUser.getRole());
             return new AuthResponse(token, savedUser.getName(), savedUser.getRole(), "Login Successful");
         }
     }

@@ -1,5 +1,6 @@
 package com.dinemaster.auth.util;
 
+import com.dinemaster.auth.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,8 +18,9 @@ import java.util.function.Function;
 public class JwtUtil {
     public static final String SECRET = "dinemaster_auth_jwt_secret_key_2026_super_secure_key";
 
-    public String generateToken(String mobileNumber){
+    public String generateToken(String mobileNumber, Role role){
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role.name());
         return createToken(claims, mobileNumber);
     }
 
@@ -31,6 +33,7 @@ public class JwtUtil {
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     private Key getSignKey(){
         byte[] keyBytes = SECRET.getBytes();
@@ -57,6 +60,11 @@ public class JwtUtil {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
+    }
+
+    public String extractRole(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("role", String.class);
     }
 
     private Boolean isTokenExpired(String token) {

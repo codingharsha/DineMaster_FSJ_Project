@@ -1,0 +1,43 @@
+.error-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.error-popup {
+    background: white;
+    padding: 25px 30px;
+    border-radius: 14px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+    h3 {
+        color: #ff4500;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #444;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+    }
+
+    button {
+        background: #ff4500;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+
+        &:hover {
+            background: #e03e00;
+        }
+    }
+}

@@ -4,6 +4,7 @@ import com.dinemaster.auth.dto.AuthResponse;
 import com.dinemaster.auth.dto.LoginRequest;
 import com.dinemaster.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -17,8 +18,9 @@ public class AuthController {
     private AuthService service;
 
     @PostMapping("/send-otp")
-    public String sendOtp(@RequestBody Map<String, String> request) {
-        return service.sendOtp(request.get("mobile"));
+    public ResponseEntity<Map<String, Boolean>> sendOtp(@RequestParam("mobile") String mobile) {
+        boolean userExists = service.sendOtp(mobile);
+        return ResponseEntity.ok(Map.of("userExists", userExists));
     }
 
 

@@ -5,14 +5,16 @@ import {BrowserRouter} from 'react-router-dom'
 import './index.css'
 import StoreContextProvider from './Context/StoreContextProvider.jsx'
 import App from './App.jsx'
+import ErrorProvider from './Context/ErrorContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    
     <BrowserRouter>
-    <StoreContextProvider>
-      <App />
-    </StoreContextProvider>
+        <StoreContextProvider>
+          <ErrorProvider>
+            <App />
+          </ErrorProvider>
+        </StoreContextProvider>
     </BrowserRouter>
   </StrictMode>
 )

@@ -3,8 +3,16 @@ import './AdminDashboard.scss';
 import AdminSidebar from '../AdminSidebar/AdminSidebar';
 import { FaWallet, FaShoppingCart, FaUserFriends, FaArrowUp, FaStar, FaCircle, FaClock, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { MdOutlineRestaurantMenu, MdDeliveryDining } from "react-icons/md";
+import { useEffect } from 'react';
 
 const AdminDashboard = () => {
+
+    useEffect(() => {
+    const role = localStorage.getItem("userRole");
+    if (role !== "ADMIN") {
+        navigate("/");
+    }
+    }, []);
 
   const popularDishes = [
       { name: "Chicken Biryani", sold: 120, revenue: "₹1400" },

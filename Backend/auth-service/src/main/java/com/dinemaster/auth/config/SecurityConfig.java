@@ -19,7 +19,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) {
         http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable).authorizeHttpRequests((auth) ->
-                        auth.requestMatchers("/auth/verify-otp", "/auth/send-otp", "/auth/login","/auth/test", "/error").permitAll().anyRequest().authenticated())
+                        auth.requestMatchers(
+                                "/auth/**",
+                                "/error"
+                        ).permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/kitchen/**").hasRole("KITCHEN_STAFF")
+                                .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);;
 

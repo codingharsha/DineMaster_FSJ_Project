@@ -1,8 +1,45 @@
 import { useState } from "react";
 import { food_list } from '../assets/assets';
 import { StoreContext } from './StoreContext';
+import axios from 'axios';
 
 const StoreContextProvider = (props) => {
+
+    const API_URL = "http://localhost:8080/auth";
+
+    const sendOtp = async (mobile) => {
+        try {
+            const response = await axios.post(
+                `${API_URL}/send-otp?mobile=${mobile}`
+            );
+            return response.data;
+        } catch (error) {
+            console.error("OTP Error:", error);
+            return false;
+        }
+    };
+
+const verifyOtp = async (credentials) => {
+    try {
+        const response = await axios.post(`${API_URL}/verify-otp`, credentials);
+        if (response.data.token) {
+            setToken(response.data.token);
+            setUserName(response.data.name);
+            setUserRole(response.data.role);
+
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("userName", response.data.name);
+            localStorage.setItem("userRole", response.data.role);
+            return true;
+        }
+        // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+        alert("Invalid OTP or Verification Failed");
+        return false;
+    }
+};
+
+
     const [cartItems, setCartItems] = useState({});
     const [token, setToken] = useState(() => localStorage.getItem("token") || "");
     const [userName, setUserName] = useState(() => localStorage.getItem("userName") || "");
@@ -56,7 +93,9 @@ const StoreContextProvider = (props) => {
         kitchenTab, setKitchenTab,
         bookings,
         bookingDetails,
-        addBooking
+        addBooking,
+        sendOtp,
+        verifyOtp
     };
 
     return (

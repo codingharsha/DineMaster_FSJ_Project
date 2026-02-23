@@ -70,13 +70,7 @@ const Home = () => {
                         <p>No More Waiting</p>
                     </div>
                 </div>
-                <div className="feature-item" onClick={()=> navigate('/order-online')}>
-                    <div className="feature-icon-box"><FaMotorcycle /></div>
-                    <div className="feature-text">
-                        <h4>Takeaway</h4>
-                        <p>Order Online</p>
-                    </div>
-                </div>
+
                 <div className="feature-item" onClick={()=> navigate('/happiness-cards')}>
                     <div className="feature-icon-box"><TbCardsFilled /></div>
                     <div className="feature-text">

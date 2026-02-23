@@ -19,7 +19,7 @@ public class OtpService {
     @Value("${twilio.auth-token}")
     private String authToken;
 
-    @Value("${twilio.from-number}")
+    @Value("${twilio.phone-number}")
     private String fromNumber;
 
     private final Map<String, String> otpStorage = new ConcurrentHashMap<>();
@@ -27,6 +27,11 @@ public class OtpService {
     @PostConstruct
     public void initTwilio() {
         Twilio.init(accountSid, authToken);
+    }
+
+    @PostConstruct
+    public void checkEnv() {
+        System.out.println("SID = " + System.getenv("TWILIO_ACCOUNT_SID"));
     }
 
     public String generateOtp(String mobile) {

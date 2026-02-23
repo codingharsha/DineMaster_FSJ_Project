@@ -1,5 +1,6 @@
 package com.dinemaster.auth.dto;
 
+import com.dinemaster.auth.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,6 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
     private String token;
     private String name;
-    private String role;
+    private Role role;
     private String message;
 }

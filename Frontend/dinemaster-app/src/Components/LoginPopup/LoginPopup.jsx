@@ -6,131 +6,124 @@ import { FaMobileAlt, FaLock, FaUser, FaTimes } from "react-icons/fa";
 
 const LoginPopup = ({ setShowLogin }) => {
 
-  const { setToken, setUserName, setUserRole } = useContext(StoreContext);
+  const {sendOtp, verifyOtp } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const [currStep, setCurrStep] = useState(1);
-  const [mobile, setMobile] = useState("");
-  const [otp, setOtp] = useState("");
-  const [name, setName] = useState("");
+  const [isNewUser, setIsNewUser] = useState(false);
+  const [data, setData] = useState({
+    name: "",
+    mobile: "",
+    otp: ""
+  });
 
-  const KITCHEN_PHONE = "9876543210";
-  const EXISTING_USER_PHONE = "0123456789";
-  const ADMIN_PHONE = "1122334455";
+  const onChangeHandler = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setData(prev => ({...prev, [name]: value}));
+  }
 
-  const handleSendOtp = (e) => {
+  // const onLogin = async(event) =>{
+  //   event.preventDefault();
+  //
+  //   if(currStep == "get-otp"){
+  //       const success = await sendOtp(data.mobile);
+  //       if(success){
+  //           setCurrStep("verify");
+  //       }else{
+  //           const success = await verifyOtp(data);
+  //           if(success){
+  //               setShowLogin(false);
+  //           }
+  //       }
+  //   }
+  // }
+
+  const handleSendOtp = async(e) => {
       e.preventDefault();
-      if(mobile.length < 10) { alert("Please enter valid mobile number"); return; }
-      setCurrStep(2);
-      alert(`OTP Sent to ₹{mobile}: 1234`);
-  };
-
-  const handleVerifyOtp = (e) => {
-      e.preventDefault();
-      if(otp !== "1234") { alert("Invalid OTP"); return; }
-
-      const inputMobile = String(mobile).trim();
-
-      if (inputMobile === ADMIN_PHONE) {
-          finalizeLogin("System Admin", "admin");
-      } 
-      else if (inputMobile === KITCHEN_PHONE) {
-          finalizeLogin("Chef Manager", "kitchen");
-      } 
-      else if (inputMobile === EXISTING_USER_PHONE) {
-          finalizeLogin("DineMaster User", "customer");
-      } 
-      else {
-          setCurrStep(3);
+      if(data.mobile.length < 10){
+          alert("Please enter a valid mobile number!");
+          return;
       }
-      
-      console.log("Input Mobile:", mobile);
-      console.log("Kitchen Target:", KITCHEN_PHONE);
 
-    
-  };
-
-  const handleSignup = (e) => {
-      e.preventDefault();
-      if(name.length === 0) { alert("Name is mandatory"); return; }
-      finalizeLogin(name, "customer");
-  };
-
-  const finalizeLogin = (name, role) => {
-      setToken("dummy-token-123");
-      setUserName(name);
-      setUserRole(role);
-      
-      localStorage.setItem("token", "dummy-token-123");
-      localStorage.setItem("userName", name);
-      localStorage.setItem("userRole", role);
-
-      setShowLogin(false);
-
-      if (role === "admin") {
-          navigate("/admin/dashboard"); 
-      } else if (role === "kitchen") {
-          navigate("/kitchen");
-      } else {
-          navigate("/");
+      const result = await sendOtp(data.mobile);
+        if (result) {
+        setIsNewUser(!result.userExists);
+        setCurrStep(2);
+        } else {
+        alert("Failed to send OTP. Check backend.");
       }
   };
+
+const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+
+    const success = await verifyOtp(data);
+
+    if (success) {
+        setShowLogin(false);
+
+        const role = localStorage.getItem("userRole");
+
+        if (role === "ADMIN") {
+            navigate("/admin/dashboard");
+        } else if (role === "KITCHEN_STAFF") {
+            navigate("/kitchen");
+        } else {
+            navigate("/");
+        }
+    }
+};
 
   return (
-    <div className='login-popup'>
-      <div className="login-popup-container">
-        <div className="login-popup-title">
-          <h2>
-              {currStep === 1 && "Login"}
-              {currStep === 2 && "Verification"}
-              {currStep === 3 && "Profile"}
-          </h2>
-          <FaTimes 
-            onClick={() => setShowLogin(false)} 
-            className="close-icon" 
-            style={{ cursor: "pointer", fontSize: "18px" }}
-          />
-        </div>
+      <div className='login-popup'>
+          <div className="login-popup-container">
+              <div className="login-popup-title">
+                  <h2>{currStep === 1 ? "Login" : "Verification"}</h2>
+                  <FaTimes
+                      onClick={() => setShowLogin(false)}
+                      className="close-icon"
+                      style={{ cursor: "pointer", fontSize: "18px" }}
+                  />
+              </div>
 
-        <form className="login-popup-inputs">
-            {currStep === 1 && (
-                <>
-                    <div className="input-group">
-                        <FaMobileAlt className="input-icon"/>
-                        <input type="number" placeholder='Mobile Number' value={mobile} onChange={(e) => setMobile(e.target.value)} required />
-                    </div>
-                    <button onClick={handleSendOtp}>Continue</button>
-                    <div className="login-hints" style={{marginTop:'10px', fontSize:'12px', color:'#666'}}>
-                        <p>Kitchen ID: <b>9876543210</b></p>
-                        <p>Admin ID: <b>1122334455</b></p>
-                    </div>
-                </>
-            )}
+              <form className="login-popup-inputs">
+                  {currStep === 1 && (
+                      <>
+                          <div className="input-group">
+                              <FaMobileAlt className="input-icon"/>
+                              <input name="mobile" type="tel" placeholder='Mobile Number' value={data.mobile} onChange={onChangeHandler} required />
+                          </div>
+                          <button onClick={handleSendOtp}>Continue</button>
+                      </>
+                  )}
 
-            {currStep === 2 && (
-                <>
-                    <p className="otp-sent-text">Enter OTP sent to <b>{mobile}</b></p>
-                    <div className="input-group">
-                        <FaLock className="input-icon"/>
-                        <input type="text" placeholder='Enter OTP' value={otp} onChange={(e) => setOtp(e.target.value)} maxLength={4} required />
-                    </div>
-                    <button onClick={handleVerifyOtp}>Verify & Proceed</button>
-                    <p className="resend-text" onClick={() => setCurrStep(1)}>Wrong number?</p>
-                </>
-            )}
-
-            {currStep === 3 && (
-                <>
-                    <div className="input-group">
-                        <FaUser className="input-icon"/>
-                        <input type="text" placeholder='Your Name' value={name} onChange={(e) => setName(e.target.value)} required />
-                    </div>
-                    <button onClick={handleSignup}>Create Account</button>
-                </>
-            )}
-        </form>
+                  {currStep === 2 && (
+                      <>
+                          <p className="otp-sent-text">Enter OTP sent to <b>{data.mobile}</b></p>
+                          {isNewUser && (
+                            <div className="input-group">
+                                <FaUser className="input-icon"/>
+                                <input
+                                name="name"
+                                type="text"
+                                placeholder="Your Name"
+                                value={data.name}
+                                onChange={onChangeHandler}
+                                required/>
+                            </div>)
+                           }
+                          <div className="input-group">
+                              <FaLock className="input-icon"/>
+                              <input name="otp" type="text" placeholder='Enter 4-digit OTP' value={data.otp} onChange={onChangeHandler} maxLength={4} required />
+                          </div>
+                          <button onClick={handleVerifyOtp}>Verify & Proceed</button>
+                          <p className="resend-text" onClick={() => setCurrStep(1)}>Wrong number?</p>
+                      </>
+                  )}
+              </form>
+          </div>
       </div>
-    </div>
   )
 }
 

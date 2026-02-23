@@ -21,7 +21,10 @@ public class User {
     private String mobileNumber;
     private String name;
     private String email;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
 
 }
