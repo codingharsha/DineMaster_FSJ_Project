@@ -29,7 +29,6 @@ const TableReservation = () => {
         { id: 16, size: 4, status: "available", type: "rect", label: "T14" },
     ];
 
-     
 
     const handleBookingAction = (targetPath) => {
         if(!date || !time || !selectedTable) { 
@@ -58,13 +57,16 @@ const TableReservation = () => {
                     <h3><FaChair /> Reservation Details</h3>
 
                     <div className="res-form">
-                        <div className="res-input-group">
+                        <div className="res-input-group fancy">
                             <label><FaCalendarAlt /> Date</label>
-                            <input
-                                type="date"
-                                value={date}
-                                onChange={(e) => setDate(e.target.value)}
-                            />
+                            <div className="input-wrapper">
+                                <input
+                                    type="date"
+                                    min={new Date().toISOString().split("T")[0]}
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)}
+                                />
+                            </div>
                         </div>
 
                         <div className="res-input-group">

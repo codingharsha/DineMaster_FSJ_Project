@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react'
 import Navbar from './Components/Customer/Navbar/Navbar'
 import Home from './Components/Customer/Home/Home';
-import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom';
+import {Routes, Route, useLocation} from 'react-router-dom';
 import OrderOnline from './Components/Customer/OrderOnline/OrderOnline';
 import PlaceOrder from './Components/Customer/PlaceOrder/PlaceOrder';
 import Cart from './Components/Customer/Cart/Cart';
@@ -15,6 +15,8 @@ import MyOrders from './Components/Customer/MyOrders/MyOrders';
 import TrackOrder from './Components/Customer/TrackOrder/TrackOrder';
 import GalleryPage from './Components/Customer/GalleryPage/GalleryPage';
 import { StoreContext } from './Context/StoreContext';
+
+import ErrorPopup from './Components/Common/ErrorPopup';
 import { ErrorContext } from './Context/ErrorContext';
 
 import KitchenDashboard from './Components/Kitchen/KitchenDashboard/KitchenDashboard';
@@ -31,20 +33,11 @@ import AdminProfile from './Components/Admin/AdminProfile/AdminProfile';
 import AdminRoute from './Components/Admin/AdminRoute/AdminRoute';
 const App = () => {
 
+  const { error, clearError } = useContext(ErrorContext);
   const [showLogin, setShowLogin] = useState(false);
   const {userRole} = useContext(StoreContext);
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
-
-  const ErrorWrapper = ({ children }) => {
-    const { error, clearError } = useContext(ErrorContext);
-    return (
-        <>
-            {children}
-            <ErrorPopup message={error} onClose={clearError} />
-        </>
-    );
-};
 
   return (
     <>
@@ -55,13 +48,12 @@ const App = () => {
         {isAdminRoute ? (
           <></>
         ):
-        userRole === "kitchen" ? (
+        userRole === "KITCHEN_STAFF" ? (
           <KitchenNavbar />
         ) : (
           <Navbar setShowLogin={setShowLogin} />
         )}
 
-            <ErrorWrapper>
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/order-online' element ={<OrderOnline />} />
@@ -86,7 +78,8 @@ const App = () => {
               <Route path='/admin/inventory' element={<AdminMenuInventory />} />
               <Route path="/admin/profile" element={<AdminProfile />} />
             </Routes>
-            </ErrorWrapper>
+
+            <ErrorPopup message={error} onClose={clearError} />
       </div>
     </>
   )

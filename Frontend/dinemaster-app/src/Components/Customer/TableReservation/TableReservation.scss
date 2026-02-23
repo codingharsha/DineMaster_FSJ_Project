@@ -132,6 +132,25 @@
         }
     }
 
+    .res-input-group.fancy {
+        input,
+        select {
+            background: linear-gradient(180deg, #ffffff, #fafafa);
+            border-radius: 14px;
+            border: 1px solid #e6e6e6;
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            transition: 0.25s ease;
+
+            &:focus {
+            border-color: #ff4500;
+            background: #fff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.15);
+            }
+        }
+    }
+
     .res-form{
         flex: 1;
     }
