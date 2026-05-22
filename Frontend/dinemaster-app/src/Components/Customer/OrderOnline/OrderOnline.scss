@@ -12,26 +12,6 @@
     color: $text-dark;
 }
 
-.category-list {
-    display: flex;
-    gap: 20px;
-    margin: 20px 0;
-
-    button {
-        padding: 10px 20px;
-        border: 1px solid #747474;
-        background: transparent;
-        border-radius: 20px;
-        cursor: pointer;
-
-        &.active {
-            background-color: $primary-color;
-            color: $white;
-            border-color: $primary-color;
-        }
-    }
-}
-
 .food-display-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));

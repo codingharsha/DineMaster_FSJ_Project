@@ -1,56 +1,157 @@
 @use '../../../variables.scss' as *;
 
+.home-page {
+    background-color: #fafafa;
+}
+
 .hero-section{
-    background-image: url('../../../assets/Images/premium_photo-1698500035173-fdea60f9294e.jpg');
     width: 100%;
     height: 85vh;
-    background-size: cover;
-    background-position: center;
     position: relative;
     margin-bottom: 100px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    overflow: visible;
+}
 
-    &::after{
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 200px;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
-        z-index: 1;
-        pointer-events: none;
+.hero-slider {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1);
+    transition: opacity 900ms ease-in-out, transform 5s ease-out;
+
+    &.active {
+        opacity: 1;
+        transform: scale(1.06);
     }
 }
 
 .hero-content {
     z-index: 100;
     text-align: center;
+    margin-top: 80px;
+    margin-bottom: 30px;
+    max-width: 950px;
+    padding: 0 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-text-slider {
+    position: relative;
+    width: 100%;
+    min-height: 180px;
     margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .hero-headline {
     color: $white;
-    font-size: 3.5rem;
-    font-weight: 700;
+    font-size: 2.5rem;
+    font-weight: 800;
     line-height: 1.2;
-    margin-bottom: 40px;
+    margin: 0;
     text-shadow: 0px 4px 15px rgba(0,0,0,0.8);
+    width: 100%;
+    max-width: 1280px;
+    text-align: center;
+}
+
+.hero-text-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 900ms ease-in-out, transform 900ms ease-in-out;
+    pointer-events: none;
+
+    &.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-quote {
+    display: block;
+    white-space: nowrap;
+}
+
+.hero-subline {
+    display: block;
+    margin-top: 14px;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.95);
+}
+
+.hero-slider-controls {
+    position: absolute;
+    right: 26px;
+    bottom: 26px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(20, 20, 20, 0.4);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 130;
+}
+
+.hero-slider-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.slider-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.55);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.active {
+        width: 30px;
+        border-radius: 10px;
+        background: $primary-color;
+        box-shadow: 0 0 14px rgba(242, 102, 34, 0.6);
+    }
 }
 
 .booking-widget {
     background-color: $white; 
-    padding: 30px 30px;
+    padding: 22px 18px;
     display: inline-flex;
-    gap: 80px;
+    gap: 20px;
     border-radius: 20px;
     align-items: center;
     box-shadow: $box-shadow-md; 
     position: relative; 
     z-index: 60;
+    margin-top: -65px;
+    min-width: 410px;
+    max-width: 470px;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .branch-selection {
@@ -146,15 +247,15 @@
 
 .features-bar {
     display: flex;
-    gap: 100px;
+    gap: 56px;
     position: absolute;
     bottom: -50px;
-    z-index: 10; 
+    z-index: 900; 
     background: $white; 
     border-radius: 20px;
-    padding: 25px 50px;
+    padding: 22px 38px;
     max-width: 1100px;
-    box-shadow: 0px 20px 40px rgba(0,0,0,0.15);
+    box-shadow: $box-shadow-md;
     justify-content: space-between;
     align-items: center;
 }
@@ -166,7 +267,6 @@
     gap: 0px;
     cursor: pointer;
     transition: 0.3s;
-
     &:hover {
         transform: translateY(-5px);
     }
@@ -185,10 +285,12 @@
 }
 
 .feature-text {
+    text-align: center;
+
     h4 {
         font-size: 1rem;
         font-weight: 800;
-        margin-bottom: 4px;
+        margin: 0 0 4px;
         color: $secondary-color; 
     }
 
@@ -198,5 +300,91 @@
         margin: 0;
         font-weight: 500;
         text-align: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-headline {
+        font-size: 2.45rem;
+    }
+
+    .booking-widget {
+        gap: 40px;
+    }
+
+    .features-bar {
+        gap: 32px;
+        padding: 22px 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        height: auto;
+        min-height: 92vh;
+        padding: 90px 0 28px;
+        margin-bottom: 50px;
+    }
+
+    .hero-content {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .hero-text-slider {
+        min-height: 138px;
+        margin-bottom: 24px;
+    }
+
+    .hero-headline {
+        font-size: 2.1rem;
+    }
+
+    .hero-quote {
+        white-space: normal;
+    }
+
+    .hero-subline {
+        font-size: 1.02rem;
+        margin-top: 10px;
+    }
+
+    .booking-widget {
+        width: calc(100vw - 36px);
+        max-width: 500px;
+        padding: 20px;
+        gap: 16px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .branch-selection {
+        min-width: unset;
+    }
+
+    .reserve-btn {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .hero-slider-controls {
+        right: 18px;
+        bottom: 200px;
+        padding: 10px;
+    }
+
+    .features-bar {
+        position: static;
+        width: calc(100vw - 36px);
+        max-width: 520px;
+        margin-top: 18px;
+        padding: 18px 14px;
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .feature-item {
+        width: calc(50% - 12px);
     }
 }

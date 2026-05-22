@@ -1,156 +1,203 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import './AdminReviews.scss';
-import { FaStar, FaRegStar, FaStarHalfAlt, FaUserTie, FaComments, FaArrowLeft, FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
+import AdminSidebar from '../AdminSidebar/AdminSidebar';
+import { FaStar, FaRegStar, FaStarHalfAlt, FaUserTie, FaComments, FaArrowLeft, FaCheckCircle, FaTrash, FaReply } from 'react-icons/fa';
+import { StoreContext } from '../../../Context/StoreContext';
 
 const AdminReviews = () => {
-    const [activeSection, setActiveSection] = useState('overview');
-    const customerReviews = [
-        { id: 1, name: "Alice Johnson", rating: 5, date: "2 days ago", text: "Absolutely loved the Biryani! The ambiance was great too.", sentiment: "positive" },
-        { id: 2, name: "Rajdeep Singh", rating: 3, date: "5 days ago", text: "Food was good but service was a bit slow during rush hour.", sentiment: "neutral" },
-        { id: 3, name: "Maria Garcia", rating: 1, date: "1 week ago", text: "Found a hair in my soup. Very disappointed.", sentiment: "negative" }
-    ];
+    const { fetchAllFeedback, fetchFeedbackSummary, replyToReview, flagReview, deleteReview } = useContext(StoreContext);
 
-    const staffReports = [
-        { id: 1, staff: "Rajesh Kumar (Chef)", type: "Inventory", date: "Today, 10:30 AM", text: "Oven #2 is overheating constantly. Needs repair.", status: "Pending" },
-        { id: 2, staff: "Sita Devi (Manager)", type: "Conflict", date: "Yesterday", text: "Customer dispute at Table 5 regarding billing error.", status: "Resolved" }
-    ];
-    const renderStars = (rating) => {
-        const stars = [];
-        for (let i = 1; i <= 5; i++) {
-            if (i <= rating) stars.push(<FaStar key={i} className="star filled" />);
-            else stars.push(<FaRegStar key={i} className="star" />);
+    const [activeSection, setSection]     = useState('overview');
+    const [reviews, setReviews]           = useState([]);
+    const [summary, setSummary]           = useState(null);
+    const [filterSentiment, setFilter]    = useState('all');
+    const [replyingId, setReplyingId]     = useState(null);
+    const [replyText, setReplyText]       = useState('');
+    const [loading, setLoading]           = useState(true);
+
+    const load = useCallback(async () => {
+        try {
+            const [revRes, sumRes] = await Promise.all([fetchAllFeedback(), fetchFeedbackSummary()]);
+            setReviews(revRes.data);
+            setSummary(sumRes.data);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false);
         }
-        return stars;
+    }, [fetchAllFeedback, fetchFeedbackSummary]);
+
+    useEffect(() => { load(); }, [load]);
+
+    const handleReply = async (id) => {
+        if (!replyText.trim()) return;
+        await replyToReview(id, replyText);
+        setReplyingId(null);
+        setReplyText('');
+        load();
     };
 
+    const handleFlag = async (id, flagged) => {
+        await flagReview(id, flagged);
+        load();
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm("Delete this review?")) return;
+        await deleteReview(id);
+        load();
+    };
+
+    const renderStars = (rating) => {
+        return Array.from({ length: 5 }, (_, i) =>
+            i < rating ? <FaStar key={i} className="star filled" /> : <FaRegStar key={i} className="star" />
+        );
+    };
+
+    const filtered = filterSentiment === 'all' ? reviews : reviews.filter(r => r.sentiment === filterSentiment);
+
+    if (loading) return (
+        <div className="admin-container"><AdminSidebar />
+            <div className="admin-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <p>Loading reviews…</p>
+            </div>
+        </div>
+    );
+
     return (
-        <div className="admin-content">
-            <div className="reviews-header">
-                <h1>Reports & Reviews Center</h1>
-                {activeSection !== 'overview' && (
-                    <button className="back-btn" onClick={() => setActiveSection('overview')}>
-                        <FaArrowLeft /> Back to Dashboard
-                    </button>
+        <div className="admin-container">
+            <AdminSidebar />
+            <div className="admin-content">
+                <div className="reviews-header">
+                    <h1>Reports & Reviews Center</h1>
+                    {activeSection !== 'overview' && (
+                        <button className="back-btn" onClick={() => setSection('overview')}>
+                            <FaArrowLeft /> Back
+                        </button>
+                    )}
+                </div>
+
+                {activeSection === 'overview' && (
+                    <div className="overview-container">
+                        <div className="rating-hero-card">
+                            <div className="rating-left">
+                                <span className="rating-label">Overall Restaurant Rating</span>
+                                <div className="rating-score">
+                                    {summary?.averageRating?.toFixed(1) ?? '–'}
+                                    <span className="max-score"> / 5.0</span>
+                                </div>
+                                <div className="stars-row">
+                                    <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalfAlt />
+                                    <span className="review-count">({summary?.total ?? 0} Reviews)</span>
+                                </div>
+                            </div>
+                            <div className="rating-right">
+                                <div className="stat-pill positive">
+                                    <FaCheckCircle /> {summary
+                                    ? Math.round((summary.positive / Math.max(summary.total, 1)) * 100)
+                                    : 0}% Positive Feedback
+                                </div>
+                                <div className="sentiment-breakdown">
+                                    <span className="s-pill positive">✅ {summary?.positive ?? 0} Positive</span>
+                                    <span className="s-pill neutral">⚠️ {summary?.neutral ?? 0} Neutral</span>
+                                    <span className="s-pill negative">❌ {summary?.negative ?? 0} Negative</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="split-cards-row">
+                            <div className="category-card customers" onClick={() => setSection('customer')}>
+                                <div className="icon-wrapper"><FaComments /></div>
+                                <div className="card-info">
+                                    <h2>Customer Feedback</h2>
+                                    <p>View ratings, comments and complaints from dining customers.</p>
+                                    <div className="mini-stats">
+                                        <span><strong>{summary?.total ?? 0}</strong> Total</span>
+                                        <span><strong>{summary?.negative ?? 0}</strong> Critical</span>
+                                    </div>
+                                </div>
+                                <button className="enter-btn">View Reviews</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {activeSection === 'customer' && (
+                    <div className="detail-section animate-fade">
+                        <div className="section-title">
+                            <h2>Customer Feedback Log</h2>
+                            <div className="filter-pills">
+                                {['all', 'positive', 'neutral', 'negative'].map(s => (
+                                    <button key={s} className={filterSentiment === s ? 'active' : ''} onClick={() => setFilter(s)}>
+                                        {s.charAt(0).toUpperCase() + s.slice(1)}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {filtered.length === 0 && <p style={{ color: '#aaa', textAlign: 'center', padding: 40 }}>No reviews found.</p>}
+
+                        <div className="reviews-list">
+                            {filtered.map(review => (
+                                <div key={review.id} className={`review-item ${review.sentiment} ${review.flagged ? 'flagged-review' : ''}`}>
+                                    <div className="r-head">
+                                        <div className="r-user">
+                                            <div className="avatar">{review.customerName?.charAt(0) ?? '?'}</div>
+                                            <div>
+                                                <h4>{review.customerName}</h4>
+                                                <small>{new Date(review.createdAt).toLocaleDateString()}</small>
+                                                {review.flagged && <span style={{ color: 'red', marginLeft: 8, fontSize: 12 }}>🚩 Flagged</span>}
+                                            </div>
+                                        </div>
+                                        <div className="r-stars">{renderStars(review.dishRating)}</div>
+                                    </div>
+
+                                    <div style={{ display: 'flex', gap: 16, margin: '6px 0', fontSize: 13, color: '#666' }}>
+                                        <span>🍽 Dish: <b>{review.dishName}</b></span>
+                                        <span>⭐ Service: {review.serviceRating}/5</span>
+                                    </div>
+
+                                    <p className="r-text">"{review.comment}"</p>
+
+                                    {review.adminReply && (
+                                        <div style={{ background: '#f0f9ff', borderLeft: '3px solid #3498db', padding: '8px 12px', borderRadius: 6, marginTop: 8 }}>
+                                            <strong style={{ fontSize: 12, color: '#3498db' }}>Admin Reply:</strong>
+                                            <p style={{ margin: 0, fontSize: 13 }}>{review.adminReply}</p>
+                                        </div>
+                                    )}
+
+                                    {replyingId === review.id && (
+                                        <div style={{ marginTop: 8 }}>
+                                            <textarea
+                                                placeholder="Write your reply…"
+                                                value={replyText}
+                                                onChange={e => setReplyText(e.target.value)}
+                                                style={{ width: '100%', padding: 8, borderRadius: 6, border: '1px solid #ddd', resize: 'none' }}
+                                                rows={3}
+                                            />
+                                            <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
+                                                <button style={{ background: '#f26622', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 14px', cursor: 'pointer' }}
+                                                        onClick={() => handleReply(review.id)}>Submit</button>
+                                                <button style={{ background: '#eee', border: 'none', borderRadius: 6, padding: '6px 14px', cursor: 'pointer' }}
+                                                        onClick={() => { setReplyingId(null); setReplyText(''); }}>Cancel</button>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <div className="r-actions">
+                                        <button className="reply-btn" onClick={() => setReplyingId(review.id)}><FaReply /> Reply</button>
+                                        <button className="flag-btn" onClick={() => handleFlag(review.id, !review.flagged)}>
+                                            {review.flagged ? '🔓 Unflag' : '🚩 Flag'}
+                                        </button>
+                                        <button className="flag-btn" style={{ background: '#fee', color: '#e74c3c' }}
+                                                onClick={() => handleDelete(review.id)}><FaTrash /></button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 )}
             </div>
-
-            {activeSection === 'overview' && (
-                <div className="overview-container">
-                    
-                    <div className="rating-hero-card">
-                        <div className="rating-left">
-                            <span className="rating-label">Overall Restaurant Rating</span>
-                            <div className="rating-score">
-                                4.7 <span className="max-score">/ 5.0</span>
-                            </div>
-                            <div className="stars-row">
-                                <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalfAlt />
-                                <span className="review-count">(1,240 Reviews)</span>
-                            </div>
-                        </div>
-                        <div className="rating-right">
-                            <div className="stat-pill positive">
-                                <FaCheckCircle /> 92% Positive Feedback
-                            </div>
-                            <div className="critical-areas">
-                                <h4>Areas for Improvement:</h4>
-                                <div className="tags">
-                                    <span>Wait Time</span>
-                                    <span>Parking</span>
-                                    <span>Washroom Cleanliness</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="split-cards-row">
-                        <div className="category-card customers" onClick={() => setActiveSection('customer')}>
-                            <div className="icon-wrapper"><FaComments /></div>
-                            <div className="card-info">
-                                <h2>Customer Feedback</h2>
-                                <p>View ratings, comments, and complaints from dining customers.</p>
-                                <div className="mini-stats">
-                                    <span><strong>12</strong> New today</span>
-                                    <span><strong>3</strong> Critical</span>
-                                </div>
-                            </div>
-                            <button className="enter-btn">View Reviews</button>
-                        </div>
-
-                        <div className="category-card staff" onClick={() => setActiveSection('staff')}>
-                            <div className="icon-wrapper"><FaUserTie /></div>
-                            <div className="card-info">
-                                <h2>Staff Reports</h2>
-                                <p>Internal logs regarding kitchen equipment, conflicts, and operational issues.</p>
-                                <div className="mini-stats">
-                                    <span><strong>2</strong> Pending Issues</span>
-                                    <span><strong>100%</strong> Attendance</span>
-                                </div>
-                            </div>
-                            <button className="enter-btn">View Reports</button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {activeSection === 'customer' && (
-                <div className="detail-section animate-fade">
-                    <div className="section-title">
-                        <h2>Customer Feedback Log</h2>
-                        <div className="filter-pills">
-                            <button className="active">All</button>
-                            <button>Positive</button>
-                            <button>Critical</button>
-                        </div>
-                    </div>
-                    <div className="reviews-list">
-                        {customerReviews.map(review => (
-                            <div key={review.id} className={`review-item ${review.sentiment}`}>
-                                <div className="r-head">
-                                    <div className="r-user">
-                                        <div className="avatar">{review.name.charAt(0)}</div>
-                                        <div>
-                                            <h4>{review.name}</h4>
-                                            <small>{review.date}</small>
-                                        </div>
-                                    </div>
-                                    <div className="r-stars">{renderStars(review.rating)}</div>
-                                </div>
-                                <p className="r-text">"{review.text}"</p>
-                                <div className="r-actions">
-                                    <button className="reply-btn">Reply</button>
-                                    <button className="flag-btn">Flag</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {activeSection === 'staff' && (
-                <div className="detail-section animate-fade">
-                    <div className="section-title">
-                        <h2>Internal Staff Reports</h2>
-                        <button className="resolve-all-btn">Mark All Read</button>
-                    </div>
-                    <div className="reports-grid">
-                        {staffReports.map(report => (
-                            <div key={report.id} className="report-card">
-                                <div className="report-header">
-                                    <span className={`status-badge ${report.status.toLowerCase()}`}>{report.status}</span>
-                                    <small>{report.date}</small>
-                                </div>
-                                <h3>{report.type} Issue</h3>
-                                <p>{report.text}</p>
-                                <div className="report-footer">
-                                    <span className="reporter-name"><FaUserTie /> {report.staff}</span>
-                                    {report.status === 'Pending' && <button className="resolve-btn">Mark Resolved</button>}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

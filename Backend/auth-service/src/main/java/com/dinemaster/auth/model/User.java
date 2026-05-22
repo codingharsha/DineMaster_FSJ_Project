@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Controller;
 
 @Entity
 @Table(name = "users")
@@ -17,14 +16,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String mobileNumber;
     private String name;
+    @Column(unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    @Builder.Default
+    private Role role = Role.CUSTOMER;
 
+    @Column(name = "password", length = 120)
+    private String passwordHash;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean passwordChangeRequired = false;
 }

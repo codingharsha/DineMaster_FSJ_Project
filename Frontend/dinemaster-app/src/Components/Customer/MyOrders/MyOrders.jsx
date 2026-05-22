@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './MyOrders.scss';
 import { StoreContext } from '../../../Context/StoreContext';
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +6,10 @@ import { FaBoxOpen, FaCircle, FaChair, FaCalendarAlt, FaClock } from 'react-icon
 
 const MyOrders = () => {
 
-  const { token, bookings } = useContext(StoreContext); 
+  const { bookings } = useContext(StoreContext); 
   const navigate = useNavigate();
   
   const [view, setView] = useState("orders"); 
-  const [orders, setOrders] = useState([]);
-
   const mockOrders = [
     {
       _id: "ORD001",
@@ -47,14 +45,7 @@ const MyOrders = () => {
       date: "2025-09-15"
     }
   ];
-
-  useEffect(() => {
-    if (token) {
-      setOrders(mockOrders); 
-    } else {
-      setOrders(mockOrders); 
-    }
-  }, [token]);
+  const [orders] = useState(mockOrders);
 
   return (
     <div className='my-orders'>

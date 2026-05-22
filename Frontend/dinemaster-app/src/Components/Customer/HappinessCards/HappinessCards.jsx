@@ -1,71 +1,89 @@
-import React , {useRef} from 'react'
+import React, { useRef } from 'react'
 import './HappinessCards.scss'
+import { useNavigate } from 'react-router-dom';
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 
 const HappinessCards = () => {
     const sliderRef = useRef(null);
+    const navigate = useNavigate();
 
     const slideLeft = () => {
         if(sliderRef.current){
-            sliderRef.current.scrollBy({left: -450});
+            sliderRef.current.scrollBy({ left: -450, behavior: 'smooth' });
         }
     };
 
     const slideRight = () =>{
         if(sliderRef.current){
-            sliderRef.current.scrollBy({left: 450});
+            sliderRef.current.scrollBy({ left: 450, behavior: 'smooth' });
         }
     };
 
     const cards = [
         {
       id: 1,
-      title: "Happiness Gift Card : Treat for 2 - Coimbatore",
+      title: "Happiness Gift Card: Date Night Delight",
       price: "1500",
       tag: "Treat For Two",
       color: "#5b9bd5",
-      imgUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600&auto=format&fit=crop" 
+      imgUrl: "https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1200&auto=format&fit=crop"
     },
     {
       id: 2,
-      title: "Happiness Gift Card : Treat for 8 - Coimbatore",
+      title: "Happiness Gift Card: Celebration Table",
       price: "7250",
       tag: "Treat For Eight",
       color: "#e06666",
-      imgUrl: "https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=600&auto=format&fit=crop"
+      imgUrl: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200&auto=format&fit=crop"
     },
     {
       id: 3,
-      title: "Happiness Gift Card : Family Feast - Chennai",
+      title: "Happiness Gift Card: Family Feast Pass",
       price: "4500",
       tag: "Family Pack",
       color: "#ffd966",
-      imgUrl: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600&auto=format&fit=crop"
+      imgUrl: "https://images.unsplash.com/photo-1551218808-94e220e084d2?q=80&w=1200&auto=format&fit=crop"
     },
     {
       id: 4,
-      title: "Happiness Gift Card : Jumbo Pack - Bangalore",
+      title: "Happiness Gift Card: Premium Dining Bundle",
       price: "9000",
       tag: "Jumbo Pack",
       color: "#93c47d",
-      imgUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600&auto=format&fit=crop"
+      imgUrl: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop"
+    },
+    {
+      id: 5,
+      title: "Happiness Gift Card: Weekend Brunch Combo",
+      price: "3200",
+      tag: "Weekend Special",
+      color: "#6fa8dc",
+      imgUrl: "https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?q=80&w=1200&auto=format&fit=crop"
+    },
+    {
+      id: 6,
+      title: "Happiness Gift Card: Coffee & Dessert Duo",
+      price: "2100",
+      tag: "Cafe Treat",
+      color: "#f6b26b",
+      imgUrl: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200&auto=format&fit=crop"
     }
     ];
 
   return (
     <div className="happiness-section"> 
         <div className="section-header">
-        <h2 className="section-title">Happiness Cards</h2>
+            <h2 className="section-title">Happiness Cards</h2>
             <div className="controls">
-                <button className="view-all-btn">View All</button>
-                <div className="arrow-btn">
-                    <FaArrowLeft onClick={slideLeft}/>
-                </div>
-                <div className="arrow-btn">
-                    <FaArrowRight onClick={slideRight}/>
-                </div>
+                <button className="view-all-btn" onClick={() => navigate('/happiness-cards')}>View All</button>
+                <button type="button" className="arrow-btn" onClick={slideLeft} aria-label="Scroll left">
+                    <FaArrowLeft />
+                </button>
+                <button type="button" className="arrow-btn" onClick={slideRight} aria-label="Scroll right">
+                    <FaArrowRight />
+                </button>
             </div>
         </div>
 

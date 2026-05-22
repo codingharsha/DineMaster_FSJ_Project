@@ -13,57 +13,74 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class OtpService {
 
-    @Value("${twilio.account-sid}")
-    private String accountSid;
-
-    @Value("${twilio.auth-token}")
-    private String authToken;
-
-    @Value("${twilio.phone-number}")
-    private String fromNumber;
+//    @Value("${twilio.account-sid}")
+//    private String accountSid;
+//
+//    @Value("${twilio.auth-token}")
+//    private String authToken;
+//
+//    @Value("${twilio.phone-number}")
+//    private String fromNumber;
 
     private final Map<String, String> otpStorage = new ConcurrentHashMap<>();
 
-    @PostConstruct
-    public void initTwilio() {
-        Twilio.init(accountSid, authToken);
-    }
+//    @PostConstruct
+//    public void initTwilio() {
+//        Twilio.init(accountSid, authToken);
+//    }
 
-    @PostConstruct
-    public void checkEnv() {
-        System.out.println("SID = " + System.getenv("TWILIO_ACCOUNT_SID"));
-    }
+//    @PostConstruct
+//    public void checkEnv() {
+//        System.out.println("SID = " + System.getenv("TWILIO_ACCOUNT_SID"));
+//    }
 
-    public String generateOtp(String mobile) {
-        String formattedMobile = mobile.trim();
-        if (!formattedMobile.startsWith("+")) {
-            formattedMobile = "+" + formattedMobile;
+    public String generateOtp(String identifier) {
+        String key = normalizeIdentifier(identifier);
+        String otp = String.format("%06d", new Random().nextInt(1_000_000));
+        otpStorage.put(key, otp);
+
+        // SMS sending can be enabled only for phone identifiers.
+        if (false) {
+            String phone = key.startsWith("+") ? key : "+" + key;
+//            Message.creator(
+//                    new com.twilio.type.PhoneNumber(phone),
+//                    new com.twilio.type.PhoneNumber(fromNumber),
+//                    "Your DineMaster OTP is: " + otp
+//            ).create();
         }
-        String otp = String.format("%04d", new Random().nextInt(10000));
-        otpStorage.put(formattedMobile, otp);
-
-//        Message.creator(
-//                new com.twilio.type.PhoneNumber(formattedMobile),
-//                new com.twilio.type.PhoneNumber(fromNumber),
-//                "Your DineMaster OTP is: " + otp
-//        ).create();
 
         System.out.println("========== DEV MODE ==========");
-        System.out.println("OTP for " + formattedMobile + " is -> " + otp);
+        System.out.println("OTP for " + key + " is -> " + otp);
         System.out.println("==============================");
-
         return otp;
     }
 
-    public boolean validateOtp(String mobile, String enteredOtp) {
-        String formattedMobile = mobile.trim();
-        if (!formattedMobile.startsWith("+")) {
-            formattedMobile = "+" + formattedMobile;
-        }
-        if (otpStorage.containsKey(formattedMobile) && otpStorage.get(formattedMobile).equals(enteredOtp)) {
-            otpStorage.remove(formattedMobile);
+    public boolean validateOtp(String identifier, String enteredOtp) {
+        String key = normalizeIdentifier(identifier);
+        if (otpStorage.containsKey(key) && otpStorage.get(key).equals(enteredOtp)) {
+            otpStorage.remove(key);
             return true;
         }
         return false;
+    }
+
+    private String normalizeIdentifier(String identifier) {
+        if (identifier == null) {
+            return "";
+        }
+        String trimmed = identifier.trim();
+        if (trimmed.contains("@")) {
+            return trimmed.toLowerCase();
+        }
+        String digits = trimmed.replaceAll("\\D", "");
+        if (trimmed.startsWith("+")) {
+            return "+" + digits;
+        }
+        return digits;
+    }
+
+    private boolean isPhoneIdentifier(String key) {
+        String normalized = key.replaceAll("\\D", "");
+        return !key.contains("@") && normalized.length() >= 6;
     }
 }

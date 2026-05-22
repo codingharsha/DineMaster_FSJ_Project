@@ -5,18 +5,66 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77accda6-0360-424a-9965-126265147b5d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/DineMaster_FSJ_Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DineMaster_FSJ_Project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/auth-service/src/main/java/com/dinemaster/auth/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/auth-service/src/main/java/com/dinemaster/auth/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/auth-service/src/main/java/com/dinemaster/auth/service/OtpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/auth-service/src/main/java/com/dinemaster/auth/service/OtpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/src/main/java/com/dinemaster/analytics/AnalyticsServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/src/main/java/com/dinemaster/analytics/client/MenuClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/src/main/java/com/dinemaster/analytics/client/OrderClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/src/main/java/com/dinemaster/analytics/client/ReservationClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/src/main/java/com/dinemaster/analytics/model/Analytics.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/src/main/java/com/dinemaster/analytics/model/AnalyticsData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/src/main/java/com/dinemaster/analytics/service/AnalyticsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/analytics-service/analytics-service/src/test/java/com/dinemaster/analytics/AnalyticsServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/auth-service/src/main/java/com/dinemaster/auth/config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/auth-service/src/main/java/com/dinemaster/auth/config/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/auth-service/src/main/java/com/dinemaster/auth/util/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/auth-service/src/main/java/com/dinemaster/auth/util/JwtUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/auth-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/auth-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/menu-service/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/menu-service/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/menu-service/menu-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/menu-service/menu-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/menu-service/menu-service/src/main/java/com/dinemaster/menu/controller/FoodItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/menu-service/menu-service/src/main/java/com/dinemaster/menu/controller/FoodItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/order-service/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/order-service/order-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/order-service/order-service/src/main/java/com/dinemaster/order/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/order-service/order-service/src/main/java/com/dinemaster/order/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/order-service/order-service/src/main/java/com/dinemaster/order/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/order-service/order-service/src/main/java/com/dinemaster/order/model/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/order-service/order-service/src/main/java/com/dinemaster/order/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/order-service/order-service/src/main/java/com/dinemaster/order/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/order-service/order-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/order-service/order-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/.idea/reservation-service.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/.idea/reservation-service.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/ReservationServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/ReservationServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/controller/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/controller/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/model/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/model/Reservation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/repository/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/repository/ReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/service/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/java/com/dinemaster/reservation/service/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/reservation-service/reservation-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/LoginPopup/LoginPopup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/LoginPopup/LoginPopup.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminBilling/AdminBilling.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminBilling/AdminBilling.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminDashboard/AdminDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminDashboard/AdminDashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminReviews/AdminReviews.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminReviews/AdminReviews.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminSettings/AdminSettings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminSettings/AdminSettings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminSidebar/AdminSidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminSidebar/AdminSidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminStaff/AdminStaff.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Admin/AdminStaff/AdminStaff.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Cart/Cart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Cart/Cart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Cart/Cart.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Cart/Cart.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Home/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Home/Home.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Home/Home.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Navbar/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Navbar/Navbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/Navbar/Navbar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/OrderOnline/OrderOnline.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/OrderOnline/OrderOnline.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/TableReservation/TableReservation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/TableReservation/TableReservation.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/TableReservation/TableReservation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Components/Customer/TableReservation/TableReservation.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Context/StoreContextProvider.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/dinemaster-app/src/Context/StoreContextProvider.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,10 +73,27 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="274" />
+    <option name="cachedIndexableFilesCount" value="401" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="HTML File" />
+        <option value="JSX File" />
+        <option value="SCSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -42,34 +107,71 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="39jxGyaEoID7mFreTiK3qUXTHfJ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.PaymentApplication.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.PaymentApplication.executor&quot;: &quot;Run&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;curr&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;vers1&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/Academics_And_Coding/Project Files/DineMaster_FSJ_Project&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMConfigurable&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Academics_And_Coding\Project Files\DineMaster_FSJ_Project\Frontend\dinemaster-app\src\Components\Customer\Menu" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.PaymentApplication">
+    <configuration name="OrderServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="order-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dinemaster.order.OrderServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PaymentApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="payment" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dinemaster.payment.PaymentApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -89,10 +191,39 @@
       <workItem from="1771575518433" duration="4945000" />
       <workItem from="1771615183909" duration="3090000" />
       <workItem from="1771817494155" duration="188000" />
+      <workItem from="1771871842832" duration="324000" />
+      <workItem from="1771872186487" duration="408000" />
+      <workItem from="1771872617860" duration="3060000" />
+      <workItem from="1771879336549" duration="688000" />
+      <workItem from="1771880048069" duration="310000" />
+      <workItem from="1771881458355" duration="4696000" />
+      <workItem from="1771904127124" duration="7116000" />
+      <workItem from="1771944504242" duration="4475000" />
+      <workItem from="1772000409693" duration="856000" />
+      <workItem from="1772045555109" duration="1544000" />
+      <workItem from="1772050285335" duration="384000" />
+      <workItem from="1772050694733" duration="163000" />
+      <workItem from="1772051517191" duration="6260000" />
+      <workItem from="1772138502938" duration="1970000" />
+      <workItem from="1772165661130" duration="7029000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:react" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:vite" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

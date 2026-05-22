@@ -1,63 +1,52 @@
 import React, { useContext } from 'react';
 import './KitchenNavbar.scss';
 import { StoreContext } from '../../../Context/StoreContext';
-import { FaFire, FaHistory, FaBoxOpen, FaSignOutAlt, FaClipboardList, FaUserTie } from 'react-icons/fa';
+import { FaBoxOpen, FaClipboardList, FaFireAlt, FaHistory, FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 const KitchenNavbar = () => {
-    
-    const { setToken, setUserName, setUserRole, kitchenTab, setKitchenTab } = useContext(StoreContext);
-    const navigate = useNavigate();
+  const { setToken, setUserName, setUserRole, kitchenTab, setKitchenTab, userName } = useContext(StoreContext);
+  const navigate = useNavigate();
 
-    const logout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userRole");
-        localStorage.removeItem("userName");
+  const onLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userName');
+    setToken('');
+    setUserName('');
+    setUserRole('customer');
+    setKitchenTab('live');
+    navigate('/');
+  };
 
-        setToken("");
-        setUserName("");
-        setUserRole("customer"); 
-        setKitchenTab("live");
-
-        navigate("/");
-        window.location.reload();
-    }
-
-    return (
-        <div className="kitchen-navbar">
-            <div className="k-logo-container">
-                 <div className="k-icon-wrapper">
-                    <FaFire className='k-logo-icon'/>
-                 </div>
-                 <div className="k-logo-txt-container">
-                    <div className='k-logo-txt'>DineMaster</div>
-                    <div className='k-logo-slogan'>KITCHEN STATION</div>
-                 </div>
-            </div>
-
-           <div className="k-nav-links">
-                <div className={`k-link ₹{kitchenTab === 'live' ? 'active' : ''}`} 
-                    onClick={() => setKitchenTab('live')}>
-                    <FaClipboardList /> Live Orders</div>
-                <div className={`k-link ₹{kitchenTab === 'history' ? 'active' : ''}`}
-                    onClick={() => setKitchenTab('history')}>
-                    <FaHistory /> History</div>
-                <div className={`k-link ₹{kitchenTab === 'inventory' ? 'active' : ''}`}
-                    onClick={() => setKitchenTab('inventory')}>
-                    <FaBoxOpen /> Inventory</div>
-            </div>
-
-            <div className="k-nav-right">
-                 <div className="k-profile-pill">
-                    <FaUserTie /> <span>Chef Manager</span>
-                 </div>
-                 
-                 <button onClick={logout} className="k-logout-btn">
-                    <FaSignOutAlt /> Logout
-                 </button>
-            </div>
+  return (
+    <header className="k-navbar">
+      <div className="k-brand">
+        <div className="fire-wrap"><FaFireAlt /></div>
+        <div>
+          <h2>DineMaster Kitchen</h2>
+          <p>Production Console</p>
         </div>
-    )
-}
+      </div>
+
+      <nav className="k-tabs">
+        <button className={kitchenTab === 'live' ? 'active' : ''} onClick={() => setKitchenTab('live')}>
+          <FaClipboardList /> Live
+        </button>
+        <button className={kitchenTab === 'history' ? 'active' : ''} onClick={() => setKitchenTab('history')}>
+          <FaHistory /> History
+        </button>
+        <button className={kitchenTab === 'inventory' ? 'active' : ''} onClick={() => setKitchenTab('inventory')}>
+          <FaBoxOpen /> Inventory
+        </button>
+      </nav>
+
+      <div className="k-user-strip">
+        <span><FaUserCircle /> {userName || 'Kitchen Staff'}</span>
+        <button onClick={onLogout}><FaSignOutAlt /> Logout</button>
+      </div>
+    </header>
+  );
+};
 
 export default KitchenNavbar;

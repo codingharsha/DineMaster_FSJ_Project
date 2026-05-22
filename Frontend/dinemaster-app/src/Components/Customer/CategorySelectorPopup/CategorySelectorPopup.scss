@@ -1,0 +1,105 @@
+@use '../../../variables.scss' as *;
+
+.floating-filter-wrap {
+    position: fixed;
+    right: 22px;
+    bottom: 24px;
+    z-index: 2500;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.floating-filter-wrap.offset-cart {
+    bottom: 120px;
+}
+
+.floating-filter-label {
+    background: #fff;
+    border: 1px solid rgba($primary-color, 0.25);
+    color: $primary-color;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 7px 11px;
+    border-radius: 999px;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+}
+
+.floating-filter-btn {
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(130deg, #f26622, #ff8d4d);
+    color: $white;
+    cursor: pointer;
+    box-shadow: 0 14px 28px rgba(242, 102, 34, 0.22);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+    &.active {
+        background: linear-gradient(130deg, #cf4f11, #f26622);
+        box-shadow: 0 16px 30px rgba(204, 73, 14, 0.32);
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.floating-filter-card {
+    width: min(240px, calc(100vw - 36px));
+    min-height: 420px;
+    overflow: hidden;
+    background: $white;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 10px;
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.16);
+}
+
+.floating-filter-option {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    padding: 12px 14px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.25;
+    cursor: pointer;
+    color: $text-dark;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &:hover {
+        background: #faf5f0;
+    }
+
+    &.active {
+        background: rgba($primary-color, 0.12);
+        color: $primary-color;
+        font-weight: 700;
+    }
+}
+
+@media (max-width: 720px) {
+    .floating-filter-wrap {
+        right: 16px;
+        bottom: 18px;
+    }
+}
+
+@media (max-width: 520px) {
+    .floating-filter-btn {
+        width: 52px;
+        height: 52px;
+    }
+}

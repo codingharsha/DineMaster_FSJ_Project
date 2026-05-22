@@ -1,75 +1,69 @@
 import React, { useContext } from 'react';
 import './AdminSidebar.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaChartLine, FaFileInvoiceDollar, FaFire, FaUsersCog, FaCogs, FaSignOutAlt, FaUsers, FaBullhorn, FaUtensils, FaUserCircle } from 'react-icons/fa';
+import {
+    FaChartLine, FaFileInvoiceDollar, FaFire, FaUsersCog,
+    FaCogs, FaSignOutAlt, FaUsers, FaBullhorn, FaUtensils,
+    FaUserCircle, FaChartBar
+} from 'react-icons/fa';
 import { StoreContext } from '../../../Context/StoreContext';
 
 const AdminSidebar = () => {
     const { setToken, setUserName, setUserRole } = useContext(StoreContext);
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const handleLogout = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userRole");
-      localStorage.removeItem("userName");
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("userName");
+        setToken("");
+        setUserName("");
+        setUserRole("customer");
+        navigate("/");
+        window.location.reload();
+    };
 
-      setToken("");
-      setUserName("");
-      setUserRole("customer"); 
+    const links = [
+        { to: "/admin/dashboard",  icon: <FaChartLine />,         label: "Dashboard"         },
+        { to: "/admin/sales",      icon: <FaChartBar />,          label: "Sales Reports"     },
+        { to: "/admin/billing",    icon: <FaFileInvoiceDollar />,  label: "Billing & Invoices"},
+        { to: "/admin/inventory",  icon: <FaUtensils />,          label: "Menu & Inventory"  },
+        { to: "/admin/staff",      icon: <FaUsersCog />,          label: "Staff & Payroll"   },
+        { to: "/admin/customers",  icon: <FaUsers />,             label: "Customers & CRM"   },
+        { to: "/admin/reviews",    icon: <FaBullhorn />,          label: "Reviews & Reports" },
+        { to: "/admin/settings",   icon: <FaCogs />,              label: "Settings"          },
+        { to: "/admin/profile",    icon: <FaUserCircle />,        label: "Profile"           },
+    ];
 
-      navigate("/");
-      window.location.reload();
-  }
-  return (
-    <div className="admin-sidebar">
-        <div className="admin-logo" style={{display:'flex', alignItems:'center', gap:'12px'}}>
-            <FaFire style={{fontSize:'28px', color:'#f26622'}}/>
-            <div>
-                <h2 style={{margin:0, lineHeight:1}}>DineMaster</h2>
-                <span style={{fontSize:'10px', letterSpacing:'1px', color:'#888'}}>ADMIN PANEL</span>
+    return (
+        <div className="admin-sidebar">
+            <div className="admin-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <FaFire style={{ fontSize: '28px', color: '#f26622' }} />
+                <div>
+                    <h2 style={{ margin: 0, lineHeight: 1 }}>DineMaster</h2>
+                    <span style={{ fontSize: '10px', letterSpacing: '1px', color: '#888' }}>ADMIN PANEL</span>
+                </div>
+            </div>
+
+            <div className="admin-nav">
+                {links.map(({ to, icon, label }) => (
+                    <NavLink
+                        key={to}
+                        to={to}
+                        className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}
+                    >
+                        {icon} {label}
+                    </NavLink>
+                ))}
+            </div>
+
+            <div className="admin-footer">
+                <button className="admin-logout" onClick={handleLogout}>
+                    <FaSignOutAlt /> Logout
+                </button>
             </div>
         </div>
-
-        <div className="admin-nav">
-            <NavLink to="/admin/dashboard" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
-                <FaChartLine /> Dashboard
-            </NavLink>
-            
-            <NavLink to="/admin/billing" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
-                <FaFileInvoiceDollar /> Billing & Invoices
-            </NavLink>
-
-            <NavLink to="/admin/inventory" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
-                <FaUtensils /> Menu & Inventory
-            </NavLink>
-            
-            <NavLink to="/admin/staff" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
-                <FaUsersCog /> Staff & Payroll
-            </NavLink>
-            
-            <NavLink to="/admin/settings" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
-                <FaCogs /> Settings
-            </NavLink>
-
-            <NavLink to="/admin/customers" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
-                <FaUsers /> Customers & CRM
-            </NavLink>
-
-            <NavLink to="/admin/reviews" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
-                <FaBullhorn /> Reviews & Reports
-            </NavLink>
-            <NavLink to="/admin/profile" className={({ isActive }) => isActive ? "admin-link active" : "admin-link"}>
-                <FaUserCircle /> Profile
-            </NavLink>
-        </div>
-
-        <div className="admin-footer">
-            <button className="admin-logout" onClick={handleLogout}>
-                <FaSignOutAlt /> Logout
-            </button>
-        </div>
-    </div>
-  )
-}
+    );
+};
 
 export default AdminSidebar;

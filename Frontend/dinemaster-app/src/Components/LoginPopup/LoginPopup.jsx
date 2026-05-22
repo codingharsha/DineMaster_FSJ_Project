@@ -2,129 +2,192 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPopup.scss';
 import { StoreContext } from '../../Context/StoreContext';
-import { FaMobileAlt, FaLock, FaUser, FaTimes } from "react-icons/fa"; 
+import { FaTimes } from "react-icons/fa";
 
 const LoginPopup = ({ setShowLogin }) => {
-
-  const {sendOtp, verifyOtp } = useContext(StoreContext);
+  const { checkIdentity,sendOtp ,verifyOtp, loginWithPassword } = useContext(StoreContext);
   const navigate = useNavigate();
 
-  const [currStep, setCurrStep] = useState(1);
+  const [step, setStep] = useState("IDENTIFIER");
+  const [authMethod, setAuthMethod] = useState("");
   const [isNewUser, setIsNewUser] = useState(false);
-  const [data, setData] = useState({
-    name: "",
-    mobile: "",
-    otp: ""
-  });
+  const [identifier, setIdentifier] = useState("");
+  const [name, setName] = useState("");
+  const [otp, setOtp] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData(prev => ({...prev, [name]: value}));
-  }
-
-  // const onLogin = async(event) =>{
-  //   event.preventDefault();
-  //
-  //   if(currStep == "get-otp"){
-  //       const success = await sendOtp(data.mobile);
-  //       if(success){
-  //           setCurrStep("verify");
-  //       }else{
-  //           const success = await verifyOtp(data);
-  //           if(success){
-  //               setShowLogin(false);
-  //           }
-  //       }
-  //   }
-  // }
-
-  const handleSendOtp = async(e) => {
-      e.preventDefault();
-      if(data.mobile.length < 10){
-          alert("Please enter a valid mobile number!");
-          return;
-      }
-
-      const result = await sendOtp(data.mobile);
-        if (result) {
-        setIsNewUser(!result.userExists);
-        setCurrStep(2);
-        } else {
-        alert("Failed to send OTP. Check backend.");
-      }
+  const routeByTokenRole = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/");
+      return;
+    }
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const role = (payload?.roles?.[0] || "").replace("ROLE_", "");
+      if (role === "ADMIN") navigate("/admin/dashboard");
+      else if (role === "KITCHEN_STAFF") navigate("/kitchen");
+      else navigate("/");
+    } catch {
+      navigate("/");
+    }
   };
 
-const handleVerifyOtp = async (e) => {
-    e.preventDefault();
-
-    const success = await verifyOtp(data);
-
-    if (success) {
-        setShowLogin(false);
-
-        const role = localStorage.getItem("userRole");
-
-        if (role === "ADMIN") {
-            navigate("/admin/dashboard");
-        } else if (role === "KITCHEN_STAFF") {
-            navigate("/kitchen");
-        } else {
-            navigate("/");
-        }
+  const handleIdentifierSubmit = async (event) => {
+    event.preventDefault();
+    if (!identifier.trim()) {
+      alert("Please enter mobile number or email.");
+      return;
     }
-};
+    setLoading(true);
+    try {
+      const result = await checkIdentity(identifier.trim());
+      if (result?.authMethod === "OTP") {
+        await sendOtp(identifier.trim());
+      }
+      setAuthMethod(result?.authMethod || "");
+      setIsNewUser(!!result?.newUser);
+      setStep("AUTH");
+    } catch (error) {
+      alert(error?.response?.data?.message || "Identity check failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOtpSubmit = async (event) => {
+    event.preventDefault();
+    if (!/^\d{6}$/.test(otp)) {
+      alert("Please enter a valid 6-digit OTP.");
+      return;
+    }
+    if (isNewUser && !name.trim()) {
+      alert("Please enter your name.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const success = await verifyOtp({
+        identifier: identifier.trim(),
+        otp,
+        name: name.trim(),
+      });
+      if (!success) {
+        alert("Unable to complete login. Please try again.");
+        return;
+      }
+      setShowLogin(false);
+      routeByTokenRole();
+    } catch (error) {
+      alert(error.message || "OTP verification failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePasswordSubmit = async (event) => {
+    event.preventDefault();
+    if (!password.trim()) {
+      alert("Please enter password.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await loginWithPassword({ identifier: identifier.trim(), password });
+      setShowLogin(false);
+      routeByTokenRole();
+    } catch (error) {
+      alert(error.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-      <div className='login-popup'>
-          <div className="login-popup-container">
-              <div className="login-popup-title">
-                  <h2>{currStep === 1 ? "Login" : "Verification"}</h2>
-                  <FaTimes
-                      onClick={() => setShowLogin(false)}
-                      className="close-icon"
-                      style={{ cursor: "pointer", fontSize: "18px" }}
-                  />
-              </div>
-
-              <form className="login-popup-inputs">
-                  {currStep === 1 && (
-                      <>
-                          <div className="input-group">
-                              <FaMobileAlt className="input-icon"/>
-                              <input name="mobile" type="tel" placeholder='Mobile Number' value={data.mobile} onChange={onChangeHandler} required />
-                          </div>
-                          <button onClick={handleSendOtp}>Continue</button>
-                      </>
-                  )}
-
-                  {currStep === 2 && (
-                      <>
-                          <p className="otp-sent-text">Enter OTP sent to <b>{data.mobile}</b></p>
-                          {isNewUser && (
-                            <div className="input-group">
-                                <FaUser className="input-icon"/>
-                                <input
-                                name="name"
-                                type="text"
-                                placeholder="Your Name"
-                                value={data.name}
-                                onChange={onChangeHandler}
-                                required/>
-                            </div>)
-                           }
-                          <div className="input-group">
-                              <FaLock className="input-icon"/>
-                              <input name="otp" type="text" placeholder='Enter 4-digit OTP' value={data.otp} onChange={onChangeHandler} maxLength={4} required />
-                          </div>
-                          <button onClick={handleVerifyOtp}>Verify & Proceed</button>
-                          <p className="resend-text" onClick={() => setCurrStep(1)}>Wrong number?</p>
-                      </>
-                  )}
-              </form>
+    <div className='login-popup'>
+      <div className="login-popup-container">
+        <div className="login-accent-strip" />
+        <div className="login-popup-title">
+          <div>
+            <h2>Welcome Back</h2>
+            <p className="title-subtext">
+              {step === "IDENTIFIER"
+                ? "Enter mobile number or email to continue"
+                : authMethod === "PASSWORD"
+                  ? "Enter your work account password"
+                  : "Enter the 6-digit OTP sent to your identifier"}
+            </p>
           </div>
+          <FaTimes onClick={() => setShowLogin(false)} className="close-icon" />
+        </div>
+
+        {step === "IDENTIFIER" && (
+          <form className="login-popup-inputs" onSubmit={handleIdentifierSubmit}>
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder='Mobile Number or Email'
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" disabled={loading}>{loading ? "Checking..." : "Continue"}</button>
+          </form>
+        )}
+
+        {step === "AUTH" && authMethod === "OTP" && (
+          <form className="login-popup-inputs" onSubmit={handleOtpSubmit}>
+            {isNewUser && (
+              <div className="input-group">
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+            )}
+            <div className="input-group">
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                placeholder="6-digit OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                required
+              />
+            </div>
+            <button type="submit" disabled={loading}>{loading ? "Verifying..." : "Verify & Proceed"}</button>
+            <p className="resend-text" onClick={() => setStep("IDENTIFIER")}>Change identifier</p>
+          </form>
+        )}
+
+        {step === "AUTH" && authMethod === "PASSWORD" && (
+          <form className="login-popup-inputs" onSubmit={handlePasswordSubmit}>
+            <div className="input-group">
+              <input
+                type="password"
+                placeholder='Password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" disabled={loading}>{loading ? "Signing in..." : "Login"}</button>
+            <p className="resend-text" onClick={() => alert("Please contact Admin to reset your work account password.")}>
+              Forgot Password?
+            </p>
+            <p className="resend-text" onClick={() => setStep("IDENTIFIER")}>Use another identifier</p>
+          </form>
+        )}
       </div>
-  )
-}
+    </div>
+  );
+};
 
 export default LoginPopup;

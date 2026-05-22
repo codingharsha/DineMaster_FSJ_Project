@@ -18,13 +18,19 @@ public class AppUserDetailsService implements UserDetailsService {
     private UserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String mobileNumber) throws UsernameNotFoundException {
-        User user = repository.findByMobileNumber(mobileNumber)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with mobile: " + mobileNumber));
+    public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
+        User user;
+        if (identifier != null && identifier.contains("@")) {
+            user = repository.findByEmailIgnoreCase(identifier.toLowerCase())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + identifier));
+        } else {
+            user = repository.findByMobileNumber(identifier == null ? "" : identifier.replaceAll("\\D", ""))
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with mobile: " + identifier));
+        }
 
         return new org.springframework.security.core.userdetails.User(
-                user.getMobileNumber(),
-                "",
+                identifier,
+                user.getPasswordHash() == null ? "" : user.getPasswordHash(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
         );
     }

@@ -10,6 +10,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+    gap: 20px;
 }
 
 .section-title {
@@ -22,31 +23,37 @@
 .controls {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+    margin-left: auto;
 }
 
 .view-all-btn {
-    padding: 8px 20px;
+    height: 40px;
+    padding: 0 20px;
     border: 1px solid #ddd;
     background: transparent;
     border-radius: 20px;
     font-weight: 600;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 0;
     color: #555;
     font-size: 13px;
+    line-height: 1;
     transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
-        background-color: #262626;
+        background: $btn-gradient;
         color: $white;
-        border-color: #262626;
+        border-color: transparent;
     }
 }
 
 .arrow-btn {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: 1px solid #ddd;
     display: flex;
@@ -56,11 +63,14 @@
     font-size: 14px;
     cursor: pointer;
     background: white;
+    color: #262626;
+    padding: 0;
+    line-height: 1;
 
     &:hover {
-        background-color: #262626;
+        background: $btn-gradient;
         color: $white;
-        border-color: #262626;
+        border-color: transparent;
     }
 }
 
@@ -95,8 +105,9 @@
 }
 
 .card-image {
-    width: 45%;
-    height: 100%; 
+    width: 42%;
+    height: 100%;
+    min-height: 100%;
     position: relative;
     background-size: cover;
     background-position: center;
@@ -124,7 +135,7 @@
 }
 
 .card-content {
-    width: 55%;
+    width: 58%;
     padding: 25px;
     display: flex;
     flex-direction: column;
@@ -132,7 +143,7 @@
 }
 
 .card-title {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     line-height: 1.4;
     color: #262626;

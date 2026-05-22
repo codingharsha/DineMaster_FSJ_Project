@@ -1,0 +1,134 @@
+.feedback-page {
+  min-height: 100vh;
+  background: #f8f4f0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 16px;
+}
+
+.feedback-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  padding: 40px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.feedback-header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 1.8rem;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+  }
+  p { color: #888; font-size: 0.95rem; }
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 500px) { grid-template-columns: 1fr; }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label { font-size: 13px; font-weight: 600; color: #555; }
+
+  input, textarea {
+    padding: 10px 14px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    font-family: inherit;
+    resize: vertical;
+
+    &:focus { outline: none; border-color: #f26622; }
+  }
+}
+
+.ratings-row {
+  display: flex;
+  gap: 32px;
+
+  @media (max-width: 500px) { flex-direction: column; gap: 16px; }
+}
+
+.star-picker {
+  label { font-size: 13px; font-weight: 600; color: #555; display: block; margin-bottom: 8px; }
+
+  .stars {
+    display: flex;
+    gap: 6px;
+
+    .star {
+      font-size: 28px;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.15s, transform 0.1s;
+
+      &.active { color: #f4a523; }
+      &:hover { transform: scale(1.2); }
+    }
+  }
+}
+
+.feedback-error {
+  color: #e74c3c;
+  font-size: 13px;
+  background: #fef0f0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ffd0d0;
+  margin: 0;
+}
+
+.submit-feedback-btn {
+  background: #f26622;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover { background: #d4540f; }
+  &:active { transform: scale(0.98); }
+  &:disabled { background: #ccc; cursor: not-allowed; }
+}
+
+.feedback-success {
+  text-align: center;
+  padding: 80px 20px;
+
+  .success-icon { font-size: 64px; margin-bottom: 16px; }
+  h2 { font-size: 1.6rem; color: #27ae60; margin-bottom: 8px; }
+  p { color: #888; margin-bottom: 24px; }
+
+  button {
+    background: #f26622;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+}
