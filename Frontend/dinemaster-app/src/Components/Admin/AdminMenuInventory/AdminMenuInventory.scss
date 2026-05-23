@@ -1,5 +1,18 @@
 @use '../../../variables.scss' as *;
 
+.admin-container {
+    display: flex;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 30px;
+    margin-left: 250px;
+    box-sizing: border-box;
+}
+
 .mi-header {
     display: flex;
     justify-content: space-between;
@@ -325,6 +338,11 @@
 }
 
 @media (max-width: 900px) {
+    .admin-content {
+        margin-left: 0;
+        padding: 18px;
+    }
+
     .mi-header {
         flex-direction: column;
         align-items: flex-start;

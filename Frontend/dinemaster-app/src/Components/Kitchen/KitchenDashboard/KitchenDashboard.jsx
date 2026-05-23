@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import './KitchenDashboard.scss';
 import { StoreContext } from '../../../Context/StoreContext';
-import { FaCheckCircle, FaClock, FaExclamationTriangle, FaFire, FaSearch, FaTimesCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaClock, FaExclamationTriangle, FaFire, FaSearch, FaTimesCircle, FaUserCircle } from 'react-icons/fa';
 import { kitchen_active_orders, kitchen_history_data } from '../../../assets/assets';
 
 const ORDER_API_URL = 'http://localhost:8082/orders';
@@ -17,7 +17,7 @@ const STATUS = {
 };
 
 const KitchenDashboard = () => {
-  const { kitchenTab, food_list } = useContext(StoreContext);
+  const { kitchenTab, food_list, userName } = useContext(StoreContext);
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(false);
   const [kitchenError, setKitchenError] = useState('');
@@ -94,6 +94,58 @@ const KitchenDashboard = () => {
 
   const prettyStatus = (status) => status?.replace('_', ' ') || 'UNKNOWN';
 
+  const getCurrentShiftLabel = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Morning Shift';
+    if (hour < 18) return 'Afternoon Shift';
+    return 'Evening Shift';
+  };
+
+  const staffIdentity = useMemo(() => {
+    let resolvedName = userName || localStorage.getItem('userName') || 'Kitchen Staff';
+    const resolvedRole = (localStorage.getItem('userRole') || 'KITCHEN_STAFF')
+      .replace('_', ' ')
+      .toLowerCase()
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+    try {
+      const token = localStorage.getItem('token');
+      if (token && !resolvedName) {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        resolvedName = payload?.name || resolvedName;
+      }
+    } catch {
+      // no-op fallback to local storage
+    }
+    return {
+      name: resolvedName,
+      role: resolvedRole,
+      shift: getCurrentShiftLabel()
+    };
+  }, [userName]);
+
+  const getPriorityMeta = (order) => {
+    const elapsed = getElapsedMinutes(order.orderTime);
+    if (order.status === STATUS.READY) {
+      return { score: 3, label: 'Ready', className: 'prio-ready', delayed: false };
+    }
+    if (order.status === STATUS.COOKING) {
+      const delayed = elapsed >= 25;
+      return {
+        score: 2,
+        label: delayed ? 'High Priority' : 'Medium Priority',
+        className: delayed ? 'prio-high' : 'prio-medium',
+        delayed
+      };
+    }
+    const delayed = elapsed >= 20;
+    return {
+      score: 1,
+      label: delayed ? 'High Priority' : 'Medium Priority',
+      className: delayed ? 'prio-high' : 'prio-medium',
+      delayed
+    };
+  };
+
   const searchedOrders = useMemo(() => {
     const keyword = searchText.trim().toLowerCase();
     return orders.filter((order) => {
@@ -104,6 +156,11 @@ const KitchenDashboard = () => {
       const byCustomer = order.customerName?.toLowerCase().includes(keyword);
       const byItem = order.items?.some((it) => it.name?.toLowerCase().includes(keyword));
       return byId || byCustomer || byItem;
+    }).sort((a, b) => {
+      const aPriority = getPriorityMeta(a);
+      const bPriority = getPriorityMeta(b);
+      if (aPriority.score !== bPriority.score) return aPriority.score - bPriority.score;
+      return getElapsedMinutes(b.orderTime) - getElapsedMinutes(a.orderTime);
     });
   }, [orders, liveStatusFilter, searchText]);
 
@@ -190,9 +247,21 @@ const KitchenDashboard = () => {
           <h1>Kitchen Command Center</h1>
           <p>Live queue control, prep tracking, and stock visibility in one workflow.</p>
         </div>
-        <button className="refresh-btn" onClick={fetchKitchenOrders} disabled={loadingOrders}>
-          {loadingOrders ? 'Refreshing...' : 'Refresh Queue'}
-        </button>
+        <div className="kitchen-hero-right">
+          <button className="refresh-btn" onClick={fetchKitchenOrders} disabled={loadingOrders}>
+            {loadingOrders ? 'Refreshing...' : 'Refresh Queue'}
+          </button>
+          <div className="k-staff-pill">
+            <FaUserCircle />
+            <div className="k-staff-meta">
+              <h4>Welcome back, {staffIdentity.name}</h4>
+              <div className="k-staff-tags">
+                <span className="role-badge">{staffIdentity.role}</span>
+                <span className="shift-badge">{staffIdentity.shift}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {kitchenError && <div className="kitchen-alert">{kitchenError}</div>}
@@ -230,26 +299,43 @@ const KitchenDashboard = () => {
           </div>
 
           <div className="k-order-grid">
+            {loadingOrders && Array.from({ length: 6 }).map((_, idx) => (
+              <article key={`sk-${idx}`} className="k-order-card skeleton">
+                <div className="sk-line long" />
+                <div className="sk-line mid" />
+                <div className="sk-line short" />
+                <div className="sk-chip" />
+              </article>
+            ))}
             {searchedOrders.length === 0 && (
-              <div className="k-empty-state">No orders for the selected filter.</div>
+              !loadingOrders && (
+                <div className="k-empty-state">
+                  <h3>No active kitchen orders</h3>
+                  <p>New placed or cooking orders will appear here automatically.</p>
+                </div>
+              )
             )}
-            {searchedOrders.map((order) => {
+            {!loadingOrders && searchedOrders.map((order) => {
               const elapsed = getElapsedMinutes(order.orderTime);
+              const priority = getPriorityMeta(order);
               return (
                 <article
                   key={order.id}
-                  className={`k-order-card ${elapsed >= 20 ? 'delay' : ''} ${order.status?.toLowerCase()}`}
+                  className={`k-order-card ${priority.delayed ? 'delay pulse' : ''} ${order.status?.toLowerCase()} ${priority.className}`}
                 >
                   <header>
                     <div>
                       <h3>#{order.id}</h3>
                       <small>{order.customerName || `Table ${order.tableNumber || '-'}`}</small>
                     </div>
-                    <span className="status-chip">{prettyStatus(order.status)}</span>
+                    <div className="k-chip-stack">
+                      <span className={`priority-chip ${priority.className}`}>{priority.label}</span>
+                      <span className="status-chip">{prettyStatus(order.status)}</span>
+                    </div>
                   </header>
 
                   <div className="k-meta-line">
-                    <span><FaClock /> {elapsed} min</span>
+                    <span className={elapsed >= 20 ? 'urgent-time' : ''}><FaClock /> {elapsed} min waiting</span>
                     <span>Table {order.tableNumber || '-'}</span>
                   </div>
 

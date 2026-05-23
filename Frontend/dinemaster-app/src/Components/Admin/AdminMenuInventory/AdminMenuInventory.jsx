@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import './AdminMenuInventory.scss';
 import { FaEdit, FaPlus, FaBoxOpen, FaUtensils, FaTrash, FaHistory, FaRedo } from 'react-icons/fa';
 import { StoreContext } from '../../../Context/StoreContext';
+import AdminPageLayout from '../AdminPageLayout/AdminPageLayout';
 
 const INVENTORY_KEY = 'dinemaster_inventory_records_v1';
 const HISTORY_KEY = 'dinemaster_inventory_history_v1';
@@ -230,7 +231,7 @@ const AdminMenuInventory = () => {
     };
 
     return (
-        <div className="admin-content">
+        <AdminPageLayout>
             <div className="mi-header">
                 <h1>Menu & Inventory Control</h1>
                 <div className="mi-tabs">
@@ -380,7 +381,7 @@ const AdminMenuInventory = () => {
                     </div>
                 </div>
             )}
-        </div>
+        </AdminPageLayout>
     );
 };
 

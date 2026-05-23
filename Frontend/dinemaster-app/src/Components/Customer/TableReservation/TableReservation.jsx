@@ -1,4 +1,4 @@
-﻿import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import './TableReservation.scss';
 import {
@@ -50,27 +50,73 @@ const TABLES = {
 
 const TableReservation = ({onReservationSuccess}) => {
     const navigate = useNavigate();
-    const { addBooking, getTotalCartAmount } = useContext(StoreContext);
+    const {
+        addBooking,
+        getTotalCartAmount,
+        reservationDraft,
+        updateReservationDraft,
+        clearReservationState
+    } = useContext(StoreContext);
     const { showError } = useContext(ErrorContext);
     const { token } = useContext(StoreContext);
 
-    const [date, setDate] = useState('');
-    const [time, setTime] = useState('');
+    const [date, setDate] = useState(reservationDraft?.reservationDate || '');
+    const [time, setTime] = useState(reservationDraft?.timeSlot || '');
     const [loading, setLoading] = useState(false);
-    const [partySize, setPartySize] = useState(2);
-    const [selectedTable, setSelectedTable] = useState(null);
+    const [partySize, setPartySize] = useState(reservationDraft?.partySize || 2);
+    const [selectedTable, setSelectedTable] = useState(reservationDraft?.selectedTable || null);
+    const [showSavedHint, setShowSavedHint] = useState(false);
+    const [restoredState, setRestoredState] = useState(false);
+
+    const pageRef = useRef(null);
+    const allTables = useMemo(() => Object.values(TABLES).flat(), []);
+
+    useEffect(() => {
+        if (reservationDraft?.selectedTable?.id) {
+            const restoredTable = allTables.find((table) => table.id === reservationDraft.selectedTable.id);
+            if (restoredTable) {
+                setSelectedTable(restoredTable);
+                setRestoredState(true);
+                setShowSavedHint(true);
+                setTimeout(() => setRestoredState(false), 900);
+                setTimeout(() => setShowSavedHint(false), 3500);
+            }
+        }
+    }, [allTables, reservationDraft?.selectedTable?.id]);
+
+    useEffect(() => {
+        const scrollKey = 'reservationPageScrollY';
+        const savedScroll = sessionStorage.getItem(scrollKey);
+        if (savedScroll && pageRef.current) {
+            pageRef.current.scrollTop = Number(savedScroll);
+        }
+
+        return () => {
+            if (pageRef.current) {
+                sessionStorage.setItem(scrollKey, String(pageRef.current.scrollTop));
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        updateReservationDraft({
+            reservationDate: date,
+            timeSlot: time,
+            partySize,
+            selectedTable
+        });
+    }, [date, time, partySize, selectedTable, updateReservationDraft]);
 
     const reserveTable = async () => {
         if (!date || !time || partySize < 1 || !selectedTable) {
-            showError("Please select date, time, party size and a table");
+            showError('Please select date, time, party size and a table');
             return;
         }
 
         try {
             setLoading(true);
-            console.log("TOKEN BEING SENT:", token);
             const response = await axios.post(
-                "http://localhost:8083/reservations",
+                'http://localhost:8083/reservations',
                 {
                     date,
                     time,
@@ -85,8 +131,7 @@ const TableReservation = ({onReservationSuccess}) => {
             );
 
             const reservationId = response.data.reservationId;
-
-            localStorage.setItem("reservationId", reservationId);
+            localStorage.setItem('reservationId', reservationId);
 
             if (onReservationSuccess) {
                 onReservationSuccess(reservationId);
@@ -94,7 +139,7 @@ const TableReservation = ({onReservationSuccess}) => {
         } catch (error) {
             const message =
                 error?.response?.data?.message ||
-                "Unable to reserve table. Please try again.";
+                'Unable to reserve table. Please try again.';
 
             showError(message);
         } finally {
@@ -156,12 +201,13 @@ const TableReservation = ({onReservationSuccess}) => {
     };
 
     return (
-        <div className="reservation-page">
+        <div ref={pageRef} className={`reservation-page customer-page-shell ${restoredState ? 'restored' : ''}`}>
             <div className="res-header">
                 <h1>
                     <FaConciergeBell className="header-icon" /> Reserve Your Table
                 </h1>
                 <p>Reservation is required for checkout. Food items are optional.</p>
+                {showSavedHint && <p className="saved-hint">Your reservation details have been saved.</p>}
             </div>
 
             <div className="res-main-container">
@@ -236,6 +282,22 @@ const TableReservation = ({onReservationSuccess}) => {
                         </div>
                     </div>
 
+                    {(date || time || selectedTable || partySize !== 2) && (
+                        <button
+                            className="reset-reservation-btn"
+                            type="button"
+                            onClick={() => {
+                                setDate('');
+                                setTime('');
+                                setPartySize(2);
+                                setSelectedTable(null);
+                                clearReservationState();
+                            }}
+                        >
+                            Reset Reservation
+                        </button>
+                    )}
+
                     <div className="legend">
                         <span>
                             <span className="dot avail" />
@@ -268,7 +330,7 @@ const TableReservation = ({onReservationSuccess}) => {
                                     {hasFoodInCart ? 'Update Food Items' : 'Add Food Items (Optional)'}
                                 </button>
                                 <button
-                                    className="pri-btn"
+                                    className="pri-btn dm-primary-btn"
                                     onClick={async () => {
                                         await reserveTable();
                                         handleBookingAction('/cart');

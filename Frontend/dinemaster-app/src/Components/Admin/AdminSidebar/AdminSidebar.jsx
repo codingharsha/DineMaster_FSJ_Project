@@ -9,18 +9,12 @@ import {
 import { StoreContext } from '../../../Context/StoreContext';
 
 const AdminSidebar = () => {
-    const { setToken, setUserName, setUserRole } = useContext(StoreContext);
+    const { resetCustomerState } = useContext(StoreContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userRole");
-        localStorage.removeItem("userName");
-        setToken("");
-        setUserName("");
-        setUserRole("customer");
+        resetCustomerState();
         navigate("/");
-        window.location.reload();
     };
 
     const links = [

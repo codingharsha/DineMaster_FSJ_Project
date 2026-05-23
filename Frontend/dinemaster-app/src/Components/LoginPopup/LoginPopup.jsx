@@ -5,7 +5,7 @@ import { StoreContext } from '../../Context/StoreContext';
 import { FaTimes } from "react-icons/fa";
 
 const LoginPopup = ({ setShowLogin }) => {
-  const { checkIdentity,sendOtp ,verifyOtp, loginWithPassword } = useContext(StoreContext);
+  const { sendOtp, verifyOtp, loginWithPassword } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const [step, setStep] = useState("IDENTIFIER");
@@ -16,6 +16,9 @@ const LoginPopup = ({ setShowLogin }) => {
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const isEmail = (value) => /\S+@\S+\.\S+/.test(value);
+  const isPhone = (value) => /^\d{10}$/.test((value || "").replace(/\D/g, ""));
 
   const routeByTokenRole = () => {
     const token = localStorage.getItem("token");
@@ -36,21 +39,31 @@ const LoginPopup = ({ setShowLogin }) => {
 
   const handleIdentifierSubmit = async (event) => {
     event.preventDefault();
-    if (!identifier.trim()) {
-      alert("Please enter mobile number or email.");
+    const trimmedIdentifier = identifier.trim();
+    if (!trimmedIdentifier) {
+      alert("Please enter mobile number or email");
       return;
     }
+
+    const emailInput = isEmail(trimmedIdentifier);
+    const phoneInput = isPhone(trimmedIdentifier);
+    if (!emailInput && !phoneInput) {
+      alert("Enter a valid 10-digit phone number or email.");
+      return;
+    }
+
     setLoading(true);
     try {
-      const result = await checkIdentity(identifier.trim());
-      if (result?.authMethod === "OTP") {
-        await sendOtp(identifier.trim());
+      if (phoneInput) {
+        await sendOtp(trimmedIdentifier.replace(/\D/g, ""));
+        setAuthMethod("OTP");
+      } else {
+        setAuthMethod("PASSWORD");
       }
-      setAuthMethod(result?.authMethod || "");
-      setIsNewUser(!!result?.newUser);
+      setIsNewUser(false);
       setStep("AUTH");
     } catch (error) {
-      alert(error?.response?.data?.message || "Identity check failed");
+      alert(error.message || "Unable to continue");
     } finally {
       setLoading(false);
     }
@@ -69,15 +82,23 @@ const LoginPopup = ({ setShowLogin }) => {
 
     setLoading(true);
     try {
-      const success = await verifyOtp({
+      const result = await verifyOtp({
         identifier: identifier.trim(),
         otp,
         name: name.trim(),
       });
-      if (!success) {
+
+      if (result?.newUserRequired) {
+        setIsNewUser(true);
+        alert("Please enter your name to complete first-time signup.");
+        return;
+      }
+
+      if (!result?.authenticated) {
         alert("Unable to complete login. Please try again.");
         return;
       }
+
       setShowLogin(false);
       routeByTokenRole();
     } catch (error) {
@@ -95,8 +116,12 @@ const LoginPopup = ({ setShowLogin }) => {
     }
     setLoading(true);
     try {
-      await loginWithPassword({ identifier: identifier.trim(), password });
+      const response = await loginWithPassword({ identifier: identifier.trim(), password });
       setShowLogin(false);
+      if (response?.passwordChangeRequired) {
+        navigate("/change-password-first");
+        return;
+      }
       routeByTokenRole();
     } catch (error) {
       alert(error.message || "Login failed");

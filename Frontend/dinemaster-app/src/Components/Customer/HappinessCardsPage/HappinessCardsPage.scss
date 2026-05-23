@@ -206,6 +206,7 @@
     transition: 0.2s;
 
     &:hover { background: $primary-color; color: $white; }
+    &.added { background: #1f8c45; border-color: #1f8c45; color: #fff; }
 }
 
 .gift-container-simple {
@@ -290,7 +291,32 @@
     .add-btn {
         background: #e65100; color: $white; border: none; padding: 8px 20px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.2s;
         &:hover { background: #bf360c; }
+        &.added { background: #1f8c45; }
     }
+}
+
+.gift-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 15, 26, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2100;
+    padding: 20px;
+}
+
+.gift-confirm-card {
+    width: min(520px, 95vw);
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #f1dfd3;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.2);
+
+    h3 { margin: 0 0 8px 0; color: #d65b1e; }
+    p { margin: 6px 0; color: #444; font-size: 14px; }
+    .delivery-text { color: #1f8c45; font-weight: 600; }
 }
 
 @media (max-width: 850px) {

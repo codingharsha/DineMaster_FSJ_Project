@@ -14,12 +14,13 @@ const EMPTY_STAFF = {
 
 const AdminStaff = () => {
     const {
-        fetchStaff,
+        fetchStaffMembers,
         addStaffMember,
         updateStaffMember,
         deleteStaffMember,
+        deleteStaffAccount,
         reportStaffIssue,
-        createStaffAccount,
+        promoteCustomerToStaff,
     } = useContext(StoreContext);
 
     const [staffList, setStaffList] = useState([]);
@@ -28,26 +29,42 @@ const AdminStaff = () => {
     const [showCreateStaffForm, setShowCreateStaffForm] = useState(false);
     const [formData, setFormData] = useState(EMPTY_STAFF);
     const [newStaffAccount, setNewStaffAccount] = useState({
-        name: '',
-        mobileNumber: '',
-        email: '',
-        role: 'KITCHEN_STAFF',
+        customerPhoneNumber: '',
+        staffEmail: '',
         temporaryPassword: '',
     });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [creatingAccount, setCreatingAccount] = useState(false);
+    const [deleteTarget, setDeleteTarget] = useState(null);
 
     const load = useCallback(async () => {
         try {
-            const res = await fetchStaff();
-            setStaffList(res.data);
+            const res = await fetchStaffMembers();
+            const mappedStaff = (res.data || []).map((staff, index) => ({
+                id: staff.id,
+                name: staff.name || "Unnamed Staff",
+                role: staff.role || "KITCHEN_STAFF",
+                contact: staff.mobileNumber || "-",
+                email: staff.email || "-",
+                status: "Active",
+                performanceScore: index === 1 ? 62 : 80,
+                issuesReported: index === 1 ? 2 : 0,
+                isEmployeeOfMonth: index === 0,
+                nextPaymentDate: "1st of every month",
+                experience: "N/A",
+                joinDate: "N/A",
+                salary: 25000,
+                shiftStart: "09:00",
+                shiftEnd: "17:00"
+            }));
+            setStaffList(mappedStaff);
         } catch (e) {
             console.error(e);
         } finally {
             setLoading(false);
         }
-    }, [fetchStaff]);
+    }, [fetchStaffMembers]);
 
     useEffect(() => { load(); }, [load]);
 
@@ -63,59 +80,59 @@ const AdminStaff = () => {
             setShowForm(false);
             setFormData(EMPTY_STAFF);
         } catch {
-            alert('Error saving staff');
+            console.error('Error saving staff');
         } finally {
             setSaving(false);
         }
     };
 
-    const handleCreateStaffAccount = async () => {
-        const mobileNumber = newStaffAccount.mobileNumber.trim();
-        if (mobileNumber && !/^\d{10}$/.test(mobileNumber)) {
-            alert('Enter a valid 10-digit mobile number.');
+    const handlePromoteStaff = async () => {
+        const customerPhoneNumber = newStaffAccount.customerPhoneNumber.trim().replace(/\D/g, '');
+        if (!/^\d{10}$/.test(customerPhoneNumber)) {
+            console.error('Enter a valid 10-digit customer phone number.');
             return;
         }
-        if (!newStaffAccount.name.trim()) {
-            alert('Please enter staff name.');
-            return;
-        }
-        if (!newStaffAccount.email.trim()) {
-            alert('Please enter email.');
+        if (!newStaffAccount.staffEmail.trim()) {
+            console.error('Please enter staff email.');
             return;
         }
         if (newStaffAccount.temporaryPassword.trim().length < 6) {
-            alert('Temporary password should be at least 6 characters.');
+            console.error('Temporary password should be at least 6 characters.');
             return;
         }
 
         setCreatingAccount(true);
         try {
-            const res = await createStaffAccount({
-                ...newStaffAccount,
-                mobileNumber,
+            await promoteCustomerToStaff({
+                customerPhoneNumber,
+                staffEmail: newStaffAccount.staffEmail.trim(),
+                temporaryPassword: newStaffAccount.temporaryPassword,
             });
-            const created = res?.data;
-            alert(`Staff account created for ${created?.name || newStaffAccount.name}. Share temporary password securely.`);
             setShowCreateStaffForm(false);
             setNewStaffAccount({
-                name: '',
-                mobileNumber: '',
-                email: '',
-                role: 'KITCHEN_STAFF',
+                customerPhoneNumber: '',
+                staffEmail: '',
                 temporaryPassword: '',
             });
         } catch (e) {
             console.error(e);
-            const message = e?.response?.data?.message || 'Failed to create staff account.';
-            alert(message);
+            if (e?.response?.status === 404) {
+                console.error('Promotion endpoint not found. Restart auth-service with latest code to enable /admin/users/promote-staff.');
+                return;
+            }
+            const message = e?.response?.data?.message || 'Failed to promote customer to staff.';
+            console.error(message);
         } finally {
             setCreatingAccount(false);
         }
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm('Remove this staff member?')) return;
-        await deleteStaffMember(id);
+        try {
+            await deleteStaffAccount(id);
+        } catch {
+            await deleteStaffMember(id);
+        }
         await load();
     };
 
@@ -144,7 +161,7 @@ const AdminStaff = () => {
                 <header className="admin-header">
                     <h1>Staff and Payroll</h1>
                     <button className="add-staff-btn" onClick={() => setShowCreateStaffForm(true)}>
-                        <FaUserPlus /> Add New Staff
+                        <FaUserPlus /> Add a New Staff
                     </button>
                 </header>
 
@@ -160,7 +177,7 @@ const AdminStaff = () => {
                         <FaExclamationTriangle className="h-icon" />
                         <div>
                             <h3>Attention Needed</h3>
-                            <p>{staffList.filter((s) => s.issuesReported > 2).length} Staff Members</p>
+                            <p>{staffList.filter((s) => s.issuesReported > 0 || s.performanceScore < 70).length} Staff Members</p>
                         </div>
                     </div>
                     <div className="highlight-card payroll">
@@ -207,7 +224,7 @@ const AdminStaff = () => {
                                 <td style={{ display: 'flex', gap: '6px' }}>
                                     <button className="view-btn" onClick={() => setSelected(staff)}><FaEye /></button>
                                     <button className="view-btn" style={{ background: '#f0ad4e' }} onClick={() => openEdit(staff)}>Edit</button>
-                                    <button className="view-btn" style={{ background: '#e74c3c' }} onClick={() => handleDelete(staff.id)}><FaTrash /></button>
+                                    <button className="view-btn" style={{ background: '#e74c3c' }} onClick={() => setDeleteTarget(staff)}><FaTrash /></button>
                                 </td>
                             </tr>
                         ))}
@@ -233,6 +250,28 @@ const AdminStaff = () => {
                             <div className="modal-actions">
                                 <button className="close-modal" onClick={() => setSelected(null)}>Close</button>
                                 <button className="report-btn" onClick={() => { handleReportIssue(selectedStaff.id); setSelected(null); }}>Report Issue</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {deleteTarget && (
+                    <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
+                        <div className="modal-content staff-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 420 }}>
+                            <h3>Remove Staff Member</h3>
+                            <p>Are you sure you want to remove <b>{deleteTarget.name}</b> from active staff records?</p>
+                            <div className="modal-actions">
+                                <button className="close-modal" onClick={() => setDeleteTarget(null)}>Cancel</button>
+                                <button
+                                    className="report-btn"
+                                    style={{ background: '#e74c3c' }}
+                                    onClick={async () => {
+                                        await handleDelete(deleteTarget.id);
+                                        setDeleteTarget(null);
+                                    }}
+                                >
+                                    Remove
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -301,7 +340,7 @@ const AdminStaff = () => {
                     <div className="modal-overlay" onClick={() => setShowCreateStaffForm(false)}>
                         <div className="modal-content staff-modal staff-form-modal" onClick={(e) => e.stopPropagation()}>
                             <div className="modal-header">
-                                <h2>Create Staff Account</h2>
+                                <h2>Add a New Staff</h2>
                                 <button className="icon-close-btn" onClick={() => setShowCreateStaffForm(false)}>
                                     <FaTimes />
                                 </button>
@@ -311,51 +350,26 @@ const AdminStaff = () => {
                             <div className="staff-account-form-grid">
                                 <div>
                                     <label className="field-label">
-                                        Full Name
+                                        Customer Phone Number
                                     </label>
                                     <input
                                         type="text"
-                                        value={newStaffAccount.name}
-                                        onChange={(e) => setNewStaffAccount({ ...newStaffAccount, name: e.target.value })}
-                                        placeholder="Alex Smith"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="field-label">
-                                        Mobile Number (Optional)
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={newStaffAccount.mobileNumber}
-                                        onChange={(e) => setNewStaffAccount({ ...newStaffAccount, mobileNumber: e.target.value })}
+                                        value={newStaffAccount.customerPhoneNumber}
+                                        onChange={(e) => setNewStaffAccount({ ...newStaffAccount, customerPhoneNumber: e.target.value })}
                                         placeholder="9876543210"
                                     />
                                 </div>
 
                                 <div>
                                     <label className="field-label">
-                                        Email
+                                        Staff Email
                                     </label>
                                     <input
                                         type="email"
-                                        value={newStaffAccount.email}
-                                        onChange={(e) => setNewStaffAccount({ ...newStaffAccount, email: e.target.value })}
+                                        value={newStaffAccount.staffEmail}
+                                        onChange={(e) => setNewStaffAccount({ ...newStaffAccount, staffEmail: e.target.value })}
                                         placeholder="staff@dinemaster.com"
                                     />
-                                </div>
-
-                                <div>
-                                    <label className="field-label">
-                                        Role
-                                    </label>
-                                    <select
-                                        value={newStaffAccount.role}
-                                        onChange={(e) => setNewStaffAccount({ ...newStaffAccount, role: e.target.value })}
-                                    >
-                                        <option value="KITCHEN_STAFF">KITCHEN_STAFF</option>
-                                        <option value="ADMIN">ADMIN</option>
-                                    </select>
                                 </div>
 
                                 <div>
@@ -371,7 +385,7 @@ const AdminStaff = () => {
                                 </div>
 
                                 <div className="form-helper-text">
-                                    Share the temporary password securely. Staff will be forced to change it on first login.
+                                    Existing customer account will be promoted to KITCHEN_STAFF and forced to change password at first login.
                                 </div>
                             </div>
 
@@ -379,10 +393,10 @@ const AdminStaff = () => {
                                 <button className="close-modal" onClick={() => setShowCreateStaffForm(false)}>Cancel</button>
                                 <button
                                     className="save-btn"
-                                    onClick={handleCreateStaffAccount}
+                                    onClick={handlePromoteStaff}
                                     disabled={creatingAccount}
                                 >
-                                    {creatingAccount ? 'Creating...' : 'Create Account'}
+                                    {creatingAccount ? 'Creating...' : 'Create Staff Access'}
                                 </button>
                             </div>
                         </div>

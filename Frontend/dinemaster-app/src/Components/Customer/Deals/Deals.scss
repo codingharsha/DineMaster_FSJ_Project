@@ -71,6 +71,7 @@
 }
 
 .theme-orange .ticket-stub { background: linear-gradient(135deg, $primary-color, #ff8c55); }
+.theme-featured .ticket-stub { background: linear-gradient(135deg, #f5a300, #f26622); }
 .theme-blue .ticket-stub   { background: linear-gradient(135deg, #00529b, #0077d4); }
 .theme-green .ticket-stub  { background: linear-gradient(135deg, #1a9f5c, #2ecc71); }
 .theme-special .ticket-stub{ background: linear-gradient(135deg, #8e44ad, #c0392b); }
@@ -119,6 +120,14 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.action-btn-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .coupon-code-box {
@@ -169,4 +178,31 @@
 .punch-hole-bottom {
     bottom: -10px;
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.order-now-btn {
+    border: 0;
+    background: linear-gradient(130deg, #f68c3e, #e55e1a);
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease;
+
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 15px rgba(229, 94, 26, 0.25);
+    }
+}
+
+.featured-badge {
+    font-size: 11px;
+    font-weight: 700;
+    background: #fff6dd;
+    border: 1px solid #ffd98c;
+    color: #a86600;
+    border-radius: 999px;
+    padding: 5px 10px;
 }

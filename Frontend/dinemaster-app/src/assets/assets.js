@@ -124,6 +124,14 @@ export const food_list = [
 
 export const general_coupons = [
     {
+        id: 'g0',
+        title: "Universal Saver",
+        code: "SAVE100",
+        description: "Flat Rs.100 OFF on almost any order above Rs.499.",
+        type: "general",
+        featured: true
+    },
+    {
         id: 'g1',
         title: "50% OFF Welcome Bonus",
         code: "WELCOME50",
@@ -132,9 +140,9 @@ export const general_coupons = [
     },
     {
         id: 'g2',
-        title: "Free Delivery",
-        code: "FREEDEL",
-        description: "Save ₹40 on delivery charges. Applicable on orders above ₹499.",
+        title: "Weekend Dining 15% OFF",
+        code: "WEEKEND15",
+        description: "Get 15% OFF on dine-in bills above ₹999 during Friday-Sunday slots.",
         type: "general"
     },
     {

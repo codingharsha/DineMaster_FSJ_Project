@@ -135,3 +135,31 @@
     .split-cards-row { grid-template-columns: 1fr; }
     .rating-hero-card { flex-direction: column; align-items: flex-start; gap: 20px; .rating-right { align-items: flex-start; text-align: left; } }
 }
+.centered-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.centered-grid .review-item {
+  margin-bottom: 0;
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 14, 24, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #ececec;
+  padding: 18px;
+  width: min(92vw, 460px);
+}

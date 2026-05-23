@@ -2,6 +2,7 @@ import React from 'react';
 import './TrackOrder.scss';
 import { FaCheckCircle, FaMapMarkerAlt, FaMotorcycle, FaUtensils, FaClipboardCheck } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
+import { formatINR } from '../../../utils/customerUi';
 
 const TrackOrder = () => {
   const { orderId } = useParams();
@@ -10,23 +11,23 @@ const TrackOrder = () => {
     _id: orderId || 'ORD001',
     status: 'Out for delivery',
     items: [
-      { name: 'Chicken Biryani', quantity: 1, price: 12 },
-      { name: 'Paneer Butter Masala', quantity: 1, price: 10 },
+      { name: 'Chicken Biryani', quantity: 1, price: 320 },
+      { name: 'Paneer Butter Masala', quantity: 1, price: 260 }
     ],
-    amount: 24.0,
+    amount: 580,
     address: {
       street: '123, Gandhi Road',
       city: 'Coimbatore',
-      zip: '641001',
+      zip: '641001'
     },
-    estimatedTime: '25-30 mins',
+    estimatedTime: '25-30 mins'
   };
 
   const steps = [
     { status: 'Order Placed', icon: FaClipboardCheck },
     { status: 'Food Processing', icon: FaUtensils },
     { status: 'Out for delivery', icon: FaMotorcycle },
-    { status: 'Delivered', icon: FaCheckCircle },
+    { status: 'Delivered', icon: FaCheckCircle }
   ];
 
   const currentStepIndex = steps.findIndex((step) => step.status === orderDetails.status);
@@ -35,7 +36,9 @@ const TrackOrder = () => {
     <div className='track-order'>
       <div className="track-header">
         <h2>Track Order</h2>
-        <p>Order ID: <span>#{orderDetails._id}</span></p>
+        <p>
+          Order ID: <span>#{orderDetails._id}</span>
+        </p>
       </div>
 
       <div className="track-container">
@@ -60,7 +63,9 @@ const TrackOrder = () => {
             <FaMapMarkerAlt className="icon" />
             <div>
               <p className="label">Delivery Address</p>
-              <p className="value">{orderDetails.address.street}, {orderDetails.address.city}</p>
+              <p className="value">
+                {orderDetails.address.street}, {orderDetails.address.city}
+              </p>
             </div>
           </div>
 
@@ -77,8 +82,10 @@ const TrackOrder = () => {
           <div className="item-list">
             {orderDetails.items.map((item, idx) => (
               <div key={idx} className="item-row">
-                <span>{item.quantity} x {item.name}</span>
-                <span>Rs.{item.price}</span>
+                <span>
+                  {item.quantity} x {item.name}
+                </span>
+                <span>{formatINR(item.price)}</span>
               </div>
             ))}
           </div>
@@ -87,7 +94,7 @@ const TrackOrder = () => {
 
           <div className="total-row">
             <span>Total Amount</span>
-            <span>Rs.{orderDetails.amount}</span>
+            <span>{formatINR(orderDetails.amount)}</span>
           </div>
 
           <button className="help-btn">Need Help?</button>

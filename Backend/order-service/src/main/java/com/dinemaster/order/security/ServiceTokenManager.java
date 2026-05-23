@@ -1,7 +1,7 @@
 package com.dinemaster.order.security;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -9,28 +9,36 @@ import java.util.Map;
 @Component
 public class ServiceTokenManager {
 
-    private String token;
+    private volatile String token;
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    @PostConstruct
-    public void init() {
-        RestTemplate rest = new RestTemplate();
+    public synchronized String getToken() {
+        if (token != null && !token.isBlank()) {
+            return token;
+        }
+        try {
+            token = fetchToken();
+        } catch (Exception ignored) {
+            token = null;
+        }
+        return token;
+    }
 
+    private String fetchToken() {
         Map<String, String> body = Map.of(
                 "clientId", "order-service",
                 "clientSecret", "order-secret-123"
         );
 
-        Map<?, ?> response =
-                rest.postForObject(
-                        "http://localhost:8080/auth/service/token",
-                        body,
-                        Map.class
-                );
+        Map<?, ?> response = restTemplate.postForObject(
+                "http://localhost:8080/auth/service/token",
+                body,
+                Map.class
+        );
 
-        token = (String) response.get("accessToken");
-    }
-
-    public String getToken() {
-        return token;
+        if (response == null || response.get("accessToken") == null) {
+            throw new RestClientException("Auth service did not return accessToken");
+        }
+        return String.valueOf(response.get("accessToken"));
     }
 }

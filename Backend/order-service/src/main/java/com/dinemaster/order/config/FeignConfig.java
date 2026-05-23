@@ -14,10 +14,12 @@ public class FeignConfig {
     ) {
         return requestTemplate -> {
             String token = tokenManager.getToken();
-            requestTemplate.header(
-                    "Authorization",
-                    "Bearer " + token
-            );
+            if (token != null && !token.isBlank()) {
+                requestTemplate.header(
+                        "Authorization",
+                        "Bearer " + token
+                );
+            }
         };
     }
 }

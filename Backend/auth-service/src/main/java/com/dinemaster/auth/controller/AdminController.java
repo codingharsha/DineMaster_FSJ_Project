@@ -1,6 +1,8 @@
 package com.dinemaster.auth.controller;
 
 import com.dinemaster.auth.dto.CreateStaffRequest;
+import com.dinemaster.auth.dto.PromoteStaffRequest;
+import com.dinemaster.auth.dto.StaffResponse;
 import com.dinemaster.auth.model.User;
 import com.dinemaster.auth.repository.UserRepository;
 import com.dinemaster.auth.service.AuthService;
@@ -27,11 +29,26 @@ public class AdminController {
         return repository.findAll();
     }
 
+    @GetMapping("/staff")
+    public ResponseEntity<List<StaffResponse>> getStaffMembers() {
+        return ResponseEntity.ok(authService.getAllStaff());
+    }
+
     @PostMapping("/create-staff")
     public ResponseEntity<?> createStaffAccount(@RequestBody CreateStaffRequest request) {
         try {
             User created = authService.createStaffAccount(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", ex.getMessage()));
+        }
+    }
+
+    @PostMapping("/promote-staff")
+    public ResponseEntity<?> promoteToKitchenStaff(@RequestBody PromoteStaffRequest request) {
+        try {
+            User updated = authService.promoteCustomerToKitchenStaff(request);
+            return ResponseEntity.ok(updated);
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", ex.getMessage()));
         }

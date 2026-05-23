@@ -3,6 +3,8 @@ package com.dinemaster.auth.service;
 import com.dinemaster.auth.dto.AuthResponse;
 import com.dinemaster.auth.dto.CheckIdentityResponse;
 import com.dinemaster.auth.dto.CreateStaffRequest;
+import com.dinemaster.auth.dto.PromoteStaffRequest;
+import com.dinemaster.auth.dto.StaffResponse;
 import com.dinemaster.auth.model.Role;
 import com.dinemaster.auth.model.User;
 import com.dinemaster.auth.repository.UserRepository;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,6 +53,9 @@ public class AuthService {
 
     public AuthResponse verifyOtp(String identifier, String otp, String name) {
         String normalized = normalizeIdentifier(identifier);
+        if (isEmail(normalized)) {
+            throw new RuntimeException("Email login requires password");
+        }
         boolean isValid = otpService.validateOtp(normalized, otp);
         if (!isValid) {
             throw new RuntimeException("Invalid OTP");
@@ -101,28 +107,112 @@ public class AuthService {
         if (role == null) {
             throw new RuntimeException("Role is required");
         }
-        if (role != Role.KITCHEN_STAFF && role != Role.ADMIN) {
-            throw new RuntimeException("Only ADMIN or KITCHEN_STAFF can be created from this endpoint");
+        if (role != Role.KITCHEN_STAFF) {
+            throw new RuntimeException("Only KITCHEN_STAFF can be created from this endpoint");
+        }
+
+        String mobileNumber = normalizePhone(request.getMobileNumber());
+        if (mobileNumber.isBlank()) {
+            throw new RuntimeException("Customer mobile number is required");
+        }
+
+        User user = repository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        if (user.getRole() == Role.ADMIN) {
+            throw new RuntimeException("ADMIN users cannot be modified");
+        }
+
+        if (user.getRole() == Role.KITCHEN_STAFF) {
+            throw new RuntimeException("User is already promoted to KITCHEN_STAFF");
         }
 
         if (repository.existsByEmailIgnoreCase(email)) {
-            throw new RuntimeException("Email already exists");
+            String existingUserEmail = user.getEmail() == null ? "" : user.getEmail().trim().toLowerCase();
+            if (!email.equals(existingUserEmail)) {
+                throw new RuntimeException("Email already exists");
+            }
         }
 
-        User user = new User();
-        user.setName(request.getName() == null ? "" : request.getName().trim());
-        if (request.getMobileNumber() != null && !request.getMobileNumber().isBlank()) {
-            String mobileNumber = normalizePhone(request.getMobileNumber());
-            if (repository.existsByMobileNumber(mobileNumber)) {
-                throw new RuntimeException("Mobile number already exists");
-            }
-            user.setMobileNumber(mobileNumber);
+        if (request.getName() != null && !request.getName().trim().isBlank()) {
+            user.setName(request.getName().trim());
         }
         user.setEmail(email);
         user.setRole(role);
         user.setPasswordHash(passwordEncoder.encode(request.getTemporaryPassword().trim()));
         user.setPasswordChangeRequired(true);
         return repository.save(user);
+    }
+
+    public User promoteCustomerToKitchenStaff(PromoteStaffRequest request) {
+        if (request == null) {
+            throw new RuntimeException("Invalid request");
+        }
+
+        String mobileNumber = normalizePhone(request.getCustomerPhoneNumber());
+        if (mobileNumber.isBlank()) {
+            throw new RuntimeException("Customer phone number is required");
+        }
+
+        String email = request.getStaffEmail() == null ? "" : request.getStaffEmail().trim().toLowerCase();
+        if (email.isBlank()) {
+            throw new RuntimeException("Staff email is required");
+        }
+
+        String tempPassword = request.getTemporaryPassword() == null ? "" : request.getTemporaryPassword().trim();
+        if (tempPassword.length() < 6) {
+            throw new RuntimeException("Temporary password must be at least 6 characters");
+        }
+
+        User user = repository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        if (user.getRole() == Role.ADMIN) {
+            throw new RuntimeException("ADMIN users cannot be modified");
+        }
+
+        if (user.getRole() == Role.KITCHEN_STAFF) {
+            throw new RuntimeException("User is already promoted to KITCHEN_STAFF");
+        }
+
+        if (repository.existsByEmailIgnoreCase(email)) {
+            String currentUserEmail = user.getEmail() == null ? "" : user.getEmail().trim().toLowerCase();
+            if (!email.equals(currentUserEmail)) {
+                throw new RuntimeException("Email already exists");
+            }
+        }
+
+        boolean kitchenStaffExistsForMobile = repository.existsByMobileNumberAndRole(mobileNumber, Role.KITCHEN_STAFF);
+        if (kitchenStaffExistsForMobile) {
+            throw new RuntimeException("Staff account already exists for this customer");
+        }
+
+        user.setEmail(email);
+        user.setPasswordHash(passwordEncoder.encode(tempPassword));
+        user.setRole(Role.KITCHEN_STAFF);
+        user.setPasswordChangeRequired(true);
+        return repository.save(user);
+    }
+
+    public void sendOtpForPhone(String identifier) {
+        String normalized = normalizeIdentifier(identifier);
+        if (normalized.isBlank() || isEmail(normalized)) {
+            throw new RuntimeException("Valid mobile number is required for OTP login");
+        }
+        otpService.generateOtp(normalized);
+    }
+
+    public List<StaffResponse> getAllStaff() {
+        return repository.findByRole(Role.KITCHEN_STAFF).stream()
+                .map(user -> new StaffResponse(
+                        user.getId(),
+                        user.getName(),
+                        user.getEmail(),
+                        user.getMobileNumber(),
+                        user.getRole(),
+                        user.isPasswordChangeRequired()
+                ))
+                .toList();
     }
 
     public AuthResponse loginWithPassword(String identifier, String password) {

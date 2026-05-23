@@ -75,20 +75,16 @@ public class OrderService {
 
     public PaymentResponse placeOrderAndCreatePayment(Order order) {
 
-        // 1️⃣ Convert Order → CreateOrderRequest
         CreateOrderRequest request = new CreateOrderRequest();
         request.setTableNumber(order.getTableNumber());
 
-        // 2️⃣ Place order (this creates & saves Order internally)
         Order savedOrder = placeOrder(request);
 
-        // 3️⃣ Build payment request
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.setOrderId(savedOrder.getId());
         paymentRequest.setAmount(savedOrder.getTotalAmount());
         paymentRequest.setCurrency("INR");
 
-        // 4️⃣ Call payment-service
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -102,7 +98,6 @@ public class OrderService {
                         PaymentResponse.class
                 );
 
-        // 5️⃣ Return payment response
         return response.getBody();
     }
 

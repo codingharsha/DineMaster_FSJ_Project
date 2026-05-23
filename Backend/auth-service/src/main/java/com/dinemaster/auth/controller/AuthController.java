@@ -7,7 +7,6 @@ import com.dinemaster.auth.dto.ChangePasswordRequest;
 import com.dinemaster.auth.dto.LoginRequest;
 import com.dinemaster.auth.dto.PasswordLoginRequest;
 import com.dinemaster.auth.service.AuthService;
-import com.dinemaster.auth.service.OtpService;
 import com.dinemaster.auth.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +24,6 @@ public class AuthController {
     private AuthService service;
 
     @Autowired
-    private OtpService otpService;
-    @Autowired
     private JwtUtil jwtUtil;
 
     @PostMapping("/check-identity")
@@ -41,10 +38,13 @@ public class AuthController {
 
     @PostMapping("/send-otp")
     public ResponseEntity<?> sendOtp(@RequestBody Map<String, String> body) {
+        try {
+            service.sendOtpForPhone(body.get("identifier"));
+            return ResponseEntity.ok("OTP sent");
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", ex.getMessage()));
+        }
 
-        otpService.generateOtp(body.get("identifier"));
-
-        return ResponseEntity.ok("OTP sent");
     }
 
     @PostMapping("/verify-otp")

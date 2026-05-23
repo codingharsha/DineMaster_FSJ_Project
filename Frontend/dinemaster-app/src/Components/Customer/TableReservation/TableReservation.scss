@@ -4,7 +4,7 @@
 $orange: #ff4500;
 $orange-lt: #fff3ef;
 $orange-bd: #ff6a35;
-$bg: #f5f3f0;
+$bg: #fafafa;
 $card-bg: #ffffff;
 $floor-bg: #111009;
 $text: #1a1a1a;
@@ -47,6 +47,14 @@ $font: 'Poppins', sans-serif;
     p {
       color: $muted;
       font-size: 0.84rem;
+    }
+
+    .saved-hint {
+      margin-top: 8px;
+      color: #2b7a2d;
+      font-size: 0.78rem;
+      font-weight: 600;
+      animation: fade-in .35s ease;
     }
   }
 
@@ -130,7 +138,7 @@ $font: 'Poppins', sans-serif;
         input,
         select {
           width: 100%;
-          padding: 10px 13px;
+          padding: 11px 13px;
           border: none;
           outline: none;
           background: transparent;
@@ -141,10 +149,20 @@ $font: 'Poppins', sans-serif;
           &[type="date"] {
             cursor: pointer;
             color-scheme: light;
+            padding-right: 44px;
+            min-height: 42px;
+            line-height: 1.35;
 
             &::-webkit-calendar-picker-indicator {
               opacity: 0.45;
               cursor: pointer;
+              margin-right: 0;
+              width: 18px;
+              height: 18px;
+              position: absolute;
+              right: 12px;
+              top: 50%;
+              transform: translateY(-50%);
 
               &:hover {
                 opacity: 0.9;
@@ -363,11 +381,11 @@ $font: 'Poppins', sans-serif;
   .mid-floor {
     display: grid;
     // left window | center | right window
-    grid-template-columns: 130px 1fr 130px;
+    grid-template-columns: 145px 1fr 145px;
     align-items: center;
     padding: 16px 0;
     border-bottom: 1px dashed #252320;
-    gap: 0;
+    gap: 14px;
   }
 
   // ── WINDOW COLUMNS ────────────────────────────────────────
@@ -413,7 +431,7 @@ $font: 'Poppins', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       padding: 0 16px;
 
       .win-lbl {
@@ -443,9 +461,29 @@ $font: 'Poppins', sans-serif;
     .dining-grid {
       display: grid;
       grid-template-columns: repeat(3, auto);
-      gap: 14px;
+      gap: 16px;
       justify-content: center;
       align-items: center;
+    }
+
+    .reset-reservation-btn {
+      border: 1px solid #ffc8b3;
+      background: #fff;
+      color: #d2541e;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      transition: all .22s ease;
+
+      &:hover {
+        border-color: #f38c62;
+        background: #fff3ed;
+        color: #b94112;
+        transform: translateY(-1px);
+      }
     }
   }
 
@@ -636,3 +674,43 @@ $font: 'Poppins', sans-serif;
     }
   }
 }
+
+.reservation-page.restored {
+  animation: restore-pulse .9s ease;
+}
+
+@keyframes restore-pulse {
+  0% { filter: brightness(0.98); }
+  50% { filter: brightness(1.03); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.reservation-page .res-card .reset-reservation-btn {
+  align-self: flex-start;
+  border: 1px solid #ffc8b3;
+  background: #fff;
+  color: #d2541e;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: all .22s ease;
+}
+
+.reservation-page .res-card .reset-reservation-btn:hover {
+  border-color: #f38c62;
+  background: #fff3ed;
+  color: #b94112;
+  transform: translateY(-1px);
+}
+
+
+

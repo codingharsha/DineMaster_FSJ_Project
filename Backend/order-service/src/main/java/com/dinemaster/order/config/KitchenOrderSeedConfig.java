@@ -63,6 +63,35 @@ public class KitchenOrderSeedConfig {
 
             repository.saveAll(List.of(placed, cooking, ready));
             System.out.println("[Order Seed] Inserted kitchen demo orders (PLACED/COOKING/READY).");
+
+            if (repository.count() < 40) {
+                List<Order> historical = new java.util.ArrayList<>();
+                String[] customerNames = {
+                        "Aarav", "Nitya", "Rahul", "Sneha", "Ishaan", "Megha", "Varun", "Pooja", "Ritika", "Manav"
+                };
+                String[] statuses = {"DELIVERED", "DELIVERED", "DELIVERED", "CANCELLED"};
+                String[] paymentStatuses = {"PAID", "PAID", "PENDING", "REFUNDED"};
+
+                for (int i = 1; i <= 36; i++) {
+                    Order o = new Order();
+                    o.setCustomerName(customerNames[i % customerNames.length] + " " + (i % 5 + 1));
+                    o.setTableNumber(i % 4 == 0 ? 0 : (i % 15) + 1);
+                    o.setStatus(statuses[i % statuses.length]);
+                    o.setPaymentStatus(paymentStatuses[i % paymentStatuses.length]);
+                    o.setOrderTime(new Date(System.currentTimeMillis() - (long) i * 6 * 60 * 60 * 1000));
+                    o.setTransactionId("TXN-DM-" + (10000 + i));
+
+                    long total = 450 + (i * 95L % 2100);
+                    o.setTotalAmount(total);
+                    o.setItems(List.of(
+                            new OrderItem("F-10" + (i % 9), "Signature Dish " + (i % 7 + 1), 180.0 + (i % 5) * 60, 1 + (i % 3)),
+                            new OrderItem("F-20" + (i % 8), "Side Item " + (i % 6 + 1), 90.0 + (i % 4) * 30, 1)
+                    ));
+                    historical.add(o);
+                }
+                repository.saveAll(historical);
+                System.out.println("[Order Seed] Inserted historical demo orders for analytics/reporting.");
+            }
         };
     }
 }

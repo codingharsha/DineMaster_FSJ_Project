@@ -5,6 +5,7 @@ body{
   padding: 0;
   margin: 0;
   font-family: "Poppins", sans-serif;
+  background: #fafafa;
 }
 
 html, body {
@@ -12,3 +13,28 @@ html, body {
   overflow-x: hidden;
 }
 
+#root,
+.app {
+  background: #fafafa;
+  min-height: 100vh;
+}
+
+.customer-page-shell {
+  background: #fafafa;
+}
+
+.dm-primary-btn {
+  background: linear-gradient(to right, #ffba00, #f26622) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(242, 102, 34, 0.4) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.dm-primary-btn:hover {
+  background: linear-gradient(to right, #ffc800, #ff4500) !important;
+  transform: scale(1.05);
+}

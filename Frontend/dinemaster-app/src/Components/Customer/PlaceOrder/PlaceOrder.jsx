@@ -2,13 +2,14 @@ import React, { useContext, useState } from 'react';
 import './PlaceOrder.scss';
 import { StoreContext } from '../../../Context/StoreContext';
 import { FaCreditCard, FaGift, FaMoneyBillWave } from 'react-icons/fa';
+import { formatINR } from '../../../utils/customerUi';
 
 const PlaceOrder = () => {
   const { getTotalCartAmount } = useContext(StoreContext);
   const [paymentMethod, setPaymentMethod] = useState('cod');
 
   return (
-    <form className='place-order'>
+    <form className='place-order customer-page-shell'>
       <div className="place-order-left">
         <p className="title">Delivery Information</p>
         <div className="multi-fields">
@@ -34,17 +35,17 @@ const PlaceOrder = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>Rs.{getTotalCartAmount()}</p>
+              <p>{formatINR(getTotalCartAmount())}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>Rs.{getTotalCartAmount() === 0 ? 0 : 40}</p>
+              <p>{formatINR(getTotalCartAmount() === 0 ? 0 : 40)}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>Rs.{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 40}</b>
+              <b>{formatINR(getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 40)}</b>
             </div>
           </div>
         </div>
@@ -77,7 +78,7 @@ const PlaceOrder = () => {
           </div>
         </div>
 
-        <button type='submit'>PLACE ORDER</button>
+        <button type='submit' className='dm-primary-btn'>PLACE ORDER</button>
       </div>
     </form>
   );

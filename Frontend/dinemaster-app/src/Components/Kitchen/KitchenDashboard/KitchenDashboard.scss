@@ -15,6 +15,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 18px;
+  gap: 14px;
 
   h1 {
     margin: 0;
@@ -29,6 +30,12 @@
   }
 }
 
+.kitchen-hero-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .refresh-btn {
   border: 1px solid rgba(242, 102, 34, 0.55);
   background: rgba(20, 22, 25, 0.9);
@@ -37,6 +44,62 @@
   padding: 10px 18px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(242, 102, 34, 0.18);
+  }
+}
+
+.k-staff-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(91, 100, 116, 0.45);
+  background: rgba(26, 30, 37, 0.65);
+  backdrop-filter: blur(8px);
+
+  svg {
+    font-size: 28px;
+    color: #ffc793;
+  }
+}
+
+.k-staff-meta {
+  h4 {
+    margin: 0 0 4px;
+    font-size: 13px;
+    color: #eef3fb;
+  }
+}
+
+.k-staff-tags {
+  display: flex;
+  gap: 6px;
+
+  span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 999px;
+    padding: 3px 8px;
+    border: 1px solid transparent;
+  }
+
+  .role-badge {
+    background: rgba(242, 102, 34, 0.2);
+    color: #ffd8b8;
+    border-color: rgba(242, 102, 34, 0.45);
+  }
+
+  .shift-badge {
+    background: rgba(64, 85, 128, 0.3);
+    color: #d6e4ff;
+    border-color: rgba(127, 154, 210, 0.45);
+  }
 }
 
 .kitchen-alert {
@@ -143,6 +206,18 @@
   border-radius: 14px;
   color: #a7b0bb;
   text-align: center;
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    color: #e7edf7;
+  }
+
+  p {
+    margin: 0;
+    color: #9ca8b7;
+    font-size: 13px;
+  }
 }
 
 .k-order-card {
@@ -154,10 +229,19 @@
   flex-direction: column;
   gap: 10px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+  }
 
   &.delay { border-color: #a55d22; }
   &.ready { border-color: #2e7a58; }
   &.cancelled { border-color: #8f3a3f; }
+  &.prio-high { border-color: #bb5a22; }
+  &.prio-medium { border-color: #7f6a2a; }
+  &.prio-ready { border-color: #2e7a58; }
 
   header {
     display: flex;
@@ -176,6 +260,42 @@
   }
 }
 
+.k-order-card.pulse {
+  animation: urgentPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes urgentPulse {
+  0% { box-shadow: 0 0 0 0 rgba(242, 102, 34, 0.2); }
+  70% { box-shadow: 0 0 0 8px rgba(242, 102, 34, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(242, 102, 34, 0); }
+}
+
+.k-order-card.skeleton {
+  .sk-line, .sk-chip {
+    border-radius: 8px;
+    background: linear-gradient(90deg, #252b33 20%, #343b46 50%, #252b33 80%);
+    background-size: 220% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  .sk-line.long { height: 16px; width: 66%; }
+  .sk-line.mid { height: 14px; width: 48%; }
+  .sk-line.short { height: 14px; width: 38%; }
+  .sk-chip { height: 30px; width: 40%; margin-top: 10px; }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.k-chip-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
 .status-chip {
   font-size: 11px;
   text-transform: uppercase;
@@ -186,11 +306,44 @@
   padding: 4px 8px;
 }
 
+.priority-chip {
+  font-size: 10px;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 3px 8px;
+  letter-spacing: 0.45px;
+  border: 1px solid transparent;
+  font-weight: 700;
+
+  &.prio-high {
+    background: rgba(160, 47, 54, 0.28);
+    border-color: #b64a50;
+    color: #ffc8cc;
+  }
+
+  &.prio-medium {
+    background: rgba(125, 97, 32, 0.3);
+    border-color: #c49835;
+    color: #ffe1a0;
+  }
+
+  &.prio-ready {
+    background: rgba(39, 120, 79, 0.28);
+    border-color: #44a06f;
+    color: #c6f7dd;
+  }
+}
+
 .k-meta-line {
   display: flex;
   justify-content: space-between;
   color: #b7bfca;
   font-size: 12px;
+}
+
+.urgent-time {
+  color: #ffbe8a;
+  font-weight: 700;
 }
 
 .k-item-list {
@@ -350,6 +503,16 @@
 }
 
 @media (max-width: 900px) {
+  .kitchen-hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .kitchen-hero-right {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .k-summary-row {
     grid-template-columns: repeat(2, minmax(130px, 1fr));
   }

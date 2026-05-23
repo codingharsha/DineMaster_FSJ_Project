@@ -6,6 +6,7 @@ import { FaStar, FaLeaf, FaTimes, FaShoppingCart, FaFire } from 'react-icons/fa'
 import { MdOutlineTimer } from 'react-icons/md';
 import { IoSearch } from 'react-icons/io5';
 import CategorySelectorPopup from '../CategorySelectorPopup/CategorySelectorPopup';
+import { formatINR, getFoodImageSrc, withFallbackImage } from '../../../utils/customerUi';
 
 const CATEGORIES = ['All', 'Rolls', 'Salad', 'Deserts', 'Sandwich', 'Cake', 'Pure Veg', 'Pasta', 'Noodles'];
 
@@ -51,13 +52,13 @@ const Menu = () => {
     };
 
     return (
-        <div className="menu-page">
+        <div className="menu-page customer-page-shell">
             <section className="menu-hero">
                 <div className="menu-hero-content">
                     <span className="menu-hero-eyebrow">Signature Dining Collection</span>
-                    <h1>Hotel Style <span>Menu</span></h1>
+                    <h1>DineMaster <span>Menu</span></h1>
                     <p>Curated specialties, plated with finesse and prepared fresh for every table.</p>
-                    <button className="menu-hero-cta" onClick={() => navigate('/order-online')}>
+                    <button className="menu-hero-cta dm-primary-btn" onClick={() => navigate('/order-online')}>
                         <FaShoppingCart /> Start Ordering
                     </button>
                 </div>
@@ -114,13 +115,13 @@ const Menu = () => {
                                         onClick={() => setSelected(item)}
                                     >
                                         <div className="menu-card-img">
-                                            <img src={item.imgUrl} alt={item.name} />
+                                            <img src={getFoodImageSrc(item)} alt={item.name} onError={withFallbackImage} />
                                         </div>
 
                                         <div className="menu-card-body">
                                             <div className="menu-card-title-row">
                                                 <h3>{item.name}</h3>
-                                                <span className="dish-price">Rs {item.price}</span>
+                                                <span className="dish-price">{formatINR(item.price)}</span>
                                             </div>
 
                                             <p className="menu-card-desc">{item.description}</p>
@@ -147,7 +148,7 @@ const Menu = () => {
                     <p>Choose your favorites now or book a table for a complete dining experience.</p>
                 </div>
                 <div className="cta-actions">
-                    <button className="cta-primary" onClick={() => navigate('/order-online')}>
+                    <button className="cta-primary dm-primary-btn" onClick={() => navigate('/order-online')}>
                         <FaShoppingCart /> Order Online
                     </button>
                     <button className="cta-secondary" onClick={() => navigate('/book-table')}>
@@ -163,7 +164,7 @@ const Menu = () => {
                             <FaTimes />
                         </button>
                         <div className="dish-modal-img">
-                            <img src={selected.imgUrl} alt={selected.name} />
+                            <img src={getFoodImageSrc(selected)} alt={selected.name} onError={withFallbackImage} />
                         </div>
                         <div className="dish-modal-body">
                             <div className="dish-modal-top">
@@ -187,11 +188,11 @@ const Menu = () => {
                                 </div>
                                 <div className="meta-cell">
                                     <span>Price</span>
-                                    <strong className="price-accent">Rs {selected.price}</strong>
+                                    <strong className="price-accent">{formatINR(selected.price)}</strong>
                                 </div>
                             </div>
                             <button
-                                className="dish-modal-order"
+                                className="dish-modal-order dm-primary-btn"
                                 onClick={() => { setSelected(null); navigate('/order-online'); }}
                             >
                                 <FaShoppingCart /> Order This Dish

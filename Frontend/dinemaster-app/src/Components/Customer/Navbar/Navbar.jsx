@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.scss';
 import { MdLogout } from "react-icons/md";
-import { RiCustomerService2Line, RiFileList3Line, RiShoppingBag3Line, RiShoppingCart2Line } from "react-icons/ri";
+import { RiShoppingBag3Line, RiShoppingCart2Line } from "react-icons/ri";
 import { FaFire, FaRegUser, FaTimes } from "react-icons/fa";
 import { FaCircleUser } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { StoreContext } from '../../../Context/StoreContext';
 import { bank_offers, general_coupons, payment_offers } from '../../../assets/assets';
+import { formatINR, getFoodImageSrc, withFallbackImage } from '../../../utils/customerUi';
 
 const Navbar = ({ setShowLogin }) => {
     const navigate = useNavigate();
@@ -19,11 +20,14 @@ const Navbar = ({ setShowLogin }) => {
     const [showSearch, setShowSearch] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [keyword, setKeyword] = useState("");
+    const [pulseCart, setPulseCart] = useState(false);
 
     const profileRef = useRef(null);
     const searchRef = useRef(null);
 
-    const { getTotalCartAmount, token, setToken, userName, setUserName, food_list } = useContext(StoreContext);
+    const { getTotalCartAmount, token, userName, food_list, happinessCartItems, cartPulseToken, resetCustomerState } = useContext(StoreContext);
+    const happinessCount = happinessCartItems.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
+    const hasCartActivity = getTotalCartAmount() > 0 || happinessCount > 0;
 
     const navLinks = [
         { label: "Menu", path: "/menu" },
@@ -33,11 +37,7 @@ const Navbar = ({ setShowLogin }) => {
     ];
 
     const logout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userName");
-        localStorage.removeItem("userRole");
-        setToken("");
-        setUserName("");
+        resetCustomerState();
         setShowMenu(false);
         navigate("/");
     };
@@ -59,6 +59,13 @@ const Navbar = ({ setShowLogin }) => {
         return () => document.removeEventListener("mousedown", handleOutsideClick);
     }, []);
 
+    useEffect(() => {
+        if (!cartPulseToken) return undefined;
+        setPulseCart(true);
+        const timer = setTimeout(() => setPulseCart(false), 650);
+        return () => clearTimeout(timer);
+    }, [cartPulseToken]);
+
     const searchResults = (() => {
         const query = keyword.trim().toLowerCase();
         if (!query) return [];
@@ -76,8 +83,8 @@ const Navbar = ({ setShowLogin }) => {
             .map((item) => ({
                 id: `food-${item.id || item._id}`,
                 title: item?.name || item?.dishName || item?.title || "Food Item",
-                subtitle: `Food - Rs. ${item?.price ?? "-"}`,
-                image: item?.imgUrl || item?.image || item?.imageUrl || "",
+                subtitle: `Food - ${formatINR(item?.price ?? 0)}`,
+                image: getFoodImageSrc(item),
                 path: "/order-online"
             }));
 
@@ -101,7 +108,9 @@ const Navbar = ({ setShowLogin }) => {
         const pageMatches = [
             ...navLinks,
             { label: "Happiness Cards", path: "/happiness-cards" },
-            { label: "Restaurants", path: "/restaurants" }
+            { label: "Restaurants", path: "/restaurants" },
+            { label: "Support", path: "/support" },
+            { label: "Feedback", path: "/feedback" }
         ]
             .filter((item) => item.label.toLowerCase().includes(query))
             .map((item) => ({
@@ -183,7 +192,7 @@ const Navbar = ({ setShowLogin }) => {
                                                     onClick={() => handleNavigate(item.path)}
                                                 >
                                                     {item.image ? (
-                                                        <img src={item.image} alt={item.title} />
+                                                        <img src={item.image} alt={item.title} onError={withFallbackImage} />
                                                     ) : (
                                                         <div className="result-fallback-icon">
                                                             <IoSearch />
@@ -200,9 +209,9 @@ const Navbar = ({ setShowLogin }) => {
                                 )}
                             </div>
 
-                            <div className="icon-wrapper navbar-search-icon" onClick={() => navigate('/cart')}>
+                            <div className={`icon-wrapper navbar-search-icon ${pulseCart ? 'cart-pulse' : ''}`} onClick={() => navigate('/cart')}>
                                 <RiShoppingCart2Line className='cart-icon' />
-                                <div className={getTotalCartAmount() === 0 ? "" : "dot"}></div>
+                                <div className={hasCartActivity ? "dot" : ""}>{hasCartActivity ? happinessCount : ""}</div>
                             </div>
                         </div>
 
@@ -223,10 +232,7 @@ const Navbar = ({ setShowLogin }) => {
                                             <FaCircleUser /> <p>My Profile</p>
                                         </li>
                                         <li onClick={() => handleNavigate('/myorders')}>
-                                            <RiShoppingBag3Line /> <p>Orders</p>
-                                        </li>
-                                        <li onClick={() => handleNavigate('/track-order')}>
-                                            <RiFileList3Line /> <p>Track Order</p>
+                                            <RiShoppingBag3Line /> <p>Reservations</p>
                                         </li>
                                         <hr />
                                         <li onClick={logout}>
@@ -253,29 +259,14 @@ const Navbar = ({ setShowLogin }) => {
 
                 <ul className="sidebar-links">
                     <li onClick={() => handleNavigate('/')}>Home</li>
-                    {navLinks.map(({ label, path }) => (
-                        <li
-                            key={path}
-                            onClick={() => handleNavigate(path)}
-                            className={location.pathname === path ? 'sidebar-active' : ''}
-                        >
-                            {label}
-                        </li>
-                    ))}
-                    <li onClick={() => handleNavigate('/happiness-cards')}>Happiness Cards</li>
+                    <li onClick={() => handleNavigate('/offers')} className={location.pathname === '/offers' ? 'sidebar-active' : ''}>Deals</li>
+                    <li onClick={() => handleNavigate('/happiness-cards')} className={location.pathname === '/happiness-cards' ? 'sidebar-active' : ''}>Happiness Cards</li>
                     <li onClick={() => handleNavigate('/feedback')}>Leave Feedback</li>
+                    <li onClick={() => handleNavigate('/myorders')} className={location.pathname === '/myorders' ? 'sidebar-active' : ''}>My Reservations</li>
+                    <li onClick={() => handleNavigate('/support')} className={location.pathname === '/support' ? 'sidebar-active' : ''}>Support</li>
                 </ul>
 
-                <div className="sidebar-footer">
-                    <div className="s-link" onClick={() => handleNavigate('/myorders')}>
-                        <RiShoppingBag3Line /> My Orders
-                    </div>
-                    <div className="s-link" onClick={() => handleNavigate('/track-order')}>
-                        <RiFileList3Line /> Track Order
-                    </div>
-                    <div className="s-link">
-                        <RiCustomerService2Line /> Support
-                    </div>
+                    <div className="sidebar-footer">
                     {token && (
                         <button className="sidebar-logout-btn" onClick={logout}>Sign Out</button>
                     )}

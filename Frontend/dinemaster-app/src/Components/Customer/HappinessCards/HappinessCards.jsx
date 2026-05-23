@@ -1,6 +1,7 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import './HappinessCards.scss'
 import { useNavigate } from 'react-router-dom';
+import { StoreContext } from '../../../Context/StoreContext';
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
@@ -8,6 +9,16 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 const HappinessCards = () => {
     const sliderRef = useRef(null);
     const navigate = useNavigate();
+    const { addHappinessCardToCart } = useContext(StoreContext);
+    const [addedMap, setAddedMap] = useState({});
+
+    const addWithFeedback = (cardId, payload) => {
+      addHappinessCardToCart(payload);
+      setAddedMap((prev) => ({ ...prev, [cardId]: true }));
+      setTimeout(() => {
+        setAddedMap((prev) => ({ ...prev, [cardId]: false }));
+      }, 2000);
+    };
 
     const slideLeft = () => {
         if(sliderRef.current){
@@ -101,7 +112,17 @@ const HappinessCards = () => {
 
                         <div className="card-footer">
                             <span className='price'>Rs. {card.price}</span>
-                            <button className="add-btn">ADD</button>
+                            <button
+                              className="add-btn"
+                              onClick={() => addWithFeedback(card.id, {
+                                id: `slider-${card.id}`,
+                                title: card.title,
+                                price: Number(card.price),
+                                tag: card.tag
+                              })}
+                            >
+                              {addedMap[card.id] ? 'Added ✓' : 'ADD'}
+                            </button>
                         </div>
                     </div>
                 </div>

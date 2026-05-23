@@ -10,4 +10,9 @@ public interface SalesReportRepository extends MongoRepository<SalesReport, Stri
     Optional<SalesReport> findByDate(LocalDate date);
     List<SalesReport> findByPeriod(String period);
     List<SalesReport> findByDateBetween(LocalDate from, LocalDate to);
+    Optional<SalesReport> findTopByOrderByDateDesc();
+    Optional<SalesReport> findTopByTotalRevenueGreaterThanOrderByDateDesc(double totalRevenue);
+    List<SalesReport> findTop7ByOrderByDateDesc();
+    List<SalesReport> findTop30ByOrderByDateDesc();
+    List<SalesReport> findTop365ByOrderByDateDesc();
 }

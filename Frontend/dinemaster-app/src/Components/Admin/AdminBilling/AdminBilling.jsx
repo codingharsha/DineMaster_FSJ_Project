@@ -54,6 +54,34 @@ const AdminBilling = () => {
       .catch(console.error);
   }, [fetchSettings]);
 
+  useEffect(() => {
+    const pullLiveOrders = () => {
+      try {
+        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+        if (!bookings.length) return;
+        const mapped = bookings.slice(0, 12).map((b, idx) => ({
+          id: b.id || `ORD-LIVE-${idx + 1}`,
+          table: b.table ? `Table ${b.table}` : 'Dine-In',
+          status: String(b.paymentStatus || '').toLowerCase() === 'paid' ? 'Billed' : 'Unbilled',
+          items: (b.items && b.items.length ? b.items : [{ name: 'Reservation Fee', price: b.paymentAmount || 50, qty: 1 }]).map((it) => ({
+            name: it.name,
+            price: Number(it.price || 0),
+            qty: Number(it.quantity || 1)
+          }))
+        }));
+        setOrders(mapped);
+        if (mapped.length > 0 && !selectedOrder) {
+          setSelectedOrder(mapped[0]);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    pullLiveOrders();
+    const timer = setInterval(pullLiveOrders, 7000);
+    return () => clearInterval(timer);
+  }, [selectedOrder]);
+
   const subtotal = (order) => order.items.reduce((sum, i) => sum + i.price * i.qty, 0);
 
   const calculateBill = (order) => {

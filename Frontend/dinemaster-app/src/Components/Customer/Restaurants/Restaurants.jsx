@@ -8,7 +8,7 @@ const Restaurants = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
-    <div className='restaurants-page'>
+    <div className='restaurants-page customer-page-shell'>
     
       <div className="res-hero">
          <div className="res-hero-content">

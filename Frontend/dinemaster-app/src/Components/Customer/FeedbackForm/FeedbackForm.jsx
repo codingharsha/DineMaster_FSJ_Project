@@ -56,18 +56,18 @@ const FeedbackForm = () => {
     };
 
     if (submitted) return (
-        <div className="feedback-success">
+        <div className="feedback-success customer-page-shell">
             <div className="success-icon">🎉</div>
             <h2>Thank you for your feedback!</h2>
             <p>Your review helps us improve your dining experience.</p>
-            <button onClick={() => { setSubmitted(false); setForm({ customerName: userName || '', customerPhone: '', dishName: '', dishRating: 0, serviceRating: 0, comment: '' }); }}>
+            <button className="dm-primary-btn" onClick={() => { setSubmitted(false); setForm({ customerName: userName || '', customerPhone: '', dishName: '', dishRating: 0, serviceRating: 0, comment: '' }); }}>
                 Submit Another
             </button>
         </div>
     );
 
     return (
-        <div className="feedback-page">
+        <div className="feedback-page customer-page-shell">
             <div className="feedback-container">
                 <div className="feedback-header">
                     <h1>Rate Your Experience</h1>
@@ -134,7 +134,7 @@ const FeedbackForm = () => {
 
                     {error && <p className="feedback-error">{error}</p>}
 
-                    <button type="submit" className="submit-feedback-btn" disabled={loading}>
+                    <button type="submit" className="submit-feedback-btn dm-primary-btn" disabled={loading}>
                         {loading ? 'Submitting…' : '🌟 Submit Feedback'}
                     </button>
                 </form>

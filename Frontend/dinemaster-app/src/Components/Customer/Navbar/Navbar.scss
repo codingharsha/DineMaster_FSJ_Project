@@ -125,13 +125,32 @@
 
     .dot {
         position: absolute;
-        top: 6px;
-        right: 3px;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
+        top: -2px;
+        right: -4px;
+        min-width: 18px;
+        height: 18px;
+        border-radius: 999px;
         background: $primary-color;
+        color: #fff;
+        padding: 0 5px;
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        border: 2px solid rgba(255,255,255,0.82);
     }
+}
+
+.cart-pulse {
+    animation: cart-bump .55s ease;
+}
+
+@keyframes cart-bump {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.16); }
+    100% { transform: scale(1); }
 }
 
 .location-btn, .profile, .navbar-search-btn {
@@ -331,7 +350,7 @@
 .sidebar-menu {
     position: fixed; top: 0; right: -360px; width: 300px; height: 100vh; background: $white;
     z-index: 2001; box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex; flex-direction: column; padding: 25px;
+    display: flex; flex-direction: column; padding: 20px 20px 16px; overflow: hidden; box-sizing: border-box;
 
     &.active { transform: translateX(-360px); }
 }
@@ -347,15 +366,16 @@
 }
 
 .sidebar-links {
-    list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;
+    list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; min-height: 0; overflow-y: auto;
 
     li {
         font-size: 16px; font-weight: 500; color: #444; cursor: pointer; padding: 12px 15px; border-radius: 8px; transition: all 0.3s ease;
         &:hover { background: #fff5f0; color: $primary-color; padding-left: 20px; }
+        &.sidebar-active { background: #fff0e7; color: $primary-color; font-weight: 700; }
     }
 }
 
-.sidebar-footer { margin-top: auto; border-top: 1px solid #f0f0f0; padding-top: 20px; display: flex; flex-direction: column; gap: 15px; }
+.sidebar-footer { margin-top: 12px; border-top: 1px solid #f0f0f0; padding-top: 12px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; background: $white; }
 
 .sidebar-logout,
 .sidebar-logout-btn {

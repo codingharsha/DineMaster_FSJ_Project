@@ -191,6 +191,10 @@
         transform: scale(1.05);
         box-shadow: 0 4px 10px rgba(242, 102, 34, 0.3);
     }
+
+    &.added {
+        background: #1f8c45;
+    }
 }
 
 @media (max-width: 768px) {

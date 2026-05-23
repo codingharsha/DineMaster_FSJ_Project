@@ -48,34 +48,58 @@ public class AnalyticsService {
 
     public SalesReport getTodayReport() {
         LocalDate today = LocalDate.now();
-        return salesReportRepository.findByDate(today)
+        Optional<SalesReport> todayReport = salesReportRepository.findByDate(today);
+        if (todayReport.isPresent()) {
+            SalesReport report = todayReport.get();
+            if (!isPlaceholderReport(report)) {
+                return report;
+            }
+            return salesReportRepository.findTopByTotalRevenueGreaterThanOrderByDateDesc(0.0)
+                    .orElse(report);
+        }
+
+        return salesReportRepository.findTopByTotalRevenueGreaterThanOrderByDateDesc(0.0)
+                .or(() -> salesReportRepository.findTopByOrderByDateDesc())
                 .orElseGet(() -> generateDailyReport(today));
     }
 
     public List<SalesReport> getWeeklyReports() {
         LocalDate from = LocalDate.now().minusDays(6);
-        return salesReportRepository.findByDateBetween(from, LocalDate.now());
+        List<SalesReport> reports = salesReportRepository.findByDateBetween(from, LocalDate.now());
+        if (!reports.isEmpty()) return reports;
+        return salesReportRepository.findTop7ByOrderByDateDesc();
     }
 
     public List<SalesReport> getMonthlyReports() {
         LocalDate from = LocalDate.now().withDayOfMonth(1);
-        return salesReportRepository.findByDateBetween(from, LocalDate.now());
+        List<SalesReport> reports = salesReportRepository.findByDateBetween(from, LocalDate.now());
+        if (!reports.isEmpty()) return reports;
+        return salesReportRepository.findTop30ByOrderByDateDesc();
     }
 
     public List<SalesReport> getYearlyReports() {
         LocalDate from = LocalDate.now().withDayOfYear(1);
-        return salesReportRepository.findByDateBetween(from, LocalDate.now());
+        List<SalesReport> reports = salesReportRepository.findByDateBetween(from, LocalDate.now());
+        if (!reports.isEmpty()) return reports;
+        return salesReportRepository.findTop365ByOrderByDateDesc();
     }
 
     private SalesReport generateDailyReport(LocalDate date) {
-        List<Object> orders = orderClient.getAllOrders();
+        List<Object> orders = Collections.emptyList();
+        try {
+            orders = orderClient.getAllOrders();
+        } catch (Exception ignored) {
+            // Keep sales report endpoint resilient when order-service is temporarily unavailable.
+        }
         int count = orders.size();
         double revenue = count * 250.0;
 
         Map<String, Integer> topDishes = new LinkedHashMap<>();
-        topDishes.put("Chicken Biryani", 45);
-        topDishes.put("Paneer Butter Masala", 32);
-        topDishes.put("Butter Naan", 80);
+        if (count > 0) {
+            topDishes.put("Chicken Biryani", 45);
+            topDishes.put("Paneer Butter Masala", 32);
+            topDishes.put("Butter Naan", 80);
+        }
 
         Map<String, Double> revByCategory = new LinkedHashMap<>();
         revByCategory.put("Main Course", revenue * 0.5);
@@ -150,6 +174,12 @@ public class AnalyticsService {
         if (avg >= 4.0) return "positive";
         if (avg >= 2.5) return "neutral";
         return "negative";
+    }
+
+    private boolean isPlaceholderReport(SalesReport report) {
+        return report.getTotalRevenue() <= 0
+                && report.getTotalOrders() <= 0
+                && report.getTotalCovers() <= 0;
     }
 
     // ─── STAFF ────────────────────────────────────────────────────────────────

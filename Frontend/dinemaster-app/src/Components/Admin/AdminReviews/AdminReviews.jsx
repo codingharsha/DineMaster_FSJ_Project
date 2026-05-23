@@ -14,6 +14,7 @@ const AdminReviews = () => {
     const [replyingId, setReplyingId]     = useState(null);
     const [replyText, setReplyText]       = useState('');
     const [loading, setLoading]           = useState(true);
+    const [deleteTarget, setDeleteTarget] = useState(null);
 
     const load = useCallback(async () => {
         try {
@@ -43,7 +44,6 @@ const AdminReviews = () => {
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm("Delete this review?")) return;
         await deleteReview(id);
         load();
     };
@@ -55,6 +55,11 @@ const AdminReviews = () => {
     };
 
     const filtered = filterSentiment === 'all' ? reviews : reviews.filter(r => r.sentiment === filterSentiment);
+    const ratingBuckets = [5, 4, 3, 2, 1].map((r) => ({
+        rating: r,
+        count: reviews.filter((x) => (x.dishRating || 0) === r).length
+    }));
+    const maxBucket = Math.max(...ratingBuckets.map(b => b.count), 1);
 
     if (loading) return (
         <div className="admin-container"><AdminSidebar />
@@ -105,6 +110,19 @@ const AdminReviews = () => {
                             </div>
                         </div>
 
+                        <div className="dashboard-widget" style={{ marginTop: 14 }}>
+                            <div className="widget-header"><h2>Rating Distribution</h2></div>
+                            {ratingBuckets.map((b) => (
+                                <div key={b.rating} style={{ display: 'grid', gridTemplateColumns: '70px 1fr 50px', gap: 8, alignItems: 'center', marginBottom: 8 }}>
+                                    <span>{b.rating} Star</span>
+                                    <div style={{ height: 10, background: '#2a323f', borderRadius: 20, overflow: 'hidden' }}>
+                                        <div style={{ width: `${(b.count / maxBucket) * 100}%`, height: '100%', background: 'linear-gradient(90deg,#f26622,#ffb760)' }} />
+                                    </div>
+                                    <b>{b.count}</b>
+                                </div>
+                            ))}
+                        </div>
+
                         <div className="split-cards-row">
                             <div className="category-card customers" onClick={() => setSection('customer')}>
                                 <div className="icon-wrapper"><FaComments /></div>
@@ -137,7 +155,7 @@ const AdminReviews = () => {
 
                         {filtered.length === 0 && <p style={{ color: '#aaa', textAlign: 'center', padding: 40 }}>No reviews found.</p>}
 
-                        <div className="reviews-list">
+                        <div className="reviews-list centered-grid">
                             {filtered.map(review => (
                                 <div key={review.id} className={`review-item ${review.sentiment} ${review.flagged ? 'flagged-review' : ''}`}>
                                     <div className="r-head">
@@ -190,10 +208,32 @@ const AdminReviews = () => {
                                             {review.flagged ? '🔓 Unflag' : '🚩 Flag'}
                                         </button>
                                         <button className="flag-btn" style={{ background: '#fee', color: '#e74c3c' }}
-                                                onClick={() => handleDelete(review.id)}><FaTrash /></button>
+                                                onClick={() => setDeleteTarget(review)}><FaTrash /></button>
                                     </div>
                                 </div>
                             ))}
+                        </div>
+                    </div>
+                )}
+
+                {deleteTarget && (
+                    <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
+                        <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 420 }}>
+                            <h3>Delete Review</h3>
+                            <p>Are you sure you want to delete review from <b>{deleteTarget.customerName}</b>?</p>
+                            <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+                                <button className="flag-btn" onClick={() => setDeleteTarget(null)}>Cancel</button>
+                                <button
+                                    className="reply-btn"
+                                    style={{ background: '#e74c3c' }}
+                                    onClick={async () => {
+                                        await handleDelete(deleteTarget.id);
+                                        setDeleteTarget(null);
+                                    }}
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}

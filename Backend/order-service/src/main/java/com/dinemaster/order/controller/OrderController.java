@@ -50,6 +50,9 @@ public class OrderController {
 
     @PostMapping("/place-and-pay")
     public ResponseEntity<PaymentResponse> placeAndPay(@RequestBody Map<String, Object> body) {
+        System.out.println(body);
+        System.out.println(body.get("tableNumber"));
+        System.out.println(body.get("items"));
         return ResponseEntity.ok(service.placeAndPay(body));
     }
 }
